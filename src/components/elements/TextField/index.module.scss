@@ -1,0 +1,60 @@
+@import '../../../styles/variables.scss';
+
+.wrapper {
+  $focus-color: #4C94FF;
+  $error-color: #F64C4C;
+  
+  display: flex;
+  flex-direction: column;
+  font-family: $font-family;
+  font-size: $font-size-description;
+  font-weight: 300;
+  gap: 4px;
+
+  &__label {
+    font-size: $font-size-subtitle;
+    margin-bottom: 0.25rem; /* mb-1 */
+  }
+
+  &__error {
+    font-size: $font-size-subtitle;
+    color: $error-color; /* text-red-500 */
+  }
+
+  .input {
+    border-radius: 0.5rem; /* rounded-sm */
+    margin: 1px;
+    border: 1px solid $color-text-light; /* border-indigo-300 border-2 */
+    color: $color-text-light;
+    padding: 12px 8px 12px 12px; /* p-2 */
+    transition: background-color 150ms, outline 150ms, ring 150ms; /* duration-150 transition-all */
+    outline: none; /* outline-none */
+    &:hover {
+      //background-color: #c3dafe; /* hover:bg-indigo-200 */
+    }
+  
+    &:focus {
+      //background-color: #c3dafe; /* focus:bg-indigo-200 */
+      margin: 0;
+      border: 2px solid $focus-color;
+    }
+
+    &_disabled {
+      border: 2px solid $border-light;
+      background-color: #F3F4F6; /* hover:bg-indigo-100 */
+    }
+
+    &_errored {
+      margin: 0;
+      border: 2px solid $error-color;
+
+      &:focus {
+        background-color: #fee2e2; /* focus:bg-red-100 */
+        border: 2px solid $error-color;
+      }
+      &:hover {
+        background-color: #fee2e2; /* hover:bg-red-100 */
+      }
+    }
+  }
+}

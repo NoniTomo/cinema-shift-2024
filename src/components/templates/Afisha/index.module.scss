@@ -1,0 +1,103 @@
+@import '../../../styles/variables.scss';
+.wrapper{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.afisha {
+  $gap: 16px;
+  $padding: 16px;
+
+  height: max-content;
+  margin-top: 60px;
+  padding: $padding;
+  padding-bottom: 90px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: $gap;
+  
+  @media (max-width: 760px) {
+    max-width: calc(#{$image-size} + #{$padding * 2});
+  }
+  @media (min-width: 760px) and (max-width: 1200px) {
+    max-width: calc(#{$image-size * 2} + #{$gap}  + #{$padding * 2});
+  }
+  @media (min-width: 1200px) and (max-width: 1920px) {
+    max-width: calc(#{$image-size * 3} + #{$gap * 2}  + #{$padding * 2});
+  }
+  @media (min-width: 1920px) {
+    max-width: calc(#{$image-size * 4} + #{$gap * 3}  + #{$padding * 2});
+  }
+
+  .movie {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: $gap;
+
+    .movie-info {
+      display: flex;
+      flex-direction: column;
+      font-family: $font-family;
+      gap: 16px;
+      height: 100%;
+
+      &__title {
+        color: $color-text-dark;
+        max-width: $image-size;
+        font-size: $font-size-title;
+        font-weight: 700;
+      }
+      &__subtitle {
+        color: $color-text-light;
+        max-width: $image-size;
+        font-size: $font-size-subtitle;
+        font-weight: 100;
+      }
+
+      .poster{
+        width: $image-size;
+        height: $image-size;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        position: relative;
+
+        &__info{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          text-align: center;
+          border-radius: 0.5rem 0 0 0;
+          background-color: rgb(216, 212, 212);
+          width: 10rem;
+          height: 3rem;
+          position: absolute;
+          margin-left: calc($image-size - 10rem);
+          margin-top: calc($image-size - 3rem);
+        }
+
+        &__img{
+          width: 100%;
+          display: inline-block;
+        }
+
+        &__text{
+          color: $color-text-dark;
+          width: 100%;
+          font-family: $font-family-film-info;
+          font-size: $font-size-subtitle;
+          font-weight: 300;
+          text-align: center;
+    
+          &_bold{
+            font-weight: 500;
+          }
+        }
+      }  
+    }
+  }
+}
+

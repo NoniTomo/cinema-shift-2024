@@ -1,0 +1,38 @@
+@import '../../../styles/variables.scss';
+
+.button {
+  font-weight: 600;
+  line-height: 24px;
+  transition: $transition;
+  cursor: pointer;
+  padding: 16px 32px;
+  border-radius: 16px;
+  border: none;
+
+  &_contained {
+    background-color: $purple;
+    color: $color-text-white;
+
+    &:hover {
+      background-color: $dark-purple;
+    }
+  }
+
+  &_outlined {
+    background-color: transparent;
+    color: $color-text-dark;
+    border: 1px solid $border-light;
+
+    &:hover {
+      background-color: $bg-secondary;
+    }
+  }
+
+  &_text {
+    background-color: transparent;
+
+    &:hover {
+      background-color: $bg-secondary;
+    }
+  }
+}

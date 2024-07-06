@@ -1,0 +1,94 @@
+@import '../../../styles/variables.scss';
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.afisha {
+  padding: 10px;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: $image-size;
+  text-align: left;
+  height: 100%;
+  box-sizing: border-box;
+
+  .movie {
+    display: flex;
+    flex-direction: column;
+    font-family: $font-family;
+    gap: 16px;
+
+    &__description{
+      font-family: $font-family;
+      font-weight: 300;
+      font-size: $font-size-description;
+    }
+    &__description_button{
+      background-color: transparent;
+      border: none;
+      color: $purple
+    }
+    &__title {
+      color: $color-text-dark;
+      max-width: $image-size;
+      font-size: $font-size-title;
+      font-weight: 700;
+    }
+    &__subtitle {
+      color: $color-text-light;
+      max-width: $image-size;
+      font-size: $font-size-subtitle;
+      font-weight: 100;
+    }
+
+    .poster{
+      width: $image-size;
+      height: $image-size;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      position: relative;
+
+      &__info{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+        border-radius: 0.5rem 0 0 0;
+        background-color: rgb(216, 212, 212);
+        width: 10rem;
+        height: 3rem;
+        position: absolute;
+        margin-left: calc($image-size - 10rem);
+        margin-top: calc($image-size - 3rem);
+      }
+
+      &__img{
+        width: 100%;
+        display: inline-block;
+      }
+
+      &__text{
+        color: $color-text-dark;
+        width: 100%;
+        font-family: $font-family-film-info;
+        font-size: $font-size-subtitle;
+        font-weight: 300;
+        text-align: center;
+  
+        &_bold{
+          font-weight: 500;
+        }
+      }
+    } 
+  
+    .contained {
+      max-width: $image-size;
+    }
+  }
+}

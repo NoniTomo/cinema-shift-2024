@@ -1,0 +1,16 @@
+@import '../../../styles/variables.scss';
+
+.rating {
+  max-width: $image-size;
+
+  &__stars {
+    max-width: $image-size;
+  }
+  &__info {
+    color: $color-text-light;
+    max-width: $image-size;
+    font-family: $font-family;
+    font-size: $font-size-subtitle;
+    font-weight: 300;
+  }
+}
