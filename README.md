@@ -31,4 +31,3 @@ export default {
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 =======
 # cinema-shift-2024
->>>>>>> 3d304c83bad102d8374d26fdd12488046808b86f
