@@ -31,7 +31,7 @@ export default function MovieSchedule() {
   const navigate = useNavigate();
   const days: string[] = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
   const month: string[] = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-  
+
   return (
     <>
     {(!error && schedules && !loading) ? (

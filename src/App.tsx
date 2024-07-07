@@ -13,21 +13,26 @@ import YourCard from './components/templates/YourCard/YourCard'
 import './App.css'
 
 function App() {
-
   return (
-    <div className='wrapper'>
+    <div className="wrapper">
       <BrowserRouter>
         <Routes>
-          <Route path='cinema/today' element={<Afisha />}/>
-          <Route path='cinema/film/:filmId' element={<MovieInfo />}/>
-          <Route path='cinema/film/:filmId/schedule' element={<MovieSchedule />}/>
-          <Route path='cinema/orders' element={<Tickets />}/>
-          <Route path='cinema/users/profile' element={<Profile />}/>
-          <Route path='cinema/film/:filmId/schedule/choose-seat' element={<ChoiceOfSeats />}/>
-          <Route path='cinema/users/signin' element={<Login />}/>
-          <Route path='cinema/users/your-data' element={<YourData />}/>
-          <Route path='cinema/users/your-card' element={<YourCard />}/>
-          <Route path='*' element={<Navigate to='cinema/today'/>}/>
+          <Route path="cinema/today" element={<Afisha />} />
+          <Route path="cinema/film/:filmId" element={<MovieInfo />} />
+          <Route
+            path="cinema/film/:filmId/schedule"
+            element={<MovieSchedule />}
+          />
+          <Route path="cinema/orders" element={<Tickets />} />
+          <Route path="cinema/users/profile" element={<Profile />} />
+          <Route
+            path="cinema/film/:filmId/schedule/choose-seat"
+            element={<ChoiceOfSeats />}
+          />
+          <Route path="cinema/users/signin" element={<Login />} />
+          <Route path="cinema/users/your-data" element={<YourData />} />
+          <Route path="cinema/users/your-card" element={<YourCard />} />
+          <Route path="*" element={<Navigate to="cinema/today" />} />
         </Routes>
       </BrowserRouter>
     </div>

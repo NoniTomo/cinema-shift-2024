@@ -1,18 +1,18 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
-import Header from '../../modules/Header/Header';
-import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg';
-import UserDataForm from '../../modules/UserDataForm/UserDataForm';
+import Header from '../../modules/Header/Header'
+import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg'
+import UserDataForm from '../../modules/UserDataForm/UserDataForm'
 
-import styles from './index.module.scss';
+import styles from './index.module.scss'
 
 export default function Login() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <>
-      <Header to='/cinema/today' Icon={ArrowLeftIcon} text='Ваши данные'/>
+      <Header to="/cinema/today" Icon={ArrowLeftIcon} text="Ваши данные" />
       <div className={styles.wrapper}>
-        <UserDataForm buttonText='Продолжить' onSubmit={() => navigate('')} />
+        <UserDataForm buttonText="Продолжить" onSubmit={() => navigate('')} />
       </div>
     </>
   )
