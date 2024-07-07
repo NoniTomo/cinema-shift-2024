@@ -4,41 +4,34 @@ import {ReactComponent as CrossIcon} from '@/assets/svg/Cross.svg';
 import { Button } from '@components/elements/Button/Button';
 import { TextField } from '../../elements/TextField/TextField';
 import { useForm, UseFormRegisterReturn } from 'react-hook-form';
+import { useRef, useState } from 'react';
+import useTimer from '../../../hooks/useTimer/useTimer';
+import { filterInputOnlyNumbers } from '../../../utils/validate';
 import styles from './index.module.scss';
-import { KeyboardEvent, useRef, useState } from 'react';
 
 export default function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { countdown, startTimer, end } = useTimer();
+  const formPhone = useForm({
     mode: "onChange",
-    defaultValues: { phone: "", code: "" },
+    defaultValues: { phone: "" },
+  });
+  const formCode = useForm({
+    mode: "onChange",
+    defaultValues: { code: "" },
   });
   const [displayCodeField, setDisplayCodeField] = useState(false);
   const refPhone = useRef<HTMLFormElement>(null);
   const refCode = useRef<HTMLFormElement>(null);
 
-  const filterInput = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (
-      !(
-        e.key >= '0' && e.key <= '9' || // Allow digits
-        e.key === 'Backspace' ||
-        e.key === 'Tab' ||
-        e.key === 'Enter' ||
-        e.key === 'ArrowLeft' ||
-        e.key === 'ArrowRight' ||
-        e.key === 'Delete' ||
-        e.key === 'Escape' ||
-        e.ctrlKey || e.metaKey // Allow Ctrl/Cmd combinations
-      )
-    ) {
-      e.preventDefault();
+  const handleFormSubmit = () => {
+    if (displayCodeField) {
+      refCode.current?.requestSubmit();
+    } else {
+      refPhone.current?.requestSubmit();
     }
-  }
+  };
 
-  const inputPhone = register("phone", {
+  const inputPhone = formPhone.register("phone", {
     required: "Это поле обязательное",
     pattern: /^[0-9]+$/i
   });
@@ -49,7 +42,7 @@ export default function Login() {
     onChange: async (event) => {inputPhone.onChange(event)}
   }
 
-  const inputCode = register("code", {
+  const inputCode = formCode.register("code", {
     required: "Это поле обязательное",
     maxLength: 6,
     pattern: /^[0-9]+$/i
@@ -60,40 +53,48 @@ export default function Login() {
     ref: inputCode.ref,
     onChange: async (event) => {inputCode.onChange(event)}
   }
-  console.log(errors)
   return (
     <>
       <Header to='/cinema/today' Icon={CrossIcon}/>
       <div className={styles.wrapper}>
-        <div className={styles.afisha}>
+        <div className={styles.content}>
           <p>Введите номер телефона для входа в личный кабинет</p>
-            <form ref={refPhone} onSubmit={handleSubmit(() => (displayCodeField) ? () => {} : setDisplayCodeField(true) )}>
+          <form ref={refPhone} onSubmit={formPhone.handleSubmit(() => (displayCodeField) ? () => {} : (() => {
+            setDisplayCodeField(true);
+            startTimer(60);
+          })())}>
+            <TextField
+              id="phone"
+              register={customRegisterPhone}
+              placeholder="89999999999"
+              error={formPhone.formState.errors.phone?.message}
+              label="Номер телефона"
+              isDisabled={false}
+              isRequired={true}
+              onKeyDown={filterInputOnlyNumbers}
+            />
+          </form>
+          <form ref={refCode} onSubmit={formCode.handleSubmit(() => {})}>
+            {displayCodeField && 
               <TextField
-                id="phone"
-                register={customRegisterPhone}
-                placeholder="89999999999"
-                error={errors.phone?.message}
-                label="Номер телефона"
-                isDisabled={false}
-                isRequired={true}
-                onKeyDown={filterInput}
+              id="code"
+              register={customRegisterCode}
+              placeholder="123456"
+              error={formCode.formState.errors.code?.message}
+              label="Код подтверждения"
+              isDisabled={false}
+              isRequired={true}
+              onKeyDown={filterInputOnlyNumbers}
               />
-            </form>
-            <form ref={refCode} onSubmit={handleSubmit(() => (displayCodeField) ? () => {} : () => {} )}>
-              {displayCodeField && 
-                <TextField
-                id="code"
-                register={customRegisterCode}
-                placeholder="123456"
-                error={errors.code?.message}
-                label="Код подтверждения"
-                isDisabled={false}
-                isRequired={true}
-                onKeyDown={filterInput}
-                />
-              }
-            <Button onClick={(displayCodeField) ? refCode?.current?.requestSubmit() : refPhone?.current?.requestSubmit()} type='submit' for>Продолжить</Button>
-            </form>
+            }
+          </form>
+          <Button onClick={handleFormSubmit} type='submit'>Продолжить</Button>
+          {displayCodeField && !end && <p className={`${styles.content__timer}`}>Отправить код повторно через {countdown} сек</p>}
+          {displayCodeField && end && 
+            <div className={styles.button}>
+              <button className={`${styles.button__description}`} onClick={() => startTimer(60)}>Отправить ещё раз</button>
+            </div>
+          }
         </div>
       </div>
     </>

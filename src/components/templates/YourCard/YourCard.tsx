@@ -2,7 +2,7 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../modules/Header/Header';
 import Footer from '../../modules/Footer/Footer';
 
-export default function YourData() {
+export default function YourCard() {
   
   return (
     <>

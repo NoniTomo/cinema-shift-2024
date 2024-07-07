@@ -1,0 +1,22 @@
+@import '../../../styles/variables.scss';
+
+.wrapper{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  $gap: 16px;
+  $padding: 16px;
+
+  height: max-content;
+  padding: $padding;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: $gap;
+  width: 100%;
+}

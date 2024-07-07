@@ -1,14 +1,17 @@
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../modules/Header/Header';
-import Footer from '../../modules/Footer/Footer';
+import {ReactComponent as CrossIcon} from '@/assets/svg/Cross.svg';
+import { useNavigate } from 'react-router-dom';
+import UserDataForm from '../../modules/UserData/UserData';
+import styles from './index.module.scss';
 
-export default function YourData() {
-  
+export default function Login() {
+  const navigate = useNavigate();
   return (
     <>
-      <Header />
-      <p>Билеты</p>
-      <Footer />
+      <Header to='/cinema/today' Icon={CrossIcon}/>
+      <div className={styles.wrapper}>
+        <UserDataForm buttonText='Продолжить' onSubmit={() => navigate('')} />
+      </div>
     </>
   )
 }

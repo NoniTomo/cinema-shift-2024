@@ -8,8 +8,8 @@ import Header from '../../modules/Header/Header';
 import { IFilm } from "../../../types/IFilm";
 import Footer from '../../modules/Footer/Footer';
 import getAgeRating from '../../../utils/getAgeRating';
-import styles from './index.module.scss';
 import Rating from '../../elements/Rating/Rating';
+import styles from './index.module.scss';
  
 export default function Afisha() {
   const [films, setFilms] = useState<IFilm[]>();

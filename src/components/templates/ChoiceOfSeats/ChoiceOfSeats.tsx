@@ -111,7 +111,7 @@ export default function ChoiceOfSeats() {
                 </TransformWrapper>
               </div>
             </div>
-            <Button variant='contained' onClick={() => navigate(`/cinema/users/signin`)}>Продолжить</Button>
+            <Button variant='contained' onClick={() => navigate(`../cinema/users/your-data`)}>Продолжить</Button>
           </div>
         </div>
       </>

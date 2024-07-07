@@ -29,14 +29,14 @@
     padding: 12px 8px 12px 12px; /* p-2 */
     transition: background-color 150ms, outline 150ms, ring 150ms; /* duration-150 transition-all */
     outline: none; /* outline-none */
-    &:hover {
-      //background-color: #c3dafe; /* hover:bg-indigo-200 */
-    }
   
     &:focus {
-      //background-color: #c3dafe; /* focus:bg-indigo-200 */
       margin: 0;
       border: 2px solid $focus-color;
+    }
+
+    &::placeholder {
+      color: $border-light;
     }
 
     &_disabled {
