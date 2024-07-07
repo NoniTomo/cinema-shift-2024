@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import { IFilm } from "../../../types/IFilm";
 import config from '../../../config';
 import { Button } from '../../elements/Button/Button';
 import Header from '../../modules/Header/Header';
-import { IFilm } from "../../../types/IFilm";
 import Footer from '../../modules/Footer/Footer';
-import getAgeRating from '../../../utils/getAgeRating';
-import Rating from '../../elements/Rating/Rating';
+import FilmCard from '../../modules/FilmCard/FilmCard';
+
 import styles from './index.module.scss';
  
 export default function Afisha() {
@@ -36,21 +36,7 @@ export default function Afisha() {
         <div className={`${styles.afisha}`}>
           {films && films.map((item: IFilm) => (
             <div className={`${styles.movie}`} key={item.id}>
-              <div className={`${styles['movie-info']}`}>
-                <div className={`${styles.poster}`}>
-                  <div className={`${styles.poster__info}`}>
-                    <p className={`${styles.poster__text_bold}`}>{item.genres[0]}</p>
-                    <p className={`${styles.poster__text}`}>{item.country.name}, {item.releaseDate}</p>
-                  </div>
-                  <img className={`${styles.poster__img}`} src={`${config.PUBLIC_SERVER_URL}${item.img}`} />
-                </div>
-                <h3 className={`${styles['movie-info__title']}`}>{`${item.name} (${getAgeRating(item.ageRating)})`}</h3>
-                <p className={`${styles['movie-info__subtitle']}`}>{item.originalName}</p>
-                <Rating ratingSource={[
-                  { name: 'Kinopoisk', estimate: item.userRatings.kinopoisk}, 
-                  { name: 'IMDB', estimate: item.userRatings.imdb }
-                ]}/>
-              </div>
+              <FilmCard film={item} />
               <Button variant='contained' onClick={() => navigate(`../cinema/film/${item.id}`)}>Подробнее</Button>
             </div>
           ))}

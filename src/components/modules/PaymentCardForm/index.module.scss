@@ -1,0 +1,45 @@
+@import '../../../styles/variables.scss';
+
+.content {
+  margin: auto;
+  margin-top: 60px;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: $image-size;
+  padding: 10px;
+  text-align: left;  
+  font-family: $font-family;
+  font-weight: 300;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card {
+  padding: $padding;
+  background-color: $bg-secondary;
+  border-radius: 1rem;
+  height: min-content;
+  gap: $gap;
+  width: 100%;
+  box-sizing: border-box;
+
+  &__second-level {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+
+    :first-child {
+      width: 48%;
+      box-sizing: border-box;
+    }
+    :last-child {
+      width: 48%;
+      box-sizing: border-box;
+      
+    }
+  }
+}

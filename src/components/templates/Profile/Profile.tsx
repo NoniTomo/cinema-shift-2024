@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Header from '../../modules/Header/Header';
 import Footer from '../../modules/Footer/Footer';
-import UserDataForm from '../../modules/UserData/UserData';
+import UserDataForm from '../../modules/UserDataForm/UserDataForm';
 import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg';
 import styles from './index.module.scss'
 

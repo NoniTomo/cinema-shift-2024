@@ -1,13 +1,14 @@
-import { ComponentProps, FC } from 'react';
+import { ComponentProps, ReactNode } from 'react';
 import clsx from 'clsx';
 
 import styles from './index.module.scss';
 
-type Props = {
+type ButtonProps = {
   variant?: 'contained' | 'outlined' | 'text';
+  children?: ReactNode;
 } & ComponentProps<'button'>;
 
-const Button: FC<Props> = ({ variant = 'contained', children, ...props }) => {
+function Button({ variant = 'contained', children, ...props }: ButtonProps) {
   return (
     <button
       {...props}
@@ -20,6 +21,6 @@ const Button: FC<Props> = ({ variant = 'contained', children, ...props }) => {
       {children}
     </button>
   );
-};
+}
 
 export { Button };

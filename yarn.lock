@@ -3106,6 +3106,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-mask-input@^3.3.8:
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/use-mask-input/-/use-mask-input-3.3.8.tgz#007051cc09eb46a6f0b40e3ae941fc83ccea48a7"
+  integrity sha512-FMT7p/KaK1kosV7MKJTGp+dSKrGo1ldqdkc+JsWfpjh7//XfjJIs3oHgF1NDUIu6m7wYT1Gne61T6tOxfWvaSg==
+
 vite@^5.3.1:
   version "5.3.2"
   resolved "https://registry.npmjs.org/vite/-/vite-5.3.2.tgz"

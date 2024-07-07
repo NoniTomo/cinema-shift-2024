@@ -66,3 +66,10 @@ export const validateEmail = (value: string) => {
   }
   return 'Некорректный формат почты';
 };
+
+export const validateMonth = (value: string) => {
+  if (+value % 100 <= 12 && +value - (+value % 100) / 100 <= 99 && +value - (+value % 100) / 100 <= 19) {
+    return true;
+  }
+  return 'Некорректный срок действия';
+};

@@ -1,13 +1,16 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+
 import Afisha from './components/templates/Afisha/Afisha'
 import MovieInfo from './components/templates/MovieInfo/MovieInfo'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import './App.css'
 import Tickets from './components/templates/Tickets/Tickets'
 import Profile from './components/templates/Profile/Profile'
 import MovieSchedule from './components/templates/MovieSchedule/MovieSchedule'
 import ChoiceOfSeats from './components/templates/ChoiceOfSeats/ChoiceOfSeats'
 import Login from './components/templates/Login/Login'
 import YourData from './components/templates/YourData/YourData'
+import YourCard from './components/templates/YourCard/YourCard'
+
+import './App.css'
 
 function App() {
 
@@ -23,6 +26,7 @@ function App() {
           <Route path='cinema/film/:filmId/schedule/choose-seat' element={<ChoiceOfSeats />}/>
           <Route path='cinema/users/signin' element={<Login />}/>
           <Route path='cinema/users/your-data' element={<YourData />}/>
+          <Route path='cinema/users/your-card' element={<YourCard />}/>
           <Route path='*' element={<Navigate to='cinema/today'/>}/>
         </Routes>
       </BrowserRouter>

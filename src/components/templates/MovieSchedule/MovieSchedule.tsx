@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
-import { Button } from '../../elements/Button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { Button } from '../../elements/Button/Button';
 import Header from '../../modules/Header/Header';
 import seancesByHalls from '../../../utils/seancesByHalls';
 import ISeance from '../../../types/ISeance';
-import styles from './index.module.scss';
-import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg';
 import { HallContext } from '../../../context/HallContext';
+import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg';
+
+import styles from './index.module.scss';
 
 export default function MovieSchedule() {
   const params = useParams();

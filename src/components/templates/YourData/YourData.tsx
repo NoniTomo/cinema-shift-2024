@@ -1,14 +1,16 @@
-import Header from '../../modules/Header/Header';
-import {ReactComponent as CrossIcon} from '@/assets/svg/Cross.svg';
 import { useNavigate } from 'react-router-dom';
-import UserDataForm from '../../modules/UserData/UserData';
+
+import Header from '../../modules/Header/Header';
+import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg';
+import UserDataForm from '../../modules/UserDataForm/UserDataForm';
+
 import styles from './index.module.scss';
 
 export default function Login() {
   const navigate = useNavigate();
   return (
     <>
-      <Header to='/cinema/today' Icon={CrossIcon}/>
+      <Header to='/cinema/today' Icon={ArrowLeftIcon} text='Ваши данные'/>
       <div className={styles.wrapper}>
         <UserDataForm buttonText='Продолжить' onSubmit={() => navigate('')} />
       </div>

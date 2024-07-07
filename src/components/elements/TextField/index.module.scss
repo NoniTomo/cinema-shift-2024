@@ -3,13 +3,14 @@
 .wrapper {
   $focus-color: #4C94FF;
   $error-color: #F64C4C;
+  position: relative;
   
   display: flex;
   flex-direction: column;
   font-family: $font-family;
   font-size: $font-size-description;
   font-weight: 300;
-  gap: 4px;
+  gap: 2px;
 
   &__label {
     font-size: $font-size-subtitle;
@@ -17,11 +18,14 @@
   }
 
   &__error {
+    position: absolute;
+    bottom: 0;
     font-size: $font-size-subtitle;
     color: $error-color; /* text-red-500 */
   }
 
   .input {
+    $margin-bottom: 20px;
     border-radius: 0.5rem; /* rounded-sm */
     margin: 1px;
     border: 1px solid $color-text-light; /* border-indigo-300 border-2 */
@@ -29,9 +33,10 @@
     padding: 12px 8px 12px 12px; /* p-2 */
     transition: background-color 150ms, outline 150ms, ring 150ms; /* duration-150 transition-all */
     outline: none; /* outline-none */
-  
+    margin-bottom: $margin-bottom;
     &:focus {
       margin: 0;
+      margin-bottom: calc($margin-bottom - 1px);
       border: 2px solid $focus-color;
     }
 
@@ -46,6 +51,7 @@
 
     &_errored {
       margin: 0;
+      margin-bottom: calc($margin-bottom - 1px);
       border: 2px solid $error-color;
 
       &:focus {
