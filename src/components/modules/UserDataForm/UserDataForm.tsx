@@ -1,126 +1,130 @@
-import { Button } from '@components/elements/Button/Button'
-import { TextField } from '../../elements/TextField/TextField'
-import { useForm } from 'react-hook-form'
+import { Button } from '@components/elements/Button/Button';
+import { TextField } from '../../elements/TextField/TextField';
+import { useForm } from 'react-hook-form';
 import {
   filterInputAlphabet,
   filterInputCity,
   filterInputEmail,
   filterInputOnlyNumbers,
   validateAlphabetAndSpecialSymbols,
-  validateEmail,
-} from '../../../utils/validate'
-import styles from './index.module.scss'
+  validateEmail
+} from '../../../utils/validate';
+import styles from './index.module.scss';
+import { Profile } from '@/types/dto';
+import { useContext } from 'react';
+import { UserContext } from '@/context/UserContext';
 
 export type UserDataFormType = {
-  buttonText: string
-  onSubmit: () => void
-}
+  buttonText: string;
+  onSubmit: (data: Profile) => void;
+};
 
-export default function UserDataForm({
-  buttonText,
-  onSubmit,
-}: UserDataFormType) {
+export default function UserDataForm({ buttonText, onSubmit }: UserDataFormType) {
+  const { userData } = useContext(UserContext);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      patronymic: '',
-      phone: '89991776356',
+      firstname: '',
+      middlename: '',
+      lastname: '',
+      phone: userData.phone,
       email: '',
-      city: '',
-    },
-  })
+      city: ''
+    }
+  });
 
   return (
     <form className={styles.content} onSubmit={handleSubmit(onSubmit)}>
       <TextField
-        id="firstName"
-        register={register('firstName', {
+        id='firstname'
+        register={register('firstname', {
           required: 'Это поле обязательное',
           minLength: { value: 1, message: 'Минимум один символ' },
           maxLength: { value: 60, message: 'Максимум один символ' },
-          validate: validateAlphabetAndSpecialSymbols,
+          validate: validateAlphabetAndSpecialSymbols
         })}
-        placeholder="Иван"
-        error={errors.firstName?.message}
-        label="Имя"
+        placeholder='Иван'
+        error={errors.firstname?.message}
+        label='Имя'
         isDisabled={false}
         isRequired={true}
         onKeyDown={filterInputAlphabet}
+        onPaste={filterInputAlphabet}
       />
       <TextField
-        id="lastName"
-        register={register('lastName', {
+        id='middlename'
+        register={register('middlename', {
           required: 'Это поле обязательное',
           maxLength: { value: 60, message: 'Максимум 60 символов' },
-          validate: validateAlphabetAndSpecialSymbols,
+          validate: validateAlphabetAndSpecialSymbols
         })}
-        placeholder="Иванов"
-        error={errors.lastName?.message}
-        label="Фамилия"
+        placeholder='Иванов'
+        error={errors.middlename?.message}
+        label='Фамилия'
         isDisabled={false}
         isRequired={true}
         onKeyDown={filterInputAlphabet}
+        onPaste={filterInputAlphabet}
       />
       <TextField
-        id="patronymic"
-        register={register('patronymic', {
+        id='lastname'
+        register={register('lastname', {
           maxLength: { value: 60, message: 'Максимум 60 символов' },
           validate: (value) =>
-            value.split('').length > 0
-              ? validateAlphabetAndSpecialSymbols(value)
-              : true,
+            value.split('').length > 0 ? validateAlphabetAndSpecialSymbols(value) : true
         })}
-        placeholder="Иванович"
-        error={errors.patronymic?.message}
-        label="Отчество"
+        placeholder='Иванович'
+        error={errors.lastname?.message}
+        label='Отчество'
         isDisabled={false}
         isRequired={false}
         onKeyDown={filterInputAlphabet}
+        onPaste={filterInputAlphabet}
       />
       <TextField
-        id="phone"
+        id='phone'
         register={register('phone')}
-        placeholder="89999999999"
+        placeholder='89999999999'
         error={errors.phone?.message}
-        label="Номер телефона"
+        label='Номер телефона'
         isDisabled={true}
         isRequired={true}
         onKeyDown={filterInputOnlyNumbers}
+        onPaste={filterInputOnlyNumbers}
       />
       <TextField
-        id="email"
+        id='email'
         register={register('email', {
           required: 'Это поле обязательное',
-          validate: validateEmail,
+          validate: validateEmail
         })}
-        placeholder="ivanov@email.mail"
+        placeholder='ivanov@email.mail'
         error={errors.email?.message}
-        label="E-mail"
+        label='E-mail'
         isDisabled={false}
         isRequired={true}
         onKeyDown={filterInputEmail}
+        onPaste={filterInputEmail}
       />
       <TextField
-        id="city"
+        id='city'
         register={register('city', {
           required: 'Это поле обязательное',
           maxLength: { value: 60, message: 'Максимум 60 символов' },
-          validate: validateAlphabetAndSpecialSymbols,
+          validate: validateAlphabetAndSpecialSymbols
         })}
-        placeholder="Москва"
+        placeholder='Москва'
         error={errors.city?.message}
-        label="Город"
+        label='Город'
         isDisabled={false}
         isRequired={true}
         onKeyDown={filterInputCity}
       />
-      <Button type="submit">{buttonText}</Button>
+      <Button type='submit'>{buttonText}</Button>
     </form>
-  )
+  );
 }

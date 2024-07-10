@@ -1,0 +1,17 @@
+@import '../../../styles/variables.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+  font-family: $font-family;
+
+  .title {
+    font-weight: 300;
+    font-size: $font-size-small;
+  }
+
+  .info {
+    font-size: $font-size-title;
+  }
+}

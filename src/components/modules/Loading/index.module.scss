@@ -17,12 +17,5 @@
   padding: 10px;
   text-align: left;
   font-family: $font-family;
-
-  .content__title {
-    font-size: $font-size-page-name;
-  }
-
-  .content__text {
-    font-size: $font-size-small;
-  }
+  font-weight: 300;
 }

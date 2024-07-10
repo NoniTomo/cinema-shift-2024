@@ -5,31 +5,31 @@ export default function useTimer() {
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const [end, setEnd] = useState<boolean>(false);
   console.log(countdown);
-  
+
   useEffect(() => {
-    console.log('countdown = ', countdown)
+    console.log('countdown = ', countdown);
     if (countdown === 0) stopTimer();
   }, [countdown]);
 
   const startTimer = (time: number) => {
     if (!timer) {
       setСountdown(time);
-      setTimer(setInterval(() => setСountdown((prevCountdown) => prevCountdown - 1), 1000));
       setEnd(false);
+      setTimer(setInterval(() => setСountdown((prevCountdown) => prevCountdown - 1), 1000));
     }
-  }
+  };
 
   const stopTimer = () => {
-    console.log('stopTimer | countdown = ', countdown)
+    console.log('stopTimer | countdown = ', countdown);
     clearInterval(timer);
     setTimer(undefined);
     setEnd(true);
-  }
+  };
 
   return {
     countdown,
     startTimer,
     stopTimer,
     end
-  }
+  };
 }

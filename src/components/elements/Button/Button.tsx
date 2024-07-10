@@ -1,12 +1,12 @@
-import { ComponentProps, ReactNode } from 'react'
-import clsx from 'clsx'
+import { ComponentProps, ReactNode } from 'react';
+import clsx from 'clsx';
 
-import styles from './index.module.scss'
+import styles from './index.module.scss';
 
 type ButtonProps = {
-  variant?: 'contained' | 'outlined' | 'text'
-  children?: ReactNode
-} & ComponentProps<'button'>
+  variant?: 'contained' | 'outlined' | 'text';
+  children?: ReactNode;
+} & ComponentProps<'button'>;
 
 const Button = ({ variant = 'contained', children, ...props }: ButtonProps) => (
   <button
@@ -14,11 +14,11 @@ const Button = ({ variant = 'contained', children, ...props }: ButtonProps) => (
     className={clsx(styles.button, {
       [styles.button_contained]: variant === 'contained',
       [styles.button_outlined]: variant === 'outlined',
-      [styles.button_text]: variant === 'text',
+      [styles.button_text]: variant === 'text'
     })}
   >
     {children}
   </button>
-)
+);
 
-export { Button }
+export { Button };

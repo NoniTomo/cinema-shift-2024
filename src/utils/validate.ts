@@ -1,117 +1,85 @@
-import { KeyboardEvent } from 'react'
+import { ClipboardEvent, KeyboardEvent } from 'react';
 
-export const filterInputOnlyNumbers = (e: KeyboardEvent<HTMLInputElement>) => {
-  const allowedKeys = [
-    'Backspace',
-    'Tab',
-    'Enter',
-    'ArrowLeft',
-    'ArrowRight',
-    'Delete',
-    'Escape',
-  ]
-
-  if (
-    !(
-      /[0-9]/.test(e.key) ||
-      allowedKeys.includes(e.key) ||
-      e.ctrlKey ||
-      e.metaKey
-    )
-  ) {
-    e.preventDefault()
-  }
+function testClipboardEvent(
+  e: KeyboardEvent<HTMLInputElement> | ClipboardEvent<HTMLInputElement>
+): asserts e is ClipboardEvent<HTMLInputElement> {
+  if (!Object.prototype.hasOwnProperty.call(e, 'clipboardData'))
+    throw new Error('The ClipboardEvent type was expected for the event');
+}
+function testKeyboardEvent(
+  e: KeyboardEvent<HTMLInputElement> | ClipboardEvent<HTMLInputElement>
+): asserts e is KeyboardEvent<HTMLInputElement> {
+  if (Object.prototype.hasOwnProperty.call(e, 'clipboardData'))
+    throw new Error('The testKeyboardEvent type was expected for the event');
 }
 
-export const filterInputAlphabet = (e: KeyboardEvent<HTMLInputElement>) => {
-  const allowedKeys = [
-    'Backspace',
-    'Tab',
-    'Enter',
-    'ArrowLeft',
-    'ArrowRight',
-    'Delete',
-    'Escape',
-    ' ',
-    '-',
-    '`',
-    '‘',
-    'ё',
-    'Ё',
-  ]
+const allowedKeys = ['Backspace', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight', 'Delete', 'Escape'];
 
-  if (
-    !(
-      /[a-zA-Zа-яА-Я]/.test(e.key) ||
-      allowedKeys.includes(e.key) ||
-      e.ctrlKey ||
-      e.metaKey
-    )
-  ) {
-    e.preventDefault()
+const check = (
+  e: KeyboardEvent<HTMLInputElement> | ClipboardEvent<HTMLInputElement>,
+  testRegex: RegExp
+) => {
+  if (Object.prototype.hasOwnProperty.call(e, 'clipboardData')) {
+    testClipboardEvent(e);
+    console.log(testRegex);
+    console.log(e.clipboardData.getData('text').split(''));
+    if (
+      !e.clipboardData
+        .getData('text')
+        .split('')
+        .reduce((res, symbol) => res && testRegex.test(symbol), true)
+    ) {
+      e.preventDefault();
+    }
+  } else {
+    testKeyboardEvent(e);
+    console.log('testRegex = ', testRegex);
+    console.log('testRegex.test(e.key) = ', testRegex.test(e.key));
+    console.log('e.key = ', e.key);
+    if (!(testRegex.test(e.key) || allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+    }
   }
-}
+};
 
-export const filterInputEmail = (e: KeyboardEvent<HTMLInputElement>) => {
-  const allowedSpecialChars = "@.!$&*=^`'|~#%'`+/?_{ }"
-  const allowedKeys = [
-    'Backspace',
-    'Tab',
-    'Enter',
-    'ArrowLeft',
-    'ArrowRight',
-    'Delete',
-    'Escape',
-    '-',
-    ' ',
-  ]
+export const filterInputOnlyNumbers = (
+  e: KeyboardEvent<HTMLInputElement> | ClipboardEvent<HTMLInputElement>
+) => {
+  const testRegex = /[0-9]/;
 
-  if (
-    !(
-      /[a-zA-Zа-яА-ЯёЁ0-9]/.test(e.key) ||
-      allowedSpecialChars.includes(e.key) ||
-      allowedKeys.includes(e.key) ||
-      e.ctrlKey ||
-      e.metaKey
-    )
-  ) {
-    e.preventDefault()
-  }
-}
+  check(e, testRegex);
+};
 
-export const filterInputCity = (e: KeyboardEvent<HTMLInputElement>) => {
-  const allowedKeys = [
-    'Backspace',
-    'Tab',
-    'Enter',
-    'ArrowLeft',
-    'ArrowRight',
-    'Delete',
-    'Escape',
-    ' ',
-    '-',
-    '.',
-    'ё',
-    'Ё',
-  ]
+export const filterInputAlphabet = (
+  e: KeyboardEvent<HTMLInputElement> | ClipboardEvent<HTMLInputElement>
+) => {
+  const testRegex = /[a-zA-Zа-яА-ЯёЁ‘`-\s]/;
 
-  if (
-    !(
-      /[a-zA-Z0-9а-яА-Я]/.test(e.key) ||
-      allowedKeys.includes(e.key) ||
-      e.ctrlKey ||
-      e.metaKey
-    )
-  ) {
-    e.preventDefault()
-  }
-}
+  check(e, testRegex);
+};
 
-const cyrillicRegex = /^[а-яА-ЯёЁ\s`-]+$/
-const latinRegex = /^[a-zA-Z\s`-]+$/
-const specialCharRegexEndBeginTest = /^(?![`-])(?!.*[`-]$).*$/
-const specialCharRegexRepeatTest = /^(?!.*[`].*[`])(?!.*[-].*[-]).*$/
-const emailRegex = /\S+@\S+\.[.a-zA-Z]{2,}$/
+export const filterInputEmail = (
+  e: KeyboardEvent<HTMLInputElement> | ClipboardEvent<HTMLInputElement>
+) => {
+  //const allowedSpecialChars = "@.!$&*=^`'|~#%'`+/?_{ }-\S"
+  const testRegex = /[a-zA-Zа-яА-ЯёЁ0-9@.!$&*=^`'|~#%'`+/?_{ }-\S]/;
+
+  check(e, testRegex);
+};
+
+export const filterInputCity = (
+  e: KeyboardEvent<HTMLInputElement> | ClipboardEvent<HTMLInputElement>
+) => {
+  const testRegex = /[a-zA-Z0-9а-яА-ЯёЁ.-\S]/;
+
+  check(e, testRegex);
+};
+
+const cyrillicRegex = /^[а-яА-ЯёЁ\s`-]+$/;
+const latinRegex = /^[a-zA-Z\s`-]+$/;
+const specialCharRegexEndBeginTest = /^(?![`-])(?!.*[`-]$).*$/;
+const specialCharRegexRepeatTest = /^(?!.*[`].*[`])(?!.*[-].*[-]).*$/;
+const emailRegex = /\S+@\S+\.[.a-zA-Z]{2,}$/;
 
 export const validateAlphabetAndSpecialSymbols = (value: string) => {
   if (
@@ -119,21 +87,27 @@ export const validateAlphabetAndSpecialSymbols = (value: string) => {
     specialCharRegexEndBeginTest.test(value) &&
     specialCharRegexRepeatTest.test(value)
   ) {
-    return true
+    return true;
   }
-  return 'Некорректный формат'
-}
+  return 'Некорректный формат';
+};
 
 export const validateEmail = (value: string) => {
+  console.log('emailRegex = ', emailRegex);
+  console.log(
+    '(emailRegex.test(value) && latinRegex.test(value)) = ',
+    emailRegex.test(value) && latinRegex.test(value)
+  );
+  console.log('value = ', value);
   if (
-    (emailRegex.test(value) || latinRegex.test(value)) &&
+    emailRegex.test(value) &&
     specialCharRegexEndBeginTest.test(value) &&
     specialCharRegexRepeatTest.test(value)
   ) {
-    return true
+    return true;
   }
-  return 'Некорректный формат почты'
-}
+  return 'Некорректный формат почты';
+};
 
 export const validateMonth = (value: string) => {
   if (
@@ -141,7 +115,7 @@ export const validateMonth = (value: string) => {
     +value - (+value % 100) / 100 <= 99 &&
     +value - (+value % 100) / 100 <= 19
   ) {
-    return true
+    return true;
   }
-  return 'Некорректный срок действия'
-}
+  return 'Некорректный срок действия';
+};

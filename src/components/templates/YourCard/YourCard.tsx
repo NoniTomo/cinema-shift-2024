@@ -1,19 +1,46 @@
-import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import Header from '../../modules/Header/Header'
-import PaymentCardForm from '../../modules/PaymentCardForm/PaymentCardForm'
-import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg'
+import Header from '@components/modules/Header/Header';
+import PaymentCardForm from '@components/modules/PaymentCardForm/PaymentCardForm';
+import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
+import { UserContext } from '@/context/UserContext';
+import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
+import { PaymentCard } from '@/types/dto';
 
-import styles from './index.module.scss'
+import styles from './index.module.scss';
+import Loading from '@/components/modules/Loading/Loading';
 
 export default function YourCard() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { isUserLogged } = useContext(UserContext);
+  const { setDebitCard, handleCinemaPayment, loading, paymentIsReady } =
+    useContext(CinemaPaymentContext);
+
+  useEffect(() => {
+    if (!isUserLogged) navigate('../cinema/users/signin');
+  }, [isUserLogged]);
+
+  useEffect(() => {
+    console.log('paymentIsReady = ', paymentIsReady);
+    paymentIsReady &&
+      handleCinemaPayment()
+        .then(() => navigate('../cinema/success'))
+        .catch((err) => navigate('../cinema/today'));
+  }, [paymentIsReady]);
+
+  const submitPaymentCard = async (data: PaymentCard) => {
+    setDebitCard(data);
+  };
+
+  if (loading) return <Loading />;
+
   return (
     <>
-      <Header to="/cinema/today" Icon={ArrowLeftIcon} text="Карта оплаты" />
+      <Header to='/cinema/today' Icon={ArrowLeftIcon} text='Карта оплаты' />
       <div className={styles.wrapper}>
-        <PaymentCardForm onSubmit={() => navigate('../cinema/today')} />
+        <PaymentCardForm onSubmit={submitPaymentCard} />
       </div>
     </>
-  )
+  );
 }
