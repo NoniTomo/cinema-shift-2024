@@ -3,16 +3,68 @@
 .ticket {
   border: 2px solid $border-light;
   border-radius: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
 
-  &__first-line {}
+  &__first-line {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-  &__date {}
+  &__date {
+    color: #97A1AF
+  }
 
-  &__time {}
+  &__time {
+    color: #97A1AF
+  }
 
-  &__second-line {}
+  &__second-line {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
+    text-align: center;
+  }
 
-  &__film-name {}
+  &__film-name {
+    font-size: $font-size-title;
+  }
 
-  &__film-seats {}
+  &__film-seats {
+    font-size: $font-size-subtitle;
+    font-weight: 300;
+  }
+
+  &__third-line {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__status-container {
+    border: none;
+    border-radius: 10px;
+
+    &_canceled {
+      color: #cf8c4e;
+      background-color: #f9f4ec;
+    }
+
+    &_payed {
+      color: #4ECF53;
+      background-color: #ECF9F2;
+    }
+  }
+
+  &__status-text {}
+
+  &__order-code {
+    color: #97A1AF
+  }
 }

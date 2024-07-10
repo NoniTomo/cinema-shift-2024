@@ -7,10 +7,9 @@ import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 import { UserContext } from '@/context/UserContext';
 import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
 import { PaymentCard } from '@/types/dto';
-
-import styles from './index.module.scss';
 import Loading from '@/components/modules/Loading/Loading';
 
+import styles from './index.module.scss';
 export default function YourCard() {
   const navigate = useNavigate();
   const { isUserLogged } = useContext(UserContext);
@@ -22,7 +21,6 @@ export default function YourCard() {
   }, [isUserLogged]);
 
   useEffect(() => {
-    console.log('paymentIsReady = ', paymentIsReady);
     paymentIsReady &&
       handleCinemaPayment()
         .then(() => navigate('../cinema/success'))

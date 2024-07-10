@@ -9,7 +9,6 @@ type ActionSchedule = {
 };
 
 function scheduleReducer(state: IDaySchedule[], action: ActionSchedule) {
-  console.log('[ ...action.data ]: ', [...action.data]);
   switch (action.type) {
     case 'get-schedules': {
       return [...action.data];
@@ -42,15 +41,12 @@ const SeanceProvider = ({ children }: Props) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log('schedules = ', schedules);
   const handleGetSchedule = async (filmId: number) => {
     setError(false);
     setLoading(true);
     await RequestClient.get(`${config.PUBLIC_SERVER_URL}/cinema/film/${filmId}/schedule`)
       .then((res) => {
         if (res.data?.success) {
-          console.log('res.data?.success = ', res.data?.success);
-          console.log('res.data.schedule = ', res.data.schedules);
           setError(false);
           dispatchSchedule({
             type: 'get-schedules',

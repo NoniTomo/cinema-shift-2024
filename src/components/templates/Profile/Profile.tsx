@@ -8,10 +8,11 @@ import { UserContext } from '@/context/UserContext';
 
 import styles from './index.module.scss';
 import { Profile as ProfileType } from '@/types/dto';
+import Loading from '@/components/modules/Loading/Loading';
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { isUserLogged, handleUpdateProfile } = useContext(UserContext);
+  const { isUserLogged, handleUpdateProfile, loading } = useContext(UserContext);
 
   useEffect(() => {
     if (!isUserLogged) navigate('../cinema/users/signin');
@@ -20,6 +21,8 @@ export default function Profile() {
   const onSubmit = async (data: ProfileType) => {
     handleUpdateProfile({ phone: data.phone, profile: data });
   };
+
+  if (loading) return <Loading />;
 
   return (
     <>

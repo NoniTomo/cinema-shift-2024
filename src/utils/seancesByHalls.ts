@@ -2,7 +2,6 @@ import ISeance from '../types/ISeance';
 
 export default function seancesByHalls(seances: ISeance[]): { name: string; seances: ISeance[] }[] {
   if (!Array.isArray(seances)) {
-    console.error('seances = ', seances);
     console.error('Expected an array of seances');
     return [];
   }
@@ -26,7 +25,6 @@ export default function seancesByHalls(seances: ISeance[]): { name: string; sean
       }
     }
   }
-  console.log('seances = ', seances);
 
   return [
     { name: 'Красный зал', seances: redHallSeances },

@@ -1,7 +1,6 @@
 import { AgeRating } from '../types/AgeRating';
 
 export default function getAgeRating(ageRating: string): string {
-  console.log(ageRating);
   switch (ageRating) {
     case 'G':
       return AgeRating.G;

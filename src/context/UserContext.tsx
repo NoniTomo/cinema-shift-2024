@@ -105,11 +105,12 @@ const UserProvider = ({ children }: Props) => {
 
   const handleUpdateProfile = async (data: UpdateProfileDto) => {
     setIsLoading(true);
-    await RequestClient.post('/users/profile', data)
+    await RequestClient.patch('/users/profile', data)
       .then((res) => {
         if (res.data.success) {
           setIsUserLogged(true);
           setIsError(false);
+          console.log('res.data.user = ', res.data.user);
           setUserData(res.data.user);
           toast.success('Данные обновлены', {
             position: 'top-left'
@@ -162,7 +163,6 @@ const UserProvider = ({ children }: Props) => {
   const handleGetOtpsCode = async (data: CreateOtpDto): Promise<number | void> => {
     setIsLoading(true);
     setIsError(false);
-    console.log('handleGetOtpsCode = ', data);
     return await RequestClient.post('/auth/otp', data)
       .then((res) => {
         setIsUserLogged(false);
@@ -212,7 +212,6 @@ const UserProvider = ({ children }: Props) => {
     handleGetSession();
   }, []);
 
-  console.log('isUserLogged = ', isUserLogged);
   return (
     <UserContext.Provider
       value={{

@@ -19,7 +19,6 @@ export default function YourData() {
   }, [isUserLogged]);
 
   const submitPerson = (data: Profile) => {
-    console.log('data: ', data);
     setPerson(data);
     navigate('../cinema/users/your-card');
   };

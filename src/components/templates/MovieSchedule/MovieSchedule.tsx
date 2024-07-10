@@ -12,6 +12,8 @@ import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 
 import styles from './index.module.scss';
 import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
+import { getDateToString } from '@/utils/getDate';
+import Loading from '@/components/modules/Loading/Loading';
 
 export default function MovieSchedule() {
   const params = useParams();
@@ -48,7 +50,6 @@ export default function MovieSchedule() {
   }, []);
 
   useEffect(() => {
-    console.log('cinemaPayment.seance = ', cinemaPayment.seance);
     if (
       params?.filmId === cinemaPayment.filmId &&
       cinemaPayment.seance.date !== '' &&
@@ -75,21 +76,8 @@ export default function MovieSchedule() {
     hall: ''
   });
   const navigate = useNavigate();
-  const days: string[] = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-  const month: string[] = [
-    'янв',
-    'фев',
-    'мар',
-    'апр',
-    'май',
-    'июн',
-    'июл',
-    'авг',
-    'сен',
-    'окт',
-    'ноя',
-    'дек'
-  ];
+
+  if (loading) return <Loading />;
 
   return (
     <>
@@ -101,26 +89,15 @@ export default function MovieSchedule() {
               <div className={`${styles['schedules__inner-wrapper']}`}>
                 <div className={styles.schedules__date}>
                   <div className={`${styles['date-group-buttons']}`}>
-                    {schedules.map((schedule) => {
-                      const currentYear: number = 2000 + +schedule?.date.split('.')[2];
-                      const currentMonth: number = +schedule?.date.split('.')[1] - 1;
-                      const currentDay: number = +schedule?.date.split('.')[0];
-
-                      const date = new Date(currentYear, currentMonth, currentDay);
-                      return (
-                        <div
-                          key={schedule?.date}
-                          className={`${styles['date-group-buttons__button']} ${schedule?.date === currentTime?.date ? styles['date-group-buttons__button_active'] : ''}`}
-                          onClick={() =>
-                            setCurrentTime({ date: schedule?.date, time: '', hall: '' })
-                          }
-                        >
-                          <p>
-                            {days[date.getDay()]}, {currentDay} {month[date.getMonth()]}
-                          </p>
-                        </div>
-                      );
-                    })}
+                    {schedules.map((schedule) => (
+                      <div
+                        key={schedule?.date}
+                        className={`${styles['date-group-buttons__button']} ${schedule?.date === currentTime?.date ? styles['date-group-buttons__button_active'] : ''}`}
+                        onClick={() => setCurrentTime({ date: schedule?.date, time: '', hall: '' })}
+                      >
+                        <p>{schedule?.date && getDateToString(schedule?.date)}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 <div className={`${styles.schedules__time}`}>

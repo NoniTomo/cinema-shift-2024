@@ -1,23 +1,25 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
-import { IFilm } from '../../../types/IFilm';
-import config from '../../../config';
-import { Button } from '../../elements/Button/Button';
-import Header from '../../modules/Header/Header';
-import Footer from '../../modules/Footer/Footer';
-import FilmCard from '../../modules/FilmCard/FilmCard';
+import { IFilm } from '@/types/IFilm';
+import config from '@/config';
+import { Button } from '@components/elements/Button/Button';
+import Header from '@components/modules/Header/Header';
+import Footer from '@components/modules/Footer/Footer';
+import FilmCard from '@components/modules/FilmCard/FilmCard';
+import { RequestClient } from '@/utils/axiosAPI';
+import Loading from '@/components/modules/Loading/Loading';
 
 import styles from './index.module.scss';
 
 export default function Afisha() {
   const [films, setFilms] = useState<IFilm[]>();
   const navigate = useNavigate();
+  const [loading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`${config.PUBLIC_SERVER_URL}/cinema/today`)
+    setIsLoading(true);
+    RequestClient.get(`${config.PUBLIC_SERVER_URL}/cinema/today`)
       .then((res) => {
         if (res.data?.success) {
           console.error('res.data?.success = ', res.data?.success);
@@ -27,8 +29,13 @@ export default function Afisha() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <>

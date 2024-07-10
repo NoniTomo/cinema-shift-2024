@@ -21,8 +21,6 @@ const check = (
 ) => {
   if (Object.prototype.hasOwnProperty.call(e, 'clipboardData')) {
     testClipboardEvent(e);
-    console.log(testRegex);
-    console.log(e.clipboardData.getData('text').split(''));
     if (
       !e.clipboardData
         .getData('text')
@@ -33,9 +31,6 @@ const check = (
     }
   } else {
     testKeyboardEvent(e);
-    console.log('testRegex = ', testRegex);
-    console.log('testRegex.test(e.key) = ', testRegex.test(e.key));
-    console.log('e.key = ', e.key);
     if (!(testRegex.test(e.key) || allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey)) {
       e.preventDefault();
     }
@@ -93,12 +88,6 @@ export const validateAlphabetAndSpecialSymbols = (value: string) => {
 };
 
 export const validateEmail = (value: string) => {
-  console.log('emailRegex = ', emailRegex);
-  console.log(
-    '(emailRegex.test(value) && latinRegex.test(value)) = ',
-    emailRegex.test(value) && latinRegex.test(value)
-  );
-  console.log('value = ', value);
   if (
     emailRegex.test(value) &&
     specialCharRegexEndBeginTest.test(value) &&

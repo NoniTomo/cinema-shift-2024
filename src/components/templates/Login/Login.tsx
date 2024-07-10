@@ -21,7 +21,6 @@ export default function Login() {
   const [phone, setPhone] = useState('');
 
   useEffect(() => {
-    console.log(isUserLogged);
     isUserLogged && navigate(-2);
   }, [isUserLogged, navigate]);
 
@@ -47,7 +46,6 @@ export default function Login() {
   };
 
   const onSubmitPhone = async (data: CreateOtpDto) => {
-    console.log('displayCodeField = ', displayCodeField);
     setPhone(data.phone);
     setDisplayCodeField(true);
     const delay = await handleGetOtpsCode(data);
@@ -59,7 +57,6 @@ export default function Login() {
       code: data.code,
       phone: phone
     };
-    console.log(signInData);
     await handleSignIn(signInData);
   };
 
@@ -89,7 +86,6 @@ export default function Login() {
       inputCode.onChange(event);
     }
   };
-  console.log("'displayCodeField, ' | ', end = ", displayCodeField, ' | ', end);
 
   if (loading) return <Loading />;
 

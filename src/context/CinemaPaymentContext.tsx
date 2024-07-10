@@ -190,14 +190,12 @@ const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) => {
     });
   };
   const setSeance = (seance: Seance) => {
-    console.log('seance = ', seance);
     dispatchCinemaPayment({
       type: 'set-seance',
       data: seance
     });
   };
   const setTickets = (tickets: Ticket[]) => {
-    console.log('tickets = ', tickets);
     dispatchCinemaPayment({
       type: 'set-tickets',
       data: tickets
@@ -231,7 +229,6 @@ const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) => {
         setPaymentIsReady(false);
       });
   };
-  console.log('CinemaPaymentContext | cinemaPayment = ', cinemaPayment);
   return (
     <CinemaPaymentContext.Provider
       value={{

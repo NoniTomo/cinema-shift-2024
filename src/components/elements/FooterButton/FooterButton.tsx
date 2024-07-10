@@ -13,7 +13,6 @@ type Props = {
 const FooterButton = ({ to, IconActive, IconNotActive, text, ...props }: Props) => (
   <NavLink className={styles.link} to={to}>
     {({ isActive }) => {
-      console.log('to: ', to, '; isActive: ', isActive);
       return (
         <button {...props} className={`${styles.button}`}>
           {isActive ? IconActive : IconNotActive}

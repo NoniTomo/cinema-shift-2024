@@ -28,12 +28,12 @@ export default function UserDataForm({ buttonText, onSubmit }: UserDataFormType)
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      firstname: '',
-      middlename: '',
-      lastname: '',
+      firstname: userData?.firstname ?? '',
+      middlename: userData?.middlename ?? '',
+      lastname: userData?.lastname ?? '',
       phone: userData.phone,
-      email: '',
-      city: ''
+      email: userData?.email ?? '',
+      city: userData?.city ?? ''
     }
   });
 
@@ -73,6 +73,7 @@ export default function UserDataForm({ buttonText, onSubmit }: UserDataFormType)
       <TextField
         id='lastname'
         register={register('lastname', {
+          required: 'Это поле обязательное',
           maxLength: { value: 60, message: 'Максимум 60 символов' },
           validate: (value) =>
             value.split('').length > 0 ? validateAlphabetAndSpecialSymbols(value) : true
@@ -81,7 +82,7 @@ export default function UserDataForm({ buttonText, onSubmit }: UserDataFormType)
         error={errors.lastname?.message}
         label='Отчество'
         isDisabled={false}
-        isRequired={false}
+        isRequired={true}
         onKeyDown={filterInputAlphabet}
         onPaste={filterInputAlphabet}
       />

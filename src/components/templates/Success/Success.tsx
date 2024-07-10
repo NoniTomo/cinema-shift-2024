@@ -1,14 +1,15 @@
+import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+
 import Header from '@components/modules/Header/Header';
 import { Button } from '@components/elements/Button/Button';
-import { useContext } from 'react';
 import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
 import { InfoCard } from '@/components/elements/InfoCard/InfoCard';
-
-import styles from './index.module.scss';
-import { NavLink } from 'react-router-dom';
 import config from '@/config';
 import { getDateToString } from '@/utils/getDate';
 import { getSeats } from '@/utils/getSeats';
+
+import styles from './index.module.scss';
 
 export default function Success() {
   const { cinemaPayment } = useContext(CinemaPaymentContext);

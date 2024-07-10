@@ -9,7 +9,7 @@ import Header from '@components/modules/Header/Header';
 import { IFilm } from '@/types/IFilm';
 import FilmCard from '@components/modules/FilmCard/FilmCard';
 
-import config from '../../../config';
+import config from '@/config';
 
 import styles from './index.module.scss';
 import { toast } from 'react-toastify';
