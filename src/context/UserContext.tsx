@@ -95,7 +95,7 @@ const UserProvider = ({ children }: Props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setIsError(true);
       })
       .finally(() => {
@@ -110,8 +110,8 @@ const UserProvider = ({ children }: Props) => {
         if (res.data.success) {
           setIsUserLogged(true);
           setIsError(false);
-          console.log('res.data.user = ', res.data.user);
-          setUserData(res.data.user);
+          console.log(res.data);
+          setUserData(res.data.profile);
           toast.success('Данные обновлены', {
             position: 'top-left'
           });
@@ -123,12 +123,11 @@ const UserProvider = ({ children }: Props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setIsError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
+    await handleGetSession();
+    setIsLoading(false);
   };
 
   const handleGetSession = async () => {
@@ -152,7 +151,7 @@ const UserProvider = ({ children }: Props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setIsError(true);
       })
       .finally(() => {
@@ -177,7 +176,7 @@ const UserProvider = ({ children }: Props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setIsError(true);
       })
       .finally(() => {
@@ -200,7 +199,7 @@ const UserProvider = ({ children }: Props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setIsError(true);
       })
       .finally(() => {
