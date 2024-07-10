@@ -10,9 +10,9 @@ import useTimer from '@/hooks/useTimer/useTimer';
 import { filterInputOnlyNumbers } from '@/utils/validate';
 import { UserContext } from '@/context/UserContext';
 import type { CreateOtpDto } from '@/types/dto';
+import { Loading } from '@/components/modules/Loading/Loading';
 
 import styles from './index.module.scss';
-import Loading from '@/components/modules/Loading/Loading';
 
 export default function Login() {
   const { countdown, startTimer, end } = useTimer();

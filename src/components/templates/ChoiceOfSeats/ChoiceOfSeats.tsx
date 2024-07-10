@@ -10,7 +10,7 @@ import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 import { ReactComponent as PlusIcon } from '@assets/svg/plus.svg';
 import { ReactComponent as MinusIcon } from '@assets/svg/minus.svg';
-import Loading from '@/components/modules/Loading/Loading';
+import { Loading } from '@/components/modules/Loading/Loading';
 
 import type { Ticket } from '@/types/dto';
 

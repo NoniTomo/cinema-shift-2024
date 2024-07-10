@@ -13,7 +13,7 @@ import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 import styles from './index.module.scss';
 import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
 import { getDateToString } from '@/utils/getDate';
-import Loading from '@/components/modules/Loading/Loading';
+import { Loading } from '@/components/modules/Loading/Loading';
 
 export default function MovieSchedule() {
   const params = useParams();

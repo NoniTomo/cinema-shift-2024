@@ -7,7 +7,7 @@ import { Order } from '@/types/dto';
 import TicketCard from '@components/modules/TicketCard/TicketCard';
 
 import styles from './index.module.scss';
-import Loading from '@components/modules/Loading/Loading';
+import { Loading } from '@components/modules/Loading/Loading';
 
 export default function Tickets() {
   const navigate = useNavigate();

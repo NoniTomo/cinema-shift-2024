@@ -10,32 +10,32 @@ import { FooterButton } from '../../elements/FooterButton/FooterButton';
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      <div className={styles.footer__actions}>
-        <div className={styles.footer__button}>
+      <ul className={styles.footer__actions}>
+        <li className={styles.footer__button}>
           <FooterButton
             to={`/cinema/today`}
             IconActive={<MovieActiveIcon />}
             IconNotActive={<MovieNotActiveIcon />}
             text='Афиша'
           />
-        </div>
-        <div className={styles.footer__button}>
+        </li>
+        <li className={styles.footer__button}>
           <FooterButton
             to={`/cinema/orders`}
             IconActive={<TicketActiveIcon />}
             IconNotActive={<TicketNotActiveIcon />}
             text='Билеты'
           />
-        </div>
-        <div className={styles.footer__button}>
+        </li>
+        <li className={styles.footer__button}>
           <FooterButton
             to={`/cinema/users/profile`}
             IconActive={<UserActiveIcon />}
             IconNotActive={<UserNotActiveIcon />}
             text='Профиль'
           />
-        </div>
-      </div>
+        </li>
+      </ul>
     </footer>
   );
 }

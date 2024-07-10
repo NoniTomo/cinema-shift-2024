@@ -8,7 +8,7 @@ import Header from '@components/modules/Header/Header';
 import Footer from '@components/modules/Footer/Footer';
 import FilmCard from '@components/modules/FilmCard/FilmCard';
 import { RequestClient } from '@/utils/axiosAPI';
-import Loading from '@/components/modules/Loading/Loading';
+import { Loading } from '@/components/modules/Loading/Loading';
 
 import styles from './index.module.scss';
 

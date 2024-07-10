@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
 import { ReactComponent as Cross } from '@assets/svg/Cross.svg';
@@ -12,7 +12,7 @@ import FilmCard from '@components/modules/FilmCard/FilmCard';
 import config from '@/config';
 
 import styles from './index.module.scss';
-import { toast } from 'react-toastify';
+import { RequestClient } from '@/utils/axiosAPI';
 
 export default function MovieInfo() {
   const { SetFilmName } = useContext(CinemaPaymentContext);
@@ -21,8 +21,7 @@ export default function MovieInfo() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`${config.PUBLIC_SERVER_URL}/cinema/film/${params.filmId}`)
+    RequestClient.get(`${config.PUBLIC_SERVER_URL}/cinema/film/${params.filmId}`)
       .then((res) => {
         if (res.data?.success) {
           console.error('res.data?.success = ', res.data?.success);

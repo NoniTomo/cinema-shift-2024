@@ -7,7 +7,7 @@ import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 import { UserContext } from '@/context/UserContext';
 import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
 import { PaymentCard } from '@/types/dto';
-import Loading from '@/components/modules/Loading/Loading';
+import { Loading } from '@/components/modules/Loading/Loading';
 
 import styles from './index.module.scss';
 export default function YourCard() {

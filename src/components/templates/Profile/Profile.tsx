@@ -8,7 +8,7 @@ import { UserContext } from '@/context/UserContext';
 
 import styles from './index.module.scss';
 import { Profile as ProfileType } from '@/types/dto';
-import Loading from '@/components/modules/Loading/Loading';
+import { Loading } from '@/components/modules/Loading/Loading';
 
 export default function Profile() {
   const navigate = useNavigate();
