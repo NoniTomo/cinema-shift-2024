@@ -1,22 +1,22 @@
-import { useState } from 'react'
-import config from '../../../config'
-import { IFilm } from '../../../types/IFilm'
-import getAgeRating from '../../../utils/getAgeRating'
-import Rating from '../../elements/Rating/Rating'
-import styles from './index.module.scss'
+import { useState } from 'react';
+import config from '../../../config';
+import { IFilm } from '../../../types/IFilm';
+import getAgeRating from '../../../utils/getAgeRating';
+import Rating from '../../elements/Rating/Rating';
+import styles from './index.module.scss';
 
 export type FilmCardType = {
-  film: IFilm
-  direction?: 'column' | 'row'
-  description?: boolean
-}
+  film: IFilm;
+  direction?: 'column' | 'row';
+  description?: boolean;
+};
 
 export default function FilmCard({
   film,
   direction = 'column',
-  description = false,
+  description = false
 }: FilmCardType) {
-  const [visibleDescription, setVisibleDescription] = useState(false)
+  const [visibleDescription, setVisibleDescription] = useState(false);
 
   function filmDescription(description: string): JSX.Element {
     if (description.split(' ').length >= 10) {
@@ -31,7 +31,7 @@ export default function FilmCard({
               раскрыть
             </button>
           </>
-        )
+        );
       } else {
         return (
           <>
@@ -43,10 +43,10 @@ export default function FilmCard({
               свернуть
             </button>
           </>
-        )
+        );
       }
     } else {
-      return <>{description}</>
+      return <>{description}</>;
     }
   }
 
@@ -60,29 +60,22 @@ export default function FilmCard({
               {film.country.name}, {film.releaseDate}
             </p>
           </div>
-          <img
-            className={`${styles.poster__img}`}
-            src={`${config.PUBLIC_SERVER_URL}${film.img}`}
-          />
+          <img className={`${styles.poster__img}`} src={`${config.PUBLIC_SERVER_URL}${film.img}`} />
         </div>
         <h3
           className={`${styles['movie-info__title']}`}
         >{`${film.name} (${getAgeRating(film.ageRating)})`}</h3>
-        <p className={`${styles['movie-info__subtitle']}`}>
-          {film.originalName}
-        </p>
+        <p className={`${styles['movie-info__subtitle']}`}>{film.originalName}</p>
         <Rating
           ratingSource={[
             { name: 'Kinopoisk', estimate: film.userRatings.kinopoisk },
-            { name: 'IMDB', estimate: film.userRatings.imdb },
+            { name: 'IMDB', estimate: film.userRatings.imdb }
           ]}
         />
         {description && (
-          <p className={`${styles.movie__description}`}>
-            {filmDescription(film?.description)}
-          </p>
+          <p className={`${styles.movie__description}`}>{filmDescription(film?.description)}</p>
         )}
       </div>
     </div>
-  )
+  );
 }

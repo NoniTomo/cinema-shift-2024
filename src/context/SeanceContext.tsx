@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useReducer, useState } from 'react';
-import axios from 'axios';
 import config from '../config';
 import IDaySchedule from '../types/IDaySchedule';
+import { RequestClient } from '@/utils/axiosAPI';
 
 type ActionSchedule = {
   type: 'get-schedules';
@@ -46,8 +46,7 @@ const SeanceProvider = ({ children }: Props) => {
   const handleGetSchedule = async (filmId: number) => {
     setError(false);
     setLoading(true);
-    await axios
-      .get(`${config.PUBLIC_SERVER_URL}/cinema/film/${filmId}/schedule`)
+    await RequestClient.get(`${config.PUBLIC_SERVER_URL}/cinema/film/${filmId}/schedule`)
       .then((res) => {
         if (res.data?.success) {
           console.log('res.data?.success = ', res.data?.success);

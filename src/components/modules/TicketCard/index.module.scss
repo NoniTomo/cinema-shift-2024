@@ -1,0 +1,18 @@
+@import '../../../styles/variables.scss';
+
+.ticket {
+  border: 2px solid $border-light;
+  border-radius: 15px;
+
+  &__first-line {}
+
+  &__date {}
+
+  &__time {}
+
+  &__second-line {}
+
+  &__film-name {}
+
+  &__film-seats {}
+}

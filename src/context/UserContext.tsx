@@ -1,37 +1,37 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
-import axios from 'axios';
-import config from '../config';
-import { CreateOtpDto, Profile, SignInDto, UpdateProfileDto } from '../types/dto';
+import { CreateOtpDto, Order, Profile, SignInDto, UpdateProfileDto } from '../types/dto';
 import { toast } from 'react-toastify';
+import { RequestClient } from '@/utils/axiosAPI';
 
-export const RequestClient = axios.create({
-  baseURL: config.PUBLIC_SERVER_URL
-});
-
-export const RequestClientWithoutToken = axios.create({
-  baseURL: config.PUBLIC_SERVER_URL
-});
-
-RequestClient.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-const defaultValue = {
+const defaultValueUserData = {
   firstname: '',
   middlename: '',
   lastname: '',
   email: '',
-  city: ''
+  city: '',
+  phone: ''
 };
+
+const defaultValueOrders: Order[] = [
+  {
+    filmName: '',
+    orderNumber: 0,
+    tickets: [
+      {
+        filmId: '',
+        row: 1,
+        column: 1,
+        seance: {
+          date: '',
+          time: ''
+        },
+        phone: ''
+      }
+    ],
+    phone: '',
+    status: 'CANCELED'
+  }
+];
 
 export type UserContextType = {
   handleSignIn: (data: SignInDto) => Promise<void>;
@@ -39,7 +39,9 @@ export type UserContextType = {
   handleGetSession: () => Promise<void>;
   handleUpdateProfile: (data: UpdateProfileDto) => Promise<void>;
   handleGetOtpsCode: (data: CreateOtpDto) => Promise<number | void>;
+  handleGetAllOrders: () => Promise<void>;
 
+  orders: Order[];
   isUserLogged: boolean;
   userData: Profile;
   loading: boolean;
@@ -52,9 +54,11 @@ export const UserContext = createContext<UserContextType>({
   handleGetSession: async () => {},
   handleUpdateProfile: async (data: UpdateProfileDto) => {},
   handleGetOtpsCode: async (data: CreateOtpDto) => {},
+  handleGetAllOrders: async () => {},
 
   isUserLogged: false,
-  userData: defaultValue,
+  userData: defaultValueUserData,
+  orders: defaultValueOrders,
   loading: false,
   error: false
 });
@@ -67,7 +71,8 @@ const UserProvider = ({ children }: Props) => {
   const [loading, setIsLoading] = useState(false);
   const [isUserLogged, setIsUserLogged] = useState(false);
   const [error, setIsError] = useState(false);
-  const [userData, setUserData] = useState<Profile>(defaultValue);
+  const [userData, setUserData] = useState<Profile>(defaultValueUserData);
+  const [orders, setOrders] = useState<Order[]>(defaultValueOrders);
 
   const handleLogOut = () => {
     setIsUserLogged(false);
@@ -77,7 +82,7 @@ const UserProvider = ({ children }: Props) => {
   const handleSignIn = async (data: SignInDto) => {
     setIsLoading(true);
     setIsError(false);
-    await RequestClientWithoutToken.post('/users/signin', data)
+    await RequestClient.post('/users/signin', data)
       .then((res) => {
         if (res.data.success) {
           setIsUserLogged(true);
@@ -106,6 +111,9 @@ const UserProvider = ({ children }: Props) => {
           setIsUserLogged(true);
           setIsError(false);
           setUserData(res.data.user);
+          toast.success('Данные обновлены', {
+            position: 'top-left'
+          });
         } else {
           toast.error(res.data.reason, {
             position: 'top-left'
@@ -155,12 +163,35 @@ const UserProvider = ({ children }: Props) => {
     setIsLoading(true);
     setIsError(false);
     console.log('handleGetOtpsCode = ', data);
-    return await RequestClientWithoutToken.post('/auth/otp', data)
+    return await RequestClient.post('/auth/otp', data)
       .then((res) => {
         setIsUserLogged(false);
 
         if (res.data.success) {
           return res.data.retryDelay;
+        } else {
+          toast.error(res.data.reason, {
+            position: 'top-left'
+          });
+          throw new Error(res.data.reason);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsError(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleGetAllOrders = async () => {
+    setIsLoading(true);
+    setIsError(false);
+    await RequestClient.get('/cinema/orders')
+      .then((res) => {
+        if (res.data.success) {
+          setOrders(res.data.orders);
         } else {
           toast.error(res.data.reason, {
             position: 'top-left'
@@ -190,9 +221,11 @@ const UserProvider = ({ children }: Props) => {
         handleGetSession,
         handleUpdateProfile,
         handleGetOtpsCode,
+        handleGetAllOrders,
 
         isUserLogged,
         userData,
+        orders,
         loading,
         error
       }}

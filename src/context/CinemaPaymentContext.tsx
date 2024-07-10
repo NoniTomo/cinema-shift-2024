@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useReducer, useState } from 'react';
 import { Profile, CreateCinemaPaymentDto, PaymentCard, Seance, Ticket } from '../types/dto';
-import { RequestClient } from './UserContext';
+import { RequestClient } from '@/utils/axiosAPI';
 import { toast } from 'react-toastify';
 
 const defaultValue: CreateCinemaPaymentDto = {

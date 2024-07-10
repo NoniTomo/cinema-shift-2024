@@ -7,21 +7,26 @@ import { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/UserContext';
 
 import styles from './index.module.scss';
+import { Profile as ProfileType } from '@/types/dto';
 
 export default function Profile() {
   const navigate = useNavigate();
+  const { isUserLogged, handleUpdateProfile } = useContext(UserContext);
 
-  const { isUserLogged } = useContext(UserContext);
   useEffect(() => {
     if (!isUserLogged) navigate('../cinema/users/signin');
   }, [isUserLogged]);
+
+  const onSubmit = async (data: ProfileType) => {
+    handleUpdateProfile({ phone: data.phone, profile: data });
+  };
 
   return (
     <>
       <Header to={`/cinema/today`} Icon={ArrowLeftIcon} text='Профиль' />
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <UserDataForm buttonText='Обновить данные' onSubmit={() => navigate('')} />
+          <UserDataForm buttonText='Обновить данные' onSubmit={onSubmit} />
         </div>
       </div>
       <Footer />

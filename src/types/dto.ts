@@ -61,3 +61,22 @@ export type CreateCinemaPaymentDto = {
   seance: Seance;
   tickets: Ticket[];
 };
+
+export type Order = {
+  filmName: string;
+  orderNumber: number;
+  tickets: TicketOrder[];
+  phone: string;
+  status: 'PAYED' | 'CANCELED';
+};
+
+export type TicketOrder = {
+  filmId: string;
+  row: number;
+  column: number;
+  seance: {
+    date: string;
+    time: string;
+  };
+  phone: string;
+};

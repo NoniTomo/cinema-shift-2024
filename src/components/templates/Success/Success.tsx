@@ -2,40 +2,16 @@ import Header from '@components/modules/Header/Header';
 import { Button } from '@components/elements/Button/Button';
 import { useContext } from 'react';
 import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
-import { SeanceContext } from '@/context/SeanceContext';
 import { InfoCard } from '@/components/elements/InfoCard/InfoCard';
 
 import styles from './index.module.scss';
-
-const days: string[] = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-const month: string[] = [
-  'янв',
-  'фев',
-  'мар',
-  'апр',
-  'май',
-  'июн',
-  'июл',
-  'авг',
-  'сен',
-  'окт',
-  'ноя',
-  'дек'
-];
+import { NavLink } from 'react-router-dom';
+import config from '@/config';
+import { getDateToString } from '@/utils/getDate';
+import { getSeats } from '@/utils/getSeats';
 
 export default function Success() {
   const { cinemaPayment } = useContext(CinemaPaymentContext);
-  const { schedules } = useContext(SeanceContext);
-
-  const getDate = () => {
-    const currentYear: number = 2000 + +cinemaPayment?.seance.date.split('.')[2];
-    const currentMonth: number = +cinemaPayment?.seance.date.split('.')[1] - 1;
-    const currentDay: number = +cinemaPayment?.seance.date.split('.')[0];
-
-    const date = new Date(currentYear, currentMonth, currentDay);
-    console.log('date = ', date);
-    return `${days[date.getDay()]}, ${currentDay} ${month[date.getMonth()]}`;
-  };
 
   return (
     <>
@@ -44,19 +20,12 @@ export default function Success() {
         <div className={styles.content}>
           <p className={styles.content__title}>Оплата прошла успешно!</p>
           <InfoCard title='Фильм' subtitle={cinemaPayment.filmName} />
-          <InfoCard title='Дата и время' subtitle={getDate()} />
-          <InfoCard
-            title='Ряд'
-            subtitle={cinemaPayment.tickets.map((ticket) => ticket.row).join(', ')}
-          />
-          <InfoCard
-            title='Места'
-            subtitle={cinemaPayment.tickets.map((ticket) => ticket.column).join(', ')}
-          />
+          <InfoCard title='Дата и время' subtitle={getDateToString(cinemaPayment?.seance.date)} />
+          <InfoCard title='Места' subtitle={getSeats(cinemaPayment.tickets)} />
           <p className={styles.content__text}>Вся информация была продублирована в SMS</p>
-          <Button variant='outlined' to={}>
-            Перейти в личный кабинет
-          </Button>
+          <NavLink style={{ width: '100%' }} to={`${config.CLIENT_URL}/cinema/users/profile`}>
+            <Button variant='outlined'>Перейти в личный кабинет</Button>
+          </NavLink>
         </div>
       </div>
     </>
