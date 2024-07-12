@@ -87,8 +87,6 @@ export default function Login() {
     }
   };
 
-  if (loading) return <Loading />;
-
   return (
     <>
       <Header to='/cinema/today' Icon={CrossIcon} />
@@ -141,12 +139,12 @@ export default function Login() {
               )}
               {displayCodeField && isEnding && (
                 <div className={styles.button}>
-                  <button
+                  <p
                     className={`${styles.button__description}`}
                     onClick={() => onSubmitPhone({ phone })}
                   >
                     Отправить ещё раз
-                  </button>
+                  </p>
                 </div>
               )}
             </>

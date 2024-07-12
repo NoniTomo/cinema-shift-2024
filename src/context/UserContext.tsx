@@ -154,7 +154,7 @@ const UserProvider = ({ children }: Props) => {
   const handleGetOtpsCode = async (data: CreateOtpDto): Promise<number | void> => {
     setIsLoading(true);
     setIsError(false);
-    return await RequestClient.post('/cinema/orders/cancel', data)
+    return await RequestClient.post('/auth/otp', data)
       .then((res) => {
         setIsUserLogged(false);
 
