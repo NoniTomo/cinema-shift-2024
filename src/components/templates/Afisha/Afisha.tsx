@@ -5,7 +5,7 @@ import { IFilm } from '@/types/IFilm';
 import config from '@/config';
 import { Button } from '@components/elements/Button/Button';
 import Header from '@components/modules/Header/Header';
-import Footer from '@components/modules/Footer/Footer';
+import { Footer } from '@components/modules/Footer/Footer';
 import FilmCard from '@components/modules/FilmCard/FilmCard';
 import { RequestClient } from '@/utils/axiosAPI';
 import { Loading } from '@/components/modules/Loading/Loading';
@@ -35,21 +35,23 @@ export default function Afisha() {
       });
   }, []);
 
-  if (loading) return <Loading />;
-
   return (
     <>
       <Header text='Афиша' />
       <div className={`${styles.wrapper}`}>
         <div className={`${styles.afisha}`}>
-          {films?.map((item: IFilm) => (
-            <div className={`${styles.movie}`} key={item.id}>
-              <FilmCard film={item} />
-              <Button variant='contained' onClick={() => navigate(`../cinema/film/${item.id}`)}>
-                Подробнее
-              </Button>
-            </div>
-          ))}
+          {loading ? (
+            <Loading />
+          ) : (
+            films?.map((item: IFilm) => (
+              <div className={`${styles.movie}`} key={item.id}>
+                <FilmCard film={item} />
+                <Button variant='contained' onClick={() => navigate(`../cinema/film/${item.id}`)}>
+                  Подробнее
+                </Button>
+              </div>
+            ))
+          )}
         </div>
       </div>
       <Footer />

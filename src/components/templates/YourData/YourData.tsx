@@ -4,13 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import Header from '@components/modules/Header/Header';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 import UserDataForm from '@components/modules/UserDataForm/UserDataForm';
-
-import styles from './index.module.scss';
 import { UserContext } from '@/context/UserContext';
 import { Profile } from '@/types/dto';
 import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
 
-export default function YourData() {
+import styles from './index.module.scss';
+
+export type Props = {
+  toBack: () => void;
+  toForward: () => void;
+};
+
+export default function YourData({ toBack, toForward }: Props) {
   const { isUserLogged } = useContext(UserContext);
   const { setPerson } = useContext(CinemaPaymentContext);
 
@@ -20,19 +25,17 @@ export default function YourData() {
 
   const submitPerson = (data: Profile) => {
     setPerson(data);
-    navigate('../cinema/users/your-card');
+    toForward();
   };
 
   const navigate = useNavigate();
   return (
     <>
-      <Header
-        to='/cinema/film/:filmId/schedule/choose-seat/'
-        Icon={ArrowLeftIcon}
-        text='Ваши данные'
-      />
+      <Header onClick={toBack} Icon={ArrowLeftIcon} text='Ваши данные' />
       <div className={styles.wrapper}>
-        <UserDataForm buttonText='Продолжить' onSubmit={(data: Profile) => submitPerson(data)} />
+        <div className={styles.content}>
+          <UserDataForm buttonText='Продолжить' onSubmit={(data: Profile) => submitPerson(data)} />
+        </div>
       </div>
     </>
   );

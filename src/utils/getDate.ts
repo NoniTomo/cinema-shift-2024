@@ -24,5 +24,5 @@ export const getDate = (date: string) => {
 
 export const getDateToString = (dateString: string) => {
   const date = getDate(dateString);
-  return `${days[date.getDay()]}, ${date.getDay()} ${month[date.getMonth()]}`;
+  return `${days[date.getDay()]}, ${date.getDate()} ${month[date.getMonth()]}`;
 };

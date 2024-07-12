@@ -10,7 +10,14 @@ import { PaymentCard } from '@/types/dto';
 import { Loading } from '@/components/modules/Loading/Loading';
 
 import styles from './index.module.scss';
-export default function YourCard() {
+
+export type Props = {
+  toBack?: () => void;
+  toForward: () => void;
+  type?: 'desktop' | 'mobile';
+};
+
+export default function YourCard({ toBack, toForward, type = 'mobile' }: Props) {
   const navigate = useNavigate();
   const { isUserLogged } = useContext(UserContext);
   const { setDebitCard, handleCinemaPayment, loading, paymentIsReady } =
@@ -18,14 +25,13 @@ export default function YourCard() {
 
   useEffect(() => {
     if (!isUserLogged) navigate('../cinema/users/signin');
-  }, [isUserLogged]);
+  }, [isUserLogged, navigate]);
 
   useEffect(() => {
-    paymentIsReady &&
-      handleCinemaPayment()
-        .then(() => navigate('../cinema/success'))
-        .catch((err) => navigate('../cinema/today'));
-  }, [paymentIsReady]);
+    if (paymentIsReady) {
+      handleCinemaPayment(toForward);
+    }
+  }, [handleCinemaPayment, toForward]);
 
   const submitPaymentCard = async (data: PaymentCard) => {
     setDebitCard(data);
@@ -35,7 +41,7 @@ export default function YourCard() {
 
   return (
     <>
-      <Header to='/cinema/today' Icon={ArrowLeftIcon} text='Карта оплаты' />
+      {type === 'mobile' && <Header onClick={toBack} Icon={ArrowLeftIcon} text='Карта оплаты' />}
       <div className={styles.wrapper}>
         <PaymentCardForm onSubmit={submitPaymentCard} />
       </div>

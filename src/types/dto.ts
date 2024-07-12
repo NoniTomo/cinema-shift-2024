@@ -24,6 +24,7 @@ export type Seance = {
 export type Ticket = {
   row: string;
   column: string;
+  price: number;
 };
 
 export type UpdateProfileDto = {
@@ -63,6 +64,7 @@ export type CreateCinemaPaymentDto = {
 };
 
 export type Order = {
+  _id: string;
   filmName: string;
   orderNumber: number;
   tickets: TicketOrder[];
@@ -79,4 +81,8 @@ export type TicketOrder = {
     time: string;
   };
   phone: string;
+};
+
+export type CancelCinemaOrderDto = {
+  orderId: string;
 };

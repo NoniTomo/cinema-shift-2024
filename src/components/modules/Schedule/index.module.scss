@@ -1,0 +1,89 @@
+@import '../../../styles/variables.scss';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.schedules {
+
+  &__hall-name {
+    font-size: $font-size-small;
+  }
+
+  &__inner-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__wrapper-chips {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+  }
+
+  &__time {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__date {
+    overflow-x: auto;
+
+    .date-group-buttons {
+      border-radius: 1rem;
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      width: max-content;
+      background-color: $bg-secondary;
+
+      &__divider {
+        width: 3px;
+        height: 100%;
+        margin: 10% 0;
+        background-color: $color-text-light;
+      }
+
+      &__button {
+        padding: 16px;
+        text-wrap: nowrap;
+        cursor: pointer;
+
+        &_active {
+          background-color: white;
+          border-radius: 1rem;
+          color: black;
+          margin: 2px;
+          padding: 14px;
+        }
+      }
+    }
+  }
+
+  .chip {
+    padding: 10px;
+    border: 2px $border-light solid;
+    transition: $transition;
+    cursor: pointer;
+    width: min-content;
+    border-radius: 0.5rem;
+    margin: 2px;
+    font-size: $font-size-subtitle;
+
+    &:hover {
+      margin: 0;
+      padding: 12px;
+    }
+
+    &_active {
+      background-color: $color-text-light;
+      border-color: $color-text-light;
+      color: $border-light;
+    }
+  }
+}

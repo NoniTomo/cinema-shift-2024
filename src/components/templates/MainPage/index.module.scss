@@ -1,0 +1,85 @@
+@import '../../../styles/variables.scss';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.container {
+  margin-top: 60px;
+  height: 100%;
+  padding: $padding;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 100%;
+  gap: 32px;
+  box-sizing: border-box;
+  margin-bottom: 60px;
+
+
+  @media (max-width: 760px) {
+    margin: auto;
+    justify-content: space-between;
+    padding-bottom: 90px;
+    max-width: calc(#{$image-size} + #{$padding * 2});
+  }
+
+  @media (min-width: 760px) and (max-width: 1200px) {
+    max-width: calc(#{$image-size * 2} + #{$gap} + #{$padding * 2});
+  }
+
+  @media (min-width: 1200px) and (max-width: 1920px) {
+    max-width: calc(#{$image-size * 3} + #{$gap * 2} + #{$padding * 2});
+  }
+
+  @media (min-width: 1920px) {
+    max-width: calc(#{$image-size * 4} + #{$gap * 3} + #{$padding * 2});
+  }
+
+  .toback {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: $gap;
+    text-decoration: none;
+  }
+
+  .text {
+    color: $color-text-light;
+    font-family: $font-family;
+    max-width: $image-size;
+    font-size: $font-size-description;
+    font-weight: 100;
+    margin: auto 0;
+  }
+}
+
+.title {
+  font-family: $font-family;
+  font-size: $font-size-title;
+  font-weight: 700;
+}
+
+.modal-header {
+  position: absolute;
+  font-family: $font-family;
+  font-size: $font-size-title;
+  font-weight: 700;
+}
+
+.schedules {
+  padding: 10px;
+  padding-top: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: $font-family;
+  font-weight: 300;
+  width: 100%;
+}

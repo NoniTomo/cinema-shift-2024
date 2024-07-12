@@ -1,7 +1,7 @@
-import { ComponentProps, FC } from 'react';
+import { ComponentProps } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import styles from './index.module.scss';
-import { NavLink } from 'react-router-dom';
 
 type Props = {
   to: string;
@@ -12,14 +12,12 @@ type Props = {
 
 const FooterButton = ({ to, IconActive, IconNotActive, text, ...props }: Props) => (
   <NavLink className={styles.link} to={to}>
-    {({ isActive }) => {
-      return (
-        <button {...props} className={`${styles.button}`}>
-          {isActive ? IconActive : IconNotActive}
-          <p className={`${styles.text} ${isActive ? styles.text_active : ''}`}>{text}</p>
-        </button>
-      );
-    }}
+    {({ isActive }) => (
+      <button {...props} className={`${styles.button}`}>
+        {isActive ? IconActive : IconNotActive}
+        <p className={`${styles.text} ${isActive ? styles.text_active : ''}`}>{text}</p>
+      </button>
+    )}
   </NavLink>
 );
 

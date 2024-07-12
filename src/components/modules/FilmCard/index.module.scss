@@ -2,22 +2,21 @@
 
 .movie {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   gap: $gap;
 
-  &_column {
-    flex-direction: column;
-  }
-  &_row {
-    flex-direction: row;
+  @media (max-width: 760px) {
+    max-width: $image-size;
   }
 
-  &__description{
+  &__description {
     font-family: $font-family;
     font-weight: 300;
     font-size: $font-size-description;
   }
-  &__description_button{
+
+  &__description_button {
     background-color: transparent;
     border: none;
     color: $purple
@@ -25,11 +24,22 @@
 }
 
 .movie-info {
-  display: flex;
-  flex-direction: column;
-  font-family: $font-family;
-  gap: 16px;
-  height: 100%;
+  &_column {
+    display: flex;
+    font-family: $font-family;
+    gap: 16px;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  &_row {
+    display: flex;
+    font-family: $font-family;
+    gap: 16px;
+    height: 100%;
+    flex-direction: row;
+    width: 100%;
+  }
 
   &__title {
     color: $color-text-dark;
@@ -37,41 +47,62 @@
     font-size: $font-size-title;
     font-weight: 700;
   }
+
   &__subtitle {
     color: $color-text-light;
     max-width: $image-size;
     font-size: $font-size-subtitle;
     font-weight: 100;
   }
-}  
 
-.poster{
+  &__text-container {
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
+
+    &_row {
+      flex: $image-size 0;
+    }
+  }
+}
+
+.poster {
   width: $image-size;
   height: $image-size;
   border-radius: 0.5rem;
   overflow: hidden;
   position: relative;
 
-  &__info{
+  &_row {
+    width: $image-size;
+    height: $image-size;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    flex: $image-size 0;
+  }
+
+  &__info {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     text-align: center;
     border-radius: 0.5rem 0 0 0;
     background-color: rgb(216, 212, 212);
-    width: 10rem;
-    height: 3rem;
+    width: 150px;
+    height: 50px;
     position: absolute;
-    margin-left: calc($image-size - 10rem);
-    margin-top: calc($image-size - 3rem);
+    margin-left: calc($image-size - 150px);
+    margin-top: calc($image-size - 50px);
   }
 
-  &__img{
-    width: 100%;
+  &__img {
+    width: $image-size;
+    height: auto; // сохранять соотношение сторон
     display: inline-block;
   }
 
-  &__text{
+  &__text {
     color: $color-text-dark;
     width: 100%;
     font-family: $font-family-film-info;
@@ -79,9 +110,8 @@
     font-weight: 300;
     text-align: center;
 
-    &_bold{
+    &_bold {
       font-weight: 500;
     }
   }
-}  
-
+}

@@ -8,6 +8,11 @@
   padding: 16px 32px;
   border-radius: 16px;
   border: none;
+  width: 100%;
+
+  @media (min-width: 760px) {
+    max-width: $max-form-width;
+  }
 
   &_contained {
     background-color: $purple;

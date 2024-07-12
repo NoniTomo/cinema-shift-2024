@@ -4,6 +4,7 @@
   height: 100vh;
   display: flex;
   justify-content: center;
+  height: min-content;
 }
 
 .content {
@@ -18,11 +19,22 @@
   text-align: left;
   font-family: $font-family;
 
-  .content__title {
+  &__title {
     font-size: $font-size-page-name;
   }
 
-  .content__text {
+  &__text {
     font-size: $font-size-small;
   }
+
+  &__success {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
 }

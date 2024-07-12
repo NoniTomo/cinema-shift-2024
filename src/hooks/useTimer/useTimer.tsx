@@ -3,33 +3,30 @@ import { useEffect, useState } from 'react';
 export default function useTimer() {
   const [countdown, setСountdown] = useState(0);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
-  const [end, setEnd] = useState<boolean>(false);
-  console.log(countdown);
+  const [isEnding, setIsEnding] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('countdown = ', countdown);
-    if (countdown === 0) stopTimer();
+    if (countdown === 0) stop();
   }, [countdown]);
 
-  const startTimer = (time: number) => {
+  const start = (time: number) => {
     if (!timer) {
       setСountdown(time);
-      setEnd(false);
+      setIsEnding(false);
       setTimer(setInterval(() => setСountdown((prevCountdown) => prevCountdown - 1), 1000));
     }
   };
 
-  const stopTimer = () => {
-    console.log('stopTimer | countdown = ', countdown);
+  const stop = () => {
     clearInterval(timer);
     setTimer(undefined);
-    setEnd(true);
+    setIsEnding(true);
   };
 
   return {
     countdown,
-    startTimer,
-    stopTimer,
-    end
+    start,
+    stop,
+    isEnding
   };
 }

@@ -1,5 +1,6 @@
 @import '../../../styles/variables.scss';
-.wrapper{
+
+.wrapper {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -15,18 +16,21 @@
   flex-wrap: wrap;
   justify-content: space-around;
   gap: $gap;
-  
+
   @media (max-width: 760px) {
     max-width: calc(#{$image-size} + #{$padding * 2});
   }
+
   @media (min-width: 760px) and (max-width: 1200px) {
-    max-width: calc(#{$image-size * 2} + #{$gap}  + #{$padding * 2});
+    max-width: calc(#{$image-size * 2} + #{$gap} + #{$padding * 2});
   }
+
   @media (min-width: 1200px) and (max-width: 1920px) {
-    max-width: calc(#{$image-size * 3} + #{$gap * 2}  + #{$padding * 2});
+    max-width: calc(#{$image-size * 3} + #{$gap * 2} + #{$padding * 2});
   }
+
   @media (min-width: 1920px) {
-    max-width: calc(#{$image-size * 4} + #{$gap * 3}  + #{$padding * 2});
+    max-width: calc(#{$image-size * 4} + #{$gap * 3} + #{$padding * 2});
   }
 
   .movie {
@@ -48,6 +52,7 @@
         font-size: $font-size-title;
         font-weight: 700;
       }
+
       &__subtitle {
         color: $color-text-light;
         max-width: $image-size;
@@ -55,14 +60,14 @@
         font-weight: 100;
       }
 
-      .poster{
+      .poster {
         width: $image-size;
         height: $image-size;
         border-radius: 0.5rem;
         overflow: hidden;
         position: relative;
 
-        &__info{
+        &__info {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
@@ -76,25 +81,24 @@
           margin-top: calc($image-size - 3rem);
         }
 
-        &__img{
+        &__img {
           width: 100%;
           display: inline-block;
         }
 
-        &__text{
+        &__text {
           color: $color-text-dark;
           width: 100%;
           font-family: $font-family-film-info;
           font-size: $font-size-subtitle;
           font-weight: 300;
           text-align: center;
-    
-          &_bold{
+
+          &_bold {
             font-weight: 500;
           }
         }
-      }  
+      }
     }
   }
 }
-

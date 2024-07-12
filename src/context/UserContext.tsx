@@ -1,5 +1,12 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
-import { CreateOtpDto, Order, Profile, SignInDto, UpdateProfileDto } from '../types/dto';
+import {
+  CancelCinemaOrderDto,
+  CreateOtpDto,
+  Order,
+  Profile,
+  SignInDto,
+  UpdateProfileDto
+} from '../types/dto';
 import { toast } from 'react-toastify';
 import { RequestClient } from '@/utils/axiosAPI';
 
@@ -12,26 +19,7 @@ const defaultValueUserData = {
   phone: ''
 };
 
-const defaultValueOrders: Order[] = [
-  {
-    filmName: '',
-    orderNumber: 0,
-    tickets: [
-      {
-        filmId: '',
-        row: 1,
-        column: 1,
-        seance: {
-          date: '',
-          time: ''
-        },
-        phone: ''
-      }
-    ],
-    phone: '',
-    status: 'CANCELED'
-  }
-];
+const defaultValueOrders: Order[] = [];
 
 export type UserContextType = {
   handleSignIn: (data: SignInDto) => Promise<void>;
@@ -40,6 +28,7 @@ export type UserContextType = {
   handleUpdateProfile: (data: UpdateProfileDto) => Promise<void>;
   handleGetOtpsCode: (data: CreateOtpDto) => Promise<number | void>;
   handleGetAllOrders: () => Promise<void>;
+  handleCancelOrder: (data: CancelCinemaOrderDto) => Promise<void>;
 
   orders: Order[];
   isUserLogged: boolean;
@@ -55,6 +44,7 @@ export const UserContext = createContext<UserContextType>({
   handleUpdateProfile: async (data: UpdateProfileDto) => {},
   handleGetOtpsCode: async (data: CreateOtpDto) => {},
   handleGetAllOrders: async () => {},
+  handleCancelOrder: async (data: CancelCinemaOrderDto) => {},
 
   isUserLogged: false,
   userData: defaultValueUserData,
@@ -76,6 +66,7 @@ const UserProvider = ({ children }: Props) => {
 
   const handleLogOut = () => {
     setIsUserLogged(false);
+    setUserData(defaultValueUserData);
     delete localStorage.token;
   };
 
@@ -87,6 +78,7 @@ const UserProvider = ({ children }: Props) => {
         if (res.data.success) {
           setIsUserLogged(true);
           localStorage.setItem('token', res.data.token);
+          setUserData({ ...defaultValueUserData, phone: data.phone });
         } else {
           toast.error(res.data.reason, {
             position: 'top-left'
@@ -162,7 +154,7 @@ const UserProvider = ({ children }: Props) => {
   const handleGetOtpsCode = async (data: CreateOtpDto): Promise<number | void> => {
     setIsLoading(true);
     setIsError(false);
-    return await RequestClient.post('/auth/otp', data)
+    return await RequestClient.post('/cinema/orders/cancel', data)
       .then((res) => {
         setIsUserLogged(false);
 
@@ -182,6 +174,30 @@ const UserProvider = ({ children }: Props) => {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const handleCancelOrder = async (data: CancelCinemaOrderDto): Promise<void> => {
+    setIsLoading(true);
+    setIsError(false);
+    await RequestClient.put('/cinema/orders/cancel', data)
+      .then((res) => {
+        if (res.data.success) {
+          setOrders(res.data.orders);
+        } else {
+          toast.error(res.data.reason, {
+            position: 'top-left'
+          });
+          throw new Error(res.data.reason);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsError(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    await handleGetAllOrders();
   };
 
   const handleGetAllOrders = async () => {
@@ -217,9 +233,10 @@ const UserProvider = ({ children }: Props) => {
         handleSignIn,
         handleLogOut,
         handleGetSession,
-        handleUpdateProfile,
         handleGetOtpsCode,
         handleGetAllOrders,
+        handleUpdateProfile,
+        handleCancelOrder,
 
         isUserLogged,
         userData,

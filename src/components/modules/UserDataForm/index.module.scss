@@ -1,16 +1,22 @@
 @import '../../../styles/variables.scss';
 
-.content {
-  margin: auto;
-  margin-top: 60px;
-  padding-bottom: 60px;
+.container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: $image-size;
-  padding: 10px;
-  text-align: left;  
+  width: 100%;
+  box-sizing: border-box;
+  gap: $gap;
+}
+
+.content {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+  text-align: left;
   font-family: $font-family;
   font-weight: 300;
   width: 100%;
+  box-sizing: border-box;
+  max-width: $max-form-width;
 }

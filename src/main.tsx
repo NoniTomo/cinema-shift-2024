@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { ToastContainer } from 'react-toastify';
+
 import App from './App.tsx';
-import './styles/fonts.css';
-import './styles/reset.css';
 import HallProvider from './context/SeanceContext.tsx';
 import CinemaPaymentProvider from './context/CinemaPaymentContext.tsx';
 import UserProvider from './context/UserContext.tsx';
-import { ToastContainer } from 'react-toastify';
+
+import './styles/fonts.css';
+import './styles/reset.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

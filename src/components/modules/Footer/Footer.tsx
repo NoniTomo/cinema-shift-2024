@@ -6,36 +6,40 @@ import { ReactComponent as UserNotActiveIcon } from '../../../assets/svg/UserNot
 import { ReactComponent as MovieActiveIcon } from '../../../assets/svg/MovieActive.svg';
 import { ReactComponent as MovieNotActiveIcon } from '../../../assets/svg/MovieNotActive.svg';
 import { FooterButton } from '../../elements/FooterButton/FooterButton';
+import useMobileDetect from '@/hooks/useMobileDetect/useMobileDetect';
 
-export default function Footer() {
-  return (
-    <footer className={styles.footer}>
-      <ul className={styles.footer__actions}>
-        <li className={styles.footer__button}>
-          <FooterButton
-            to={`/cinema/today`}
-            IconActive={<MovieActiveIcon />}
-            IconNotActive={<MovieNotActiveIcon />}
-            text='Афиша'
-          />
-        </li>
-        <li className={styles.footer__button}>
-          <FooterButton
-            to={`/cinema/orders`}
-            IconActive={<TicketActiveIcon />}
-            IconNotActive={<TicketNotActiveIcon />}
-            text='Билеты'
-          />
-        </li>
-        <li className={styles.footer__button}>
-          <FooterButton
-            to={`/cinema/users/profile`}
-            IconActive={<UserActiveIcon />}
-            IconNotActive={<UserNotActiveIcon />}
-            text='Профиль'
-          />
-        </li>
-      </ul>
-    </footer>
-  );
-}
+export const Footer = () => {
+  const { isMobile } = useMobileDetect();
+
+  if (isMobile)
+    return (
+      <footer className={styles.footer}>
+        <ul className={styles.footer__actions}>
+          <li className={styles.footer__button}>
+            <FooterButton
+              to={`/cinema/today`}
+              IconActive={<MovieActiveIcon />}
+              IconNotActive={<MovieNotActiveIcon />}
+              text='Афиша'
+            />
+          </li>
+          <li className={styles.footer__button}>
+            <FooterButton
+              to={`/cinema/orders`}
+              IconActive={<TicketActiveIcon />}
+              IconNotActive={<TicketNotActiveIcon />}
+              text='Билеты'
+            />
+          </li>
+          <li className={styles.footer__button}>
+            <FooterButton
+              to={`/cinema/users/profile`}
+              IconActive={<UserActiveIcon />}
+              IconNotActive={<UserNotActiveIcon />}
+              text='Профиль'
+            />
+          </li>
+        </ul>
+      </footer>
+    );
+};

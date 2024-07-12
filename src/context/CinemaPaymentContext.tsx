@@ -51,11 +51,22 @@ type SetSeance = {
   type: 'set-seance';
   data: Seance;
 };
-type SetTickets = {
+type setTickets = {
   type: 'set-tickets';
-  data: Ticket[];
+  data: Ticket[] | [];
 };
-type ActionSeance = SetFilm | SetFilmName | SetPerson | SetCard | SetSeance | SetTickets;
+type setTicket = {
+  type: 'add-one-tickets' | 'remove-one-tickets';
+  data: Ticket;
+};
+type ActionSeance =
+  | SetFilm
+  | SetFilmName
+  | SetPerson
+  | SetCard
+  | SetSeance
+  | setTicket
+  | setTickets;
 
 function cinemaPaymentReducer(
   state: CreateCinemaPaymentDto,
@@ -107,6 +118,19 @@ function cinemaPaymentReducer(
         }
       };
     }
+    case 'add-one-tickets': {
+      return {
+        ...state,
+        tickets: [
+          ...state.tickets,
+          {
+            row: action.data.row,
+            column: action.data.column,
+            price: action.data.price
+          }
+        ]
+      };
+    }
     case 'set-tickets': {
       return {
         ...state,
@@ -114,9 +138,20 @@ function cinemaPaymentReducer(
           ...action.data.map((ticket) => {
             return {
               row: ticket.row,
-              column: ticket.column
+              column: ticket.column,
+              price: ticket.price
             };
           })
+        ]
+      };
+    }
+    case 'remove-one-tickets': {
+      return {
+        ...state,
+        tickets: [
+          ...state.tickets.filter(
+            (ticket) => !(ticket.column === action.data.column && ticket.row === action.data.row)
+          )
         ]
       };
     }
@@ -131,13 +166,15 @@ export type CinemaPaymentContextType = {
   loading: boolean;
   error: boolean;
   paymentIsReady: boolean;
-  SetFilmName: (filmName: string) => void;
+  setTickets: (tickets: Ticket[] | []) => void;
+  setAddTicket: (ticket: Ticket) => void;
+  setDropTicket: (ticket: Ticket) => void;
+  setFilmName: (filmName: string) => void;
   setFilmId: (filmId: string) => void;
   setPerson: (person: Profile) => void;
   setDebitCard: (paymentCard: PaymentCard) => void;
   setSeance: (seance: Seance) => void;
-  setTickets: (tickets: Ticket[]) => void;
-  handleCinemaPayment: () => Promise<void>;
+  handleCinemaPayment: (toForward: () => void) => void;
 };
 
 export const CinemaPaymentContext = createContext<CinemaPaymentContextType>({
@@ -145,12 +182,14 @@ export const CinemaPaymentContext = createContext<CinemaPaymentContextType>({
   loading: false,
   error: false,
   paymentIsReady: false,
-  SetFilmName: (filmName: string) => {},
+  setTickets: (tickets: Ticket[] | []) => {},
+  setAddTicket: (ticket: Ticket) => {},
+  setDropTicket: (ticket: Ticket) => {},
+  setFilmName: (filmName: string) => {},
   setFilmId: (filmId: string) => {},
   setPerson: (person: Profile) => {},
   setDebitCard: (paymentCard: PaymentCard) => {},
   setSeance: (seance: Seance) => {},
-  setTickets: (tickets: Ticket[]) => {},
   handleCinemaPayment: async () => {}
 });
 
@@ -164,7 +203,7 @@ const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) => {
   const [error, setIsError] = useState(false);
   const [paymentIsReady, setPaymentIsReady] = useState(false);
 
-  const SetFilmName = (filmName: string) => {
+  const setFilmName = (filmName: string) => {
     dispatchCinemaPayment({
       type: 'set-film-name',
       data: { filmName }
@@ -195,16 +234,29 @@ const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) => {
       data: seance
     });
   };
-  const setTickets = (tickets: Ticket[]) => {
+  const setAddTicket = (ticket: Ticket) => {
+    dispatchCinemaPayment({
+      type: 'add-one-tickets',
+      data: ticket
+    });
+  };
+  const setTickets = (tickets: Ticket[] | []) => {
     dispatchCinemaPayment({
       type: 'set-tickets',
       data: tickets
     });
   };
-  const handleCinemaPayment = async () => {
+  const setDropTicket = (ticket: Ticket) => {
+    dispatchCinemaPayment({
+      type: 'remove-one-tickets',
+      data: ticket
+    });
+  };
+  const handleCinemaPayment = (toForward: () => void) => {
     setIsLoading(true);
     setIsError(false);
-    await RequestClient.post('/cinema/payment', cinemaPayment, {
+    setPaymentIsReady(false);
+    RequestClient.post('/cinema/payment', cinemaPayment, {
       headers: {
         'content-type': 'application/json'
       }
@@ -212,21 +264,20 @@ const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) => {
       .then((res) => {
         if (res.data.success) {
           setIsError(false);
+          toForward();
         } else {
-          toast.error(res.data.reason, {
-            position: 'top-left'
-          });
           throw new Error(res.data.reason);
         }
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err, {
+          position: 'top-left'
+        });
         setIsError(true);
         throw new Error();
       })
       .finally(() => {
         setIsLoading(false);
-        setPaymentIsReady(false);
       });
   };
   return (
@@ -238,12 +289,14 @@ const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) => {
         paymentIsReady,
         handleCinemaPayment,
 
-        SetFilmName,
+        setTickets,
+        setAddTicket,
+        setDropTicket,
+        setFilmName,
         setFilmId,
         setPerson,
         setDebitCard,
-        setSeance,
-        setTickets
+        setSeance
       }}
     >
       {children}
