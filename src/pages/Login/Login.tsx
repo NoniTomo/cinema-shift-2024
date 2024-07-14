@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, UseFormRegisterReturn } from 'react-hook-form';
 
@@ -6,17 +6,17 @@ import Header from '@components/modules/Header/Header';
 import { ReactComponent as CrossIcon } from '@/assets/svg/Cross.svg';
 import { Button } from '@components/elements/Button/Button';
 import { TextField } from '@components/elements/TextField/TextField';
-import useTimer from '@/hooks/useTimer/useTimer';
-import { filterInputOnlyNumbers } from '@/utils/validate';
-import { UserContext } from '@/context/UserContext';
-import type { CreateOtpDto } from '@/types/dto';
+import useTimer from '@/utils/hooks/useTimer/useTimer';
+import { filterInputOnlyNumbers } from '@/utils/helpers/validate';
+import type { CreateOtpDto } from '@/utils/types/dto';
 import { Loading } from '@/components/modules/Loading/Loading';
 
 import styles from './index.module.scss';
+import { useUser } from '@/utils/context/User';
 
-export default function Login() {
+export const Login = () => {
   const { countdown, start, isEnding } = useTimer();
-  const { handleGetOtpsCode, handleSignIn, loading, isUserLogged } = useContext(UserContext);
+  const { handleGetOtpsCode, handleSignIn, loading, isUserLogged } = useUser();
   const navigate = useNavigate();
   const [phone, setPhone] = useState('');
 
@@ -153,4 +153,4 @@ export default function Login() {
       </div>
     </>
   );
-}
+};

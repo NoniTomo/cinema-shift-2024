@@ -1,27 +1,25 @@
-import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Button } from '@components/elements/Button/Button';
-import Header from '@components/modules/Header/Header';
-import { SeanceContext } from '@/context/SeanceContext';
+import { Button } from '@components/elements';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
-import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
-import Schedule from '@/components/modules/Schedule/Schedule';
+import { Header, Schedule } from '@/components/modules';
+import { useSeance } from '@/utils/context/Seance';
+import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 
 import styles from './index.module.scss';
 
-export type Props = {
+export type MovieScheduleProps = {
   toBack: () => void;
   toForward: () => void;
 };
 
-export default function MovieSchedule({ toBack, toForward }: Props) {
+export const MovieSchedule = ({ toBack, toForward }: MovieScheduleProps) => {
   const params = useParams();
 
-  const { schedules, loading } = useContext(SeanceContext);
-  const { cinemaPayment } = useContext(CinemaPaymentContext);
+  const { schedules, loading } = useSeance();
+  const { cinemaPayment } = useCinemaPayment();
 
   const handleOnClick = () => {
     const filmId = params?.filmId;
@@ -63,4 +61,4 @@ export default function MovieSchedule({ toBack, toForward }: Props) {
       )}
     </>
   );
-}
+};

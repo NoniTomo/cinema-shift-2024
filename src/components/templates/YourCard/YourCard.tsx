@@ -1,27 +1,26 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Header from '@components/modules/Header/Header';
 import PaymentCardForm from '@components/modules/PaymentCardForm/PaymentCardForm';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
-import { UserContext } from '@/context/UserContext';
-import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
-import { PaymentCard } from '@/types/dto';
+import { PaymentCard } from '@/utils/types/dto';
 import { Loading } from '@/components/modules/Loading/Loading';
 
 import styles from './index.module.scss';
+import { useCinemaPayment } from '@/utils/context/CinemaPayment';
+import { useUser } from '@/utils/context/User';
 
-export type Props = {
+export type YourCardProps = {
   toBack?: () => void;
   toForward: () => void;
   type?: 'desktop' | 'mobile';
 };
 
-export default function YourCard({ toBack, toForward, type = 'mobile' }: Props) {
+export const YourCard = ({ toBack, toForward, type = 'mobile' }: YourCardProps) => {
   const navigate = useNavigate();
-  const { isUserLogged } = useContext(UserContext);
-  const { setDebitCard, handleCinemaPayment, loading, paymentIsReady } =
-    useContext(CinemaPaymentContext);
+  const { isUserLogged } = useUser();
+  const { setDebitCard, handleCinemaPayment, loading, paymentIsReady } = useCinemaPayment();
 
   useEffect(() => {
     if (!isUserLogged) navigate('../cinema/users/signin');
@@ -31,7 +30,7 @@ export default function YourCard({ toBack, toForward, type = 'mobile' }: Props) 
     if (paymentIsReady) {
       handleCinemaPayment(toForward);
     }
-  }, [handleCinemaPayment, toForward]);
+  }, [paymentIsReady, handleCinemaPayment, toForward]);
 
   const submitPaymentCard = async (data: PaymentCard) => {
     setDebitCard(data);
@@ -47,4 +46,4 @@ export default function YourCard({ toBack, toForward, type = 'mobile' }: Props) 
       </div>
     </>
   );
-}
+};

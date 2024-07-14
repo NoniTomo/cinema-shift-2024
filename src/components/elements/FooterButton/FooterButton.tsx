@@ -10,7 +10,7 @@ type Props = {
   text?: string;
 } & ComponentProps<'button'>;
 
-const FooterButton = ({ to, IconActive, IconNotActive, text, ...props }: Props) => (
+export const FooterButton = ({ to, IconActive, IconNotActive, text, ...props }: Props) => (
   <NavLink className={styles.link} to={to}>
     {({ isActive }) => (
       <button {...props} className={`${styles.button}`}>
@@ -20,5 +20,3 @@ const FooterButton = ({ to, IconActive, IconNotActive, text, ...props }: Props) 
     )}
   </NavLink>
 );
-
-export { FooterButton };

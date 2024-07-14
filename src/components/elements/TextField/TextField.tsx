@@ -12,7 +12,7 @@ export type TextFieldProps = {
   error?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const TextField = ({
+export const TextField = ({
   label,
   id,
   register,
@@ -44,5 +44,3 @@ const TextField = ({
     <span className={styles.wrapper__error}>{error}</span>
   </label>
 );
-
-export { TextField };

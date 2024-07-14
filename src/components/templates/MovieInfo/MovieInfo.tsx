@@ -1,17 +1,16 @@
 import { ReactComponent as Cross } from '@assets/svg/Cross.svg';
 import { Button } from '@components/elements/Button/Button';
-import Header from '@components/modules/Header/Header';
-import { IFilm } from '@/types/IFilm';
-import FilmCard from '@components/modules/FilmCard/FilmCard';
+import { IFilm } from '@/utils/types/IFilm';
+import { Header, FilmCard } from '@components/modules';
 
 import styles from './index.module.scss';
 
-export type Props = {
+export type MovieInfoProps = {
   toForward: () => void;
   film: IFilm;
 };
 
-export const MovieInfo = ({ toForward, film }: Props) => {
+export const MovieInfo = ({ toForward, film }: MovieInfoProps) => {
   return (
     <>
       {film && (

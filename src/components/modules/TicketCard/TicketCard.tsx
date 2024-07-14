@@ -1,11 +1,10 @@
-import { CancelCinemaOrderDto, Order } from '@/types/dto';
+import { CancelCinemaOrderDto, Order } from '@/utils/types/dto';
 import { Button } from '@/components/elements/Button/Button';
-import { getDateToString } from '@/utils/getDate';
-import { getSeats } from '@/utils/getSeats';
+import { getDateToString } from '@/utils/helpers/getDate';
+import { getSeats } from '@/utils/helpers/getSeats';
 
 import styles from './index.module.scss';
-import { useContext } from 'react';
-import { UserContext } from '@/context/UserContext';
+import { useUser } from '@/utils/context/User';
 
 type Props = {
   order: Order;
@@ -13,8 +12,8 @@ type Props = {
   active?: boolean;
 };
 
-export default function TicketCard({ order, active = false, onClick }: Props) {
-  const { handleCancelOrder } = useContext(UserContext);
+export const TicketCard = ({ order, active = false, onClick }: Props) => {
+  const { handleCancelOrder } = useUser();
   const handle = (data: CancelCinemaOrderDto) => {
     handleCancelOrder(data);
   };
@@ -68,4 +67,4 @@ export default function TicketCard({ order, active = false, onClick }: Props) {
       </div>
     </div>
   );
-}
+};

@@ -1,15 +1,15 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { useParams } from 'react-router-dom';
 
-import { SeanceContext } from '@/context/SeanceContext';
-import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
 import { Controls } from '@components/modules/Controls/Controls';
 import { Loading } from '@components/modules/Loading/Loading';
-import { getSeats } from '@/utils/getSeats';
+import { getSeats } from '@/utils/helpers/getSeats';
 
 import styles from './index.module.scss';
 import { Button } from '@/components/elements/Button/Button';
+import { useSeance } from '@/utils/context/Seance';
+import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 
 export type SeatingMatrixProps = {
   direction?: 'row' | 'column';
@@ -17,15 +17,14 @@ export type SeatingMatrixProps = {
   textButton?: string;
 };
 
-export default function SeatingMatrix({
+export const SeatingMatrix = ({
   direction = 'column',
   onClick,
   textButton = 'Продолжить'
-}: SeatingMatrixProps) {
+}: SeatingMatrixProps) => {
   const params = useParams();
-  const { schedules, loading, handleGetSchedule } = useContext(SeanceContext);
-  const { setAddTicket, setDropTicket, setTickets, cinemaPayment } =
-    useContext(CinemaPaymentContext);
+  const { schedules, loading, handleGetSchedule } = useSeance();
+  const { setAddTicket, setDropTicket, setTickets, cinemaPayment } = useCinemaPayment();
 
   const getHall = (hall: string) => {
     switch (hall) {
@@ -165,4 +164,4 @@ export default function SeatingMatrix({
       )}
     </div>
   );
-}
+};

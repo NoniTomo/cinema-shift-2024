@@ -1,23 +1,22 @@
-import { useContext } from 'react';
 import { toast } from 'react-toastify';
 
 import { Button } from '@components/elements/Button/Button';
-import Header from '@components/modules/Header/Header';
-import { SeanceContext } from '@/context/SeanceContext';
-import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
+import { Header, SeatingMatrix } from '@components/modules';
+
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 
 import styles from './index.module.scss';
-import SeatingMatrix from '@/components/modules/SeatingMatrix/SeatingMatrix';
+import { useSeance } from '@/utils/context/Seance';
+import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 
-export type Props = {
+export type ChoiceOfSeatsProps = {
   toBack: () => void;
   toForward: () => void;
 };
 
-export default function ChoiceOfSeats({ toBack, toForward }: Props) {
-  const { schedules, error } = useContext(SeanceContext);
-  const { cinemaPayment } = useContext(CinemaPaymentContext);
+export const ChoiceOfSeats = ({ toBack, toForward }: ChoiceOfSeatsProps) => {
+  const { schedules, error } = useSeance();
+  const { cinemaPayment } = useCinemaPayment();
 
   const handleOnClick = () => {
     if (cinemaPayment.tickets.length > 0) {
@@ -48,4 +47,4 @@ export default function ChoiceOfSeats({ toBack, toForward }: Props) {
       )}
     </>
   );
-}
+};

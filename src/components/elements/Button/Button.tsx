@@ -8,7 +8,7 @@ type ButtonProps = {
   children?: ReactNode;
 } & ComponentProps<'button'>;
 
-const Button = ({ variant = 'contained', children, ...props }: ButtonProps) => (
+export const Button = ({ variant = 'contained', children, ...props }: ButtonProps) => (
   <button
     {...props}
     className={clsx(styles.button, {
@@ -20,5 +20,3 @@ const Button = ({ variant = 'contained', children, ...props }: ButtonProps) => (
     {children}
   </button>
 );
-
-export { Button };

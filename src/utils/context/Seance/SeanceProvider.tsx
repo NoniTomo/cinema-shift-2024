@@ -1,7 +1,8 @@
-import { ReactNode, createContext, useReducer, useState } from 'react';
-import config from '../config';
-import IDaySchedule from '../types/IDaySchedule';
+import { ReactNode, useReducer, useState } from 'react';
+import config from '@/config';
 import { RequestClient } from '@/utils/axiosAPI';
+import { SeanceContext } from './SeanceContext';
+import IDaySchedule from '@/utils/types/IDaySchedule';
 
 type ActionSchedule = {
   type: 'get-schedules';
@@ -19,24 +20,11 @@ function scheduleReducer(state: IDaySchedule[], action: ActionSchedule) {
   }
 }
 
-export type SeanceContextType = {
-  handleGetSchedule: (filmId: number) => Promise<void>;
-  schedules?: IDaySchedule[];
-  error: boolean;
-  loading: boolean;
-};
-
-export const SeanceContext = createContext<SeanceContextType>({
-  handleGetSchedule: async () => {},
-  error: false,
-  loading: true
-});
-
 type Props = {
   children: ReactNode;
 };
 
-const SeanceProvider = ({ children }: Props) => {
+export const SeanceProvider = ({ children }: Props) => {
   const [schedules, dispatchSchedule] = useReducer(scheduleReducer, []);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -77,5 +65,3 @@ const SeanceProvider = ({ children }: Props) => {
 
   return <SeanceContext.Provider value={contextValue}>{children}</SeanceContext.Provider>;
 };
-
-export default SeanceProvider;

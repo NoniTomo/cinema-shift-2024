@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import config from '@/config';
-import { IFilm } from '@/types/IFilm';
-import getAgeRating from '@/utils/getAgeRating';
-import Rating from '@components/elements/Rating/Rating';
+import { IFilm } from '@/utils/types/IFilm';
+import getAgeRating from '@/utils/helpers/getAgeRating';
+import { Rating } from '@components/elements';
+
 import styles from './index.module.scss';
 
 export type FilmCardType = {
@@ -11,11 +12,7 @@ export type FilmCardType = {
   description?: boolean;
 };
 
-export default function FilmCard({
-  film,
-  direction = 'column',
-  description = false
-}: FilmCardType) {
+export const FilmCard = ({ film, direction = 'column', description = false }: FilmCardType) => {
   const [visibleDescription, setVisibleDescription] = useState(false);
 
   function filmDescription(description: string): JSX.Element {
@@ -86,4 +83,4 @@ export default function FilmCard({
       </div>
     </div>
   );
-}
+};

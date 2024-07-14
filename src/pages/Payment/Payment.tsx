@@ -1,22 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import YourCard from '@components/templates/YourCard/YourCard';
 import Success from '@components/templates/Success/Success';
-import useMobileDetect from '@/hooks/useMobileDetect/useMobileDetect';
-import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
+import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
 import Header from '@/components/modules/Header/Header';
-import { UserContext } from '@/context/UserContext';
 import { Modal } from '@/components/modules/Modal/Modal';
+import { useUser } from '@/utils/context/User';
+import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 
 import styles from './index.module.scss';
 
-export default function PaymentPage() {
+export const Payment = () => {
   const [open, setOpen] = useState(false);
-  const { isUserLogged } = useContext(UserContext);
+  const { isUserLogged } = useUser();
   const [stage, setStage] = useState<1 | 2>(1);
   const { isMobile } = useMobileDetect();
-  const { cinemaPayment } = useContext(CinemaPaymentContext);
+  const { cinemaPayment } = useCinemaPayment();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,4 +56,4 @@ export default function PaymentPage() {
       </>
     );
   }
-}
+};

@@ -5,5 +5,5 @@ export enum AgeRating {
   PG15 = '15+',
   R = '16+',
   NC17 = '17+',
-  NC21 = '21+',
+  NC21 = '21+'
 }

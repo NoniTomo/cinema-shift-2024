@@ -5,8 +5,8 @@ import Header from '@components/modules/Header/Header';
 import { Button } from '@components/elements/Button/Button';
 import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
 import { InfoCard } from '@/components/elements/InfoCard/InfoCard';
-import { getDateToString } from '@/utils/getDate';
-import { getSeats } from '@/utils/getSeats';
+import { getDateToString } from '@/utils/helpers/getDate';
+import { getSeats } from '@/utils/helpers/getSeats';
 import { ReactComponent as AcceptIcon } from '@assets/svg/Accept.svg';
 import { ReactComponent as CrossIcon } from '@assets/svg/Cross.svg';
 

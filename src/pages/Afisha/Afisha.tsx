@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IFilm } from '@/types/IFilm';
+import { IFilm } from '@/utils/types/IFilm';
 import config from '@/config';
 import { Button } from '@components/elements/Button/Button';
 import Header from '@components/modules/Header/Header';
@@ -12,7 +12,7 @@ import { Loading } from '@/components/modules/Loading/Loading';
 
 import styles from './index.module.scss';
 
-export default function Afisha() {
+export const Afisha = () => {
   const [films, setFilms] = useState<IFilm[]>();
   const navigate = useNavigate();
   const [loading, setIsLoading] = useState(false);
@@ -57,4 +57,4 @@ export default function Afisha() {
       <Footer />
     </>
   );
-}
+};

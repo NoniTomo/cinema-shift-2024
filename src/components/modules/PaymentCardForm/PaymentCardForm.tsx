@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useHookFormMask } from 'use-mask-input';
 
 import { TextField } from '../../elements/TextField/TextField';
-import { filterInputOnlyNumbers } from '../../../utils/validate';
+import { filterInputOnlyNumbers } from '../../../utils/helpers/validate';
 import { Button } from '../../elements/Button/Button';
 
 import styles from './index.module.scss';

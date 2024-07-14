@@ -1,9 +1,9 @@
-import { ReactComponent as Rating1 } from '../../../assets/svg/rating/RatingNumber1.svg';
-import { ReactComponent as Rating2 } from '../../../assets/svg/rating/RatingNumber2.svg';
-import { ReactComponent as Rating3 } from '../../../assets/svg/rating/RatingNumber3.svg';
-import { ReactComponent as Rating4 } from '../../../assets/svg/rating/RatingNumber4.svg';
-import { ReactComponent as Rating5 } from '../../../assets/svg/rating/RatingNumber5.svg';
-import { ReactComponent as RatingUndefined } from '../../../assets/svg/rating/RatingUndefined.svg';
+import { ReactComponent as Rating1 } from '@/assets/svg/rating/RatingNumber1.svg';
+import { ReactComponent as Rating2 } from '@/assets/svg/rating/RatingNumber2.svg';
+import { ReactComponent as Rating3 } from '@/assets/svg/rating/RatingNumber3.svg';
+import { ReactComponent as Rating4 } from '@/assets/svg/rating/RatingNumber4.svg';
+import { ReactComponent as Rating5 } from '@/assets/svg/rating/RatingNumber5.svg';
+import { ReactComponent as RatingUndefined } from '@/assets/svg/rating/RatingUndefined.svg';
 
 import styles from './index.module.scss';
 
@@ -14,7 +14,7 @@ type Props = {
   }[];
 };
 
-function Rating({ ratingSource }: Props) {
+export const Rating = ({ ratingSource }: Props) => {
   const getAverageRating = (sources: number[]): JSX.Element => {
     const average = Math.ceil(
       sources.reduce((accumulate, item) => accumulate + item, 0) / (sources.length * 2)
@@ -47,6 +47,4 @@ function Rating({ ratingSource }: Props) {
       ))}
     </div>
   );
-}
-
-export default Rating;
+};

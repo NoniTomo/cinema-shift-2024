@@ -1,34 +1,33 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Header from '@components/modules/Header/Header';
+import { Header, UserDataForm } from '@components/modules';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
-import UserDataForm from '@components/modules/UserDataForm/UserDataForm';
-import { UserContext } from '@/context/UserContext';
-import { Profile } from '@/types/dto';
-import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
+import { Profile } from '@/utils/types/dto';
 
 import styles from './index.module.scss';
+import { useUser } from '@/utils/context/User';
+import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 
-export type Props = {
+export type YourDataProps = {
   toBack: () => void;
   toForward: () => void;
 };
 
-export default function YourData({ toBack, toForward }: Props) {
-  const { isUserLogged } = useContext(UserContext);
-  const { setPerson } = useContext(CinemaPaymentContext);
+export const YourData = ({ toBack, toForward }: YourDataProps) => {
+  const { isUserLogged } = useUser();
+  const { setPerson } = useCinemaPayment();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isUserLogged) navigate('../cinema/users/signin');
-  }, [isUserLogged]);
+  }, [isUserLogged, navigate]);
 
   const submitPerson = (data: Profile) => {
     setPerson(data);
     toForward();
   };
-
-  const navigate = useNavigate();
   return (
     <>
       <Header onClick={toBack} Icon={ArrowLeftIcon} text='Ваши данные' />
@@ -39,4 +38,4 @@ export default function YourData({ toBack, toForward }: Props) {
       </div>
     </>
   );
-}
+};

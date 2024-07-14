@@ -1,20 +1,19 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Header from '@components/modules/Header/Header';
 import { Footer } from '@components/modules/Footer/Footer';
-import { UserContext } from '@/context/UserContext';
-import { Order } from '@/types/dto';
-import TicketCard from '@components/modules/TicketCard/TicketCard';
+import { Order } from '@/utils/types/dto';
+import { TicketCard } from '@components/modules/TicketCard/TicketCard';
 import { Loading } from '@components/modules/Loading/Loading';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
+import { useUser } from '@/utils/context/User';
 
 import styles from './index.module.scss';
 
-export default function Tickets() {
+export const Tickets = () => {
   const navigate = useNavigate();
-  const { orders, handleGetAllOrders, loading } = useContext(UserContext);
-  const { isUserLogged } = useContext(UserContext);
+  const { isUserLogged, orders, handleGetAllOrders, loading } = useUser();
   const [activeTicket, setActiveTicket] = useState(0);
 
   useEffect(() => {
@@ -53,4 +52,4 @@ export default function Tickets() {
       <Footer />
     </>
   );
-}
+};

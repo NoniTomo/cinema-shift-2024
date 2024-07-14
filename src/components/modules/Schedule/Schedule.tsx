@@ -1,19 +1,19 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import seancesByHalls from '@/utils/seancesByHalls';
-import ISeance from '@/types/ISeance';
-import { getDateToString } from '@/utils/getDate';
-import { SeanceContext } from '@/context/SeanceContext';
-import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
-import { Loading } from '@components/modules/Loading/Loading';
+import seancesByHalls from '@/utils/helpers/seancesByHalls';
+import ISeance from '@/utils/types/ISeance';
+import { getDateToString } from '@/utils/helpers/getDate';
+import { Loading } from '@components/modules';
+import { useSeance } from '@/utils/context/Seance';
+import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 
 import styles from './index.module.scss';
 
-export default function Schedule() {
+export const Schedule = () => {
   const params = useParams();
-  const { schedules, handleGetSchedule, loading } = useContext(SeanceContext);
-  const { cinemaPayment, setSeance, setTickets } = useContext(CinemaPaymentContext);
+  const { schedules, handleGetSchedule, loading } = useSeance();
+  const { cinemaPayment, setSeance, setTickets } = useCinemaPayment();
 
   useEffect(() => {
     handleGetSchedule(+params.filmId!);
@@ -80,4 +80,4 @@ export default function Schedule() {
       )}
     </div>
   );
-}
+};

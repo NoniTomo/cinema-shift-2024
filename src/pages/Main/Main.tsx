@@ -1,33 +1,32 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { MovieInfo } from '@components/templates/MovieInfo/MovieInfo';
-import MovieSchedule from '@components/templates/MovieSchedule/MovieSchedule';
-import ChoiceOfSeats from '@components/templates/ChoiceOfSeats/ChoiceOfSeats';
-import YourData from '@components/templates/YourData/YourData';
-import useMobileDetect from '@/hooks/useMobileDetect/useMobileDetect';
-import FilmCard from '@/components/modules/FilmCard/FilmCard';
-import { IFilm } from '@/types/IFilm';
+import { MovieSchedule, YourData, ChoiceOfSeats, MovieInfo } from '@components/templates';
+import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
+import { IFilm, Profile } from '@/utils/types';
 import { RequestClient } from '@/utils/axiosAPI';
-import Schedule from '@/components/modules/Schedule/Schedule';
-import SeatingMatrix from '@/components/modules/SeatingMatrix/SeatingMatrix';
-import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
-import Header from '@/components/modules/Header/Header';
+import {
+  Modal,
+  FilmCard,
+  Schedule,
+  SeatingMatrix,
+  Header,
+  UserDataForm
+} from '@/components/modules';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
-import { UserContext } from '@/context/UserContext';
-import { Modal } from '@/components/modules/Modal/Modal';
-import UserDataForm from '@/components/modules/UserDataForm/UserDataForm';
-import { Profile } from '@/types/dto';
+import {} from '@/utils/types/dto';
 
 import styles from './index.module.scss';
+import { useUser } from '@/utils/context/User';
+import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 
-export default function MainPage() {
+export const Main = () => {
   const [open, setOpen] = useState(false);
-  const { isUserLogged } = useContext(UserContext);
+  const { isUserLogged } = useUser();
   const [stage, setStage] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
   const { isMobile } = useMobileDetect();
-  const { setFilmId, setFilmName, cinemaPayment, setPerson } = useContext(CinemaPaymentContext);
+  const { setFilmId, setFilmName, cinemaPayment, setPerson } = useCinemaPayment();
   const [film, setFilm] = useState<IFilm>();
   const params = useParams();
   const navigate = useNavigate();
@@ -53,7 +52,7 @@ export default function MainPage() {
       .catch((error) => {
         console.log(error);
       });
-  }, [params.filmId]);
+  }, [params.filmId, setFilmId, setFilmName]);
 
   const submitPerson = (data: Profile) => {
     setPerson(data);
@@ -130,4 +129,4 @@ export default function MainPage() {
       </>
     );
   }
-}
+};

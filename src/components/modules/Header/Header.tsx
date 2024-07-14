@@ -1,7 +1,6 @@
-import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-import useMobileDetect from '@/hooks/useMobileDetect/useMobileDetect';
+import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
 import { ReactComponent as CinemaLogo } from '@assets/svg/CinemaLogo.svg';
 import { ReactComponent as UserActiveIcon } from '@assets/svg/UserActive.svg';
 import { ReactComponent as UserNotActiveIcon } from '@assets/svg/UserNotActive.svg';
@@ -10,11 +9,11 @@ import { ReactComponent as TicketNotActiveIcon } from '@assets/svg/TicketNotActi
 import { ReactComponent as EtranceActiveIcon } from '@assets/svg/EtranceActive.svg';
 import { ReactComponent as EtranceNotActiveIcon } from '@assets/svg/EtranceNotActive.svg';
 import { ReactComponent as ExitIcon } from '@assets/svg/Exit.svg';
-import { UserContext } from '@/context/UserContext';
+import { useUser } from '@/utils/context/User';
 
 import styles from './index.module.scss';
 
-type Props = {
+export type HeaderProps = {
   text?: string | number;
   to?: string;
   Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -34,9 +33,9 @@ const HeaderChildren = ({
   </>
 );
 
-function Header({ text, to, Icon, onClick }: Props) {
+export const Header = ({ text, to, Icon, onClick }: HeaderProps) => {
   const { isMobile } = useMobileDetect();
-  const { isUserLogged, handleLogOut } = useContext(UserContext);
+  const { isUserLogged, handleLogOut } = useUser();
 
   if (isMobile)
     return (
@@ -119,6 +118,4 @@ function Header({ text, to, Icon, onClick }: Props) {
       </div>
     </header>
   );
-}
-
-export default Header;
+};

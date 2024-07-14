@@ -8,20 +8,19 @@ import {
   filterInputOnlyNumbers,
   validateAlphabetAndSpecialSymbols,
   validateEmail
-} from '@/utils/validate';
-import { Profile } from '@/types/dto';
-import { useContext } from 'react';
-import { UserContext } from '@/context/UserContext';
+} from '@/utils/helpers/validate';
+import { Profile } from '@/utils/types/dto';
 
 import styles from './index.module.scss';
+import { useUser } from '@/utils/context/User';
 
 export type UserDataFormType = {
   buttonText: string;
   onSubmit: (data: Profile) => void;
 };
 
-export default function UserDataForm({ buttonText, onSubmit }: UserDataFormType) {
-  const { userData } = useContext(UserContext);
+export const UserDataForm = ({ buttonText, onSubmit }: UserDataFormType) => {
+  const { userData } = useUser();
   const {
     register,
     handleSubmit,
@@ -133,4 +132,4 @@ export default function UserDataForm({ buttonText, onSubmit }: UserDataFormType)
       </Button>
     </div>
   );
-}
+};

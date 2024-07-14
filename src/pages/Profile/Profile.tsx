@@ -1,20 +1,21 @@
 import { useNavigate } from 'react-router-dom';
-import Header from '../../modules/Header/Header';
-import { Footer } from '../../modules/Footer/Footer';
-import UserDataForm from '../../modules/UserDataForm/UserDataForm';
+import { useEffect } from 'react';
+
+import Header from '@components/modules/Header/Header';
+import { Footer } from '@components/modules/Footer/Footer';
+import UserDataForm from '@components/modules/UserDataForm/UserDataForm';
 import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg';
-import { useContext, useEffect } from 'react';
-import { UserContext } from '@/context/UserContext';
-import { Profile as ProfileType } from '@/types/dto';
+import { Profile as ProfileType } from '@/utils/types/dto';
 import { Loading } from '@/components/modules/Loading/Loading';
 import { Button } from '@/components/elements/Button/Button';
+import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
 
 import styles from './index.module.scss';
-import useMobileDetect from '@/hooks/useMobileDetect/useMobileDetect';
+import { useUser } from '@/utils/context/User';
 
-export default function Profile() {
+export const Profile = () => {
   const navigate = useNavigate();
-  const { isUserLogged, handleUpdateProfile, loading, handleLogOut } = useContext(UserContext);
+  const { isUserLogged, handleUpdateProfile, loading, handleLogOut } = useUser();
   const { isMobile } = useMobileDetect();
 
   useEffect(() => {
@@ -49,4 +50,4 @@ export default function Profile() {
       <Footer />
     </>
   );
-}
+};
