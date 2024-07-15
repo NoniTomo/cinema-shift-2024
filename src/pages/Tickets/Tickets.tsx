@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Header from '@components/modules/Header/Header';
-import { Footer } from '@components/modules/Footer/Footer';
 import { Order } from '@/utils/types/dto';
-import { TicketCard } from '@components/modules/TicketCard/TicketCard';
-import { Loading } from '@components/modules/Loading/Loading';
+import { TicketCard, Header, Loading, Footer } from '@components/modules';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 import { useUser } from '@/utils/context/User';
 

@@ -1,11 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import YourCard from '@components/templates/YourCard/YourCard';
-import Success from '@components/templates/Success/Success';
+import { Success, YourCard } from '@components/templates';
 import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
-import Header from '@/components/modules/Header/Header';
-import { Modal } from '@/components/modules/Modal/Modal';
+import { Modal, Header } from '@/components/modules';
 import { useUser } from '@/utils/context/User';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 

@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Header from '@components/modules/Header/Header';
-import PaymentCardForm from '@components/modules/PaymentCardForm/PaymentCardForm';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 import { PaymentCard } from '@/utils/types/dto';
-import { Loading } from '@/components/modules/Loading/Loading';
-
-import styles from './index.module.scss';
+import { Loading, Header, PaymentCardForm } from '@/components/modules';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 import { useUser } from '@/utils/context/User';
+
+import styles from './index.module.scss';
 
 export type YourCardProps = {
   toBack?: () => void;

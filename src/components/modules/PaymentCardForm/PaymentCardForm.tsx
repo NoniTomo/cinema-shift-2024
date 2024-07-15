@@ -1,18 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { useHookFormMask } from 'use-mask-input';
 
-import { TextField } from '../../elements/TextField/TextField';
-import { filterInputOnlyNumbers } from '../../../utils/helpers/validate';
-import { Button } from '../../elements/Button/Button';
+import { TextField, Button } from '@components/elements';
+import { filterInputOnlyNumbers } from '@/utils/helpers/validate';
 
 import styles from './index.module.scss';
-import { PaymentCard } from '@/types/dto';
+import { PaymentCard } from '@/utils/types/dto';
 
 export type PaymentCardFormType = {
   onSubmit: (data: PaymentCard) => void;
 };
 
-export default function PaymentCardForm({ onSubmit }: PaymentCardFormType) {
+export const PaymentCardForm = ({ onSubmit }: PaymentCardFormType) => {
   const {
     register,
     handleSubmit,
@@ -73,4 +72,4 @@ export default function PaymentCardForm({ onSubmit }: PaymentCardFormType) {
       <Button type='submit'>Оплатить</Button>
     </form>
   );
-}
+};

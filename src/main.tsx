@@ -3,22 +3,22 @@ import ReactDOM from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 
 import App from './App.tsx';
-import HallProvider from './context/SeanceContext.tsx';
-import CinemaPaymentProvider from './context/CinemaPaymentContext.tsx';
-import UserProvider from './context/UserContext.tsx';
+import { SeanceProvider } from './utils/context/Seance';
+import { CinemaPaymentProvider } from './utils/context/CinemaPayment';
+import { UserProvider } from './utils/context/User';
 
 import './styles/fonts.css';
 import './styles/reset.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <HallProvider>
+    <SeanceProvider>
       <UserProvider>
         <CinemaPaymentProvider>
           <App />
         </CinemaPaymentProvider>
       </UserProvider>
-    </HallProvider>
+    </SeanceProvider>
     <ToastContainer />
   </React.StrictMode>
 );

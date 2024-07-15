@@ -3,12 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { IFilm } from '@/utils/types/IFilm';
 import config from '@/config';
-import { Button } from '@components/elements/Button/Button';
-import Header from '@components/modules/Header/Header';
-import { Footer } from '@components/modules/Footer/Footer';
-import FilmCard from '@components/modules/FilmCard/FilmCard';
+import { Button } from '@components/elements';
 import { RequestClient } from '@/utils/axiosAPI';
-import { Loading } from '@/components/modules/Loading/Loading';
+import { Loading, FilmCard, Header, Footer } from '@/components/modules';
 
 import styles from './index.module.scss';
 

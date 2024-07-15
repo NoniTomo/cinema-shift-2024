@@ -2,14 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, UseFormRegisterReturn } from 'react-hook-form';
 
-import Header from '@components/modules/Header/Header';
 import { ReactComponent as CrossIcon } from '@/assets/svg/Cross.svg';
-import { Button } from '@components/elements/Button/Button';
-import { TextField } from '@components/elements/TextField/TextField';
+import { TextField, Button } from '@components/elements';
 import useTimer from '@/utils/hooks/useTimer/useTimer';
-import { filterInputOnlyNumbers } from '@/utils/helpers/validate';
+import { filterInputOnlyNumbers } from '@/utils/helpers';
 import type { CreateOtpDto } from '@/utils/types/dto';
-import { Loading } from '@/components/modules/Loading/Loading';
+import { Loading, Header } from '@/components/modules';
 
 import styles from './index.module.scss';
 import { useUser } from '@/utils/context/User';

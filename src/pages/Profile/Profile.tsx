@@ -1,12 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import Header from '@components/modules/Header/Header';
-import { Footer } from '@components/modules/Footer/Footer';
-import UserDataForm from '@components/modules/UserDataForm/UserDataForm';
 import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg';
 import { Profile as ProfileType } from '@/utils/types/dto';
-import { Loading } from '@/components/modules/Loading/Loading';
+import { Loading, UserDataForm, Footer, Header } from '@/components/modules';
 import { Button } from '@/components/elements/Button/Button';
 import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
 

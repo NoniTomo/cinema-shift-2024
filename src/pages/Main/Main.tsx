@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { MovieSchedule, YourData, ChoiceOfSeats, MovieInfo } from '@components/templates';
 import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
-import { IFilm, Profile } from '@/utils/types';
+import { Profile } from '@/utils/types';
 import { RequestClient } from '@/utils/axiosAPI';
 import {
   Modal,
@@ -20,39 +20,39 @@ import {} from '@/utils/types/dto';
 import styles from './index.module.scss';
 import { useUser } from '@/utils/context/User';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
+import { useQuery } from '@/utils/hooks/useQuery/useQuery';
+
+const getFilmInfo = (filmId: number) => RequestClient.get(`/cinema/film/${filmId}`);
 
 export const Main = () => {
+  const params = useParams();
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const { isUserLogged } = useUser();
   const [stage, setStage] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
   const { isMobile } = useMobileDetect();
   const { setFilmId, setFilmName, cinemaPayment, setPerson } = useCinemaPayment();
-  const [film, setFilm] = useState<IFilm>();
-  const params = useParams();
-  const navigate = useNavigate();
+
+  const getFilmInfoQuery = useQuery(() => getFilmInfo(+params.filmId!), {
+    keys: [params.filmId, setFilmId, setFilmName],
+    select: (data) => {
+      return data.data.film;
+    },
+    onSuccess: (data) => {
+      setFilmId(params.filmId as string);
+      setFilmName(data.name as string);
+    },
+    onError: (data) => {
+      toast.error(data.message, {
+        position: 'top-left'
+      });
+    }
+  });
 
   useEffect(() => {
     if (!isUserLogged) navigate('../cinema/users/signin');
   }, [isUserLogged, navigate]);
-
-  useEffect(() => {
-    RequestClient.get(`/cinema/film/${params.filmId}`)
-      .then((res) => {
-        if (res.data?.success) {
-          console.error('res.data?.success = ', res.data?.success);
-          setFilm(res.data.film as IFilm);
-          setFilmId(params.filmId as string);
-          setFilmName(res.data.film.name as string);
-        } else {
-          toast.error(res.data.reason, {
-            position: 'top-left'
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [params.filmId, setFilmId, setFilmName]);
 
   const submitPerson = (data: Profile) => {
     setPerson(data);
@@ -81,11 +81,13 @@ export const Main = () => {
       }
     }
   };
-  console.log(cinemaPayment);
+
   if (isMobile) {
     return (
       <>
-        {stage === 1 && film && <MovieInfo film={film} toForward={() => setStage(2)} />}
+        {stage === 1 && getFilmInfoQuery.data && (
+          <MovieInfo film={getFilmInfoQuery.data} toForward={() => setStage(2)} />
+        )}
         {stage === 2 && <MovieSchedule toBack={() => setStage(1)} toForward={() => setStage(3)} />}
         {stage === 3 && <ChoiceOfSeats toBack={() => setStage(2)} toForward={() => setStage(4)} />}
         {stage === 4 && (
@@ -103,7 +105,9 @@ export const Main = () => {
               <ArrowLeftIcon />
               <p className={styles.text}>Назад</p>
             </Link>
-            {film && <FilmCard film={film} description={true} direction='row' />}
+            {getFilmInfoQuery.data && (
+              <FilmCard film={getFilmInfoQuery.data} description={true} direction='row' />
+            )}
             <div>
               <p className={styles.title}>Расписание</p>
               <div style={{ width: '100%' }}>

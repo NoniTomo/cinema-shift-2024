@@ -1,10 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 
-import Header from '@components/modules/Header/Header';
-import { Button } from '@components/elements/Button/Button';
-import { CinemaPaymentContext } from '@/context/CinemaPaymentContext';
-import { InfoCard } from '@/components/elements/InfoCard/InfoCard';
+import { Header } from '@components/modules';
+import { Button, InfoCard } from '@components/elements';
+import { CinemaPaymentContext } from '@/utils/context/CinemaPayment';
 import { getDateToString } from '@/utils/helpers/getDate';
 import { getSeats } from '@/utils/helpers/getSeats';
 import { ReactComponent as AcceptIcon } from '@assets/svg/Accept.svg';
@@ -16,7 +15,7 @@ export type PropsSuccess = {
   type?: 'desktop' | 'mobile';
 };
 
-export default function Success({ type = 'mobile' }: PropsSuccess) {
+export const Success = ({ type = 'mobile' }: PropsSuccess) => {
   const { cinemaPayment } = useContext(CinemaPaymentContext);
 
   return (
@@ -39,4 +38,4 @@ export default function Success({ type = 'mobile' }: PropsSuccess) {
       </div>
     </>
   );
-}
+};

@@ -15,7 +15,7 @@ type Props = {
   children: ReactNode;
 };
 
-const UserProvider = ({ children }: Props) => {
+export const UserProvider = ({ children }: Props) => {
   const [loading, setIsLoading] = useState(false);
   const [isUserLogged, setIsUserLogged] = useState(false);
   const [error, setIsError] = useState(false);
@@ -207,5 +207,3 @@ const UserProvider = ({ children }: Props) => {
     </UserContext.Provider>
   );
 };
-
-export default UserProvider;
