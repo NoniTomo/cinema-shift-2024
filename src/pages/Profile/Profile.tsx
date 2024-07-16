@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import { ReactComponent as ArrowLeftIcon } from '../../../assets/svg/Arrow_Left.svg';
+import { ReactComponent as ArrowLeftIcon } from '@/assets/svg/Arrow_Left.svg';
 import { Profile as ProfileType } from '@/utils/types/dto';
 import { Loading, UserDataForm, Footer, Header } from '@/components/modules';
 import { Button } from '@/components/elements/Button/Button';

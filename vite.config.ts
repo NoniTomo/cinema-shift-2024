@@ -1,7 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import svgr from '@svgr/rollup'
-import path from 'path';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import svgr from '@svgr/rollup';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,11 +8,8 @@ export default defineConfig({
     alias: {
       '@': '/src',
       '@assets': '/src/assets',
-      '@components': '/src/components',
-    },
+      '@components': '/src/components'
+    }
   },
-  plugins: [
-    react(),
-    svgr(),
-  ],
-})
+  plugins: [react(), svgr()]
+});

@@ -35,7 +35,7 @@ export const Main = () => {
   const { setFilmId, setFilmName, cinemaPayment, setPerson } = useCinemaPayment();
 
   const getFilmInfoQuery = useQuery(() => getFilmInfo(+params.filmId!), {
-    keys: [params.filmId, setFilmId, setFilmName],
+    keys: [params.filmId],
     select: (data) => {
       return data.data.film;
     },
