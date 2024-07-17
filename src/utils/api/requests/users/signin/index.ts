@@ -1,7 +1,9 @@
-import { AxiosRequestConfig } from 'axios';
-import { SignInDto } from '@/utils/types';
 import { api } from '@/utils/api/instance';
 
-export const postSignIn = async (configRequest: AxiosRequestConfig<SignInDto>) => {
-  return api.post('/users/signin', configRequest);
+export type PostSignInParams = SignInDto;
+export type PostSignInConfig = AxiosRequestConfig<PostSignInParams>;
+
+
+export const postSignIn = async ({ params, config }: PostSignInConfig) => {
+  return api.post<SignInResponse>('/users/signin', params, config);
 };

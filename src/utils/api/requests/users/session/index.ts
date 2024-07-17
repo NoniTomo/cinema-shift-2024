@@ -1,8 +1,7 @@
-import { SignInDto } from '@/utils/types';
 import { api } from '@/utils/api/instance';
 
-export type GetUserConfig = AxiosRequestConfig;
+export type GetSessionConfig = AxiosRequestConfig;
 
-export const getSession = async (configRequest: AxiosRequestConfig<SignInDto>) => {
-  return api.post('/users/session', configRequest);
+export const getSession = async (configRequest?: GetSessionConfig) => {
+  return api.get<SessionResponse>('/users/session', configRequest?.config);
 };
