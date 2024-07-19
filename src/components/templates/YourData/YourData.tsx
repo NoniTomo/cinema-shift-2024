@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { Header, UserDataForm } from '@components/modules';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
-import { Profile } from '@/utils/types/dto';
 
 import styles from './index.module.scss';
 import { useUser } from '@/utils/context/User';
@@ -24,7 +23,7 @@ export const YourData = ({ toBack, toForward }: YourDataProps) => {
     if (!isUserLogged) navigate('../cinema/users/signin');
   }, [isUserLogged, navigate]);
 
-  const submitPerson = (data: Profile) => {
+  const submitPerson = (data: CreatePaymentPersonDto) => {
     setPerson(data);
     toForward();
   };
@@ -33,7 +32,7 @@ export const YourData = ({ toBack, toForward }: YourDataProps) => {
       <Header onClick={toBack} Icon={ArrowLeftIcon} text='Ваши данные' />
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <UserDataForm buttonText='Продолжить' onSubmit={(data: Profile) => submitPerson(data)} />
+          <UserDataForm buttonText='Продолжить' onSubmit={(data: CreatePaymentPersonDto) => submitPerson(data)} />
         </div>
       </div>
     </>

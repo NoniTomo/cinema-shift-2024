@@ -1,13 +1,11 @@
-import ISeance from '../types/ISeance';
-
-export default function seancesByHalls(seances: ISeance[]): { name: string; seances: ISeance[] }[] {
+export default function seancesByHalls(seances: ScheduleSeance[]): { name: string; seances: ScheduleSeance[] }[] {
   if (!Array.isArray(seances)) {
     return [];
   }
 
-  const greenHallSeances: ISeance[] = [],
-    blueHallSeances: ISeance[] = [],
-    redHallSeances: ISeance[] = [];
+  const greenHallSeances: ScheduleSeance[] = [],
+    blueHallSeances: ScheduleSeance[] = [],
+    redHallSeances: ScheduleSeance[] = [];
   for (const seance of seances) {
     switch (seance.hall.name) {
       case 'Red': {

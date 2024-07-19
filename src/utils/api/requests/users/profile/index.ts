@@ -1,4 +1,3 @@
-import { UpdateProfileDto } from '@/utils/types';
 import { api } from '@/utils/api/instance';
 
 export type PatchProfileParams = UpdateProfileDto;

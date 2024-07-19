@@ -1,22 +1,29 @@
-import { CancelCinemaOrderDto, Order } from '@/utils/types/dto';
 import { Button } from '@/components/elements/Button/Button';
 import { getDateToString } from '@/utils/helpers/getDate';
 import { getSeats } from '@/utils/helpers/getSeats';
 
 import styles from './index.module.scss';
-import { useUser } from '@/utils/context/User';
+import { useQuery } from '@/utils/hooks/useQuery/useQuery';
+import { putCancelOrder } from '@/utils/api/requests';
+import { showError } from '@/utils/helpers';
+import { showSuccess } from '@/utils/helpers/showSuccess';
 
 type Props = {
-  order: Order;
+  order: CinemaOrder;
   onClick: () => void;
   active?: boolean;
 };
 
 export const TicketCard = ({ order, active = false, onClick }: Props) => {
-  const { handleCancelOrder } = useUser();
-  const handle = (data: CancelCinemaOrderDto) => {
-    handleCancelOrder(data);
-  };
+  const putCancelOrderQuery = useQuery((params: { orderId: string }) => putCancelOrder({ params }), {
+    onSuccess: () => {
+      showSuccess('Заказ отменен')
+    },
+    onError: (data) => {
+      showError(data.message)
+    },
+    enabled: false,
+  })
 
   if (order.status === 'PAYED')
     return (
@@ -36,7 +43,7 @@ export const TicketCard = ({ order, active = false, onClick }: Props) => {
             <div
               className={
                 styles[
-                  `ticket__status-container_${order.status === 'PAYED' ? 'payed' : 'canceled'}`
+                `ticket__status-container_${order.status === 'PAYED' ? 'payed' : 'canceled'}`
                 ]
               }
             >
@@ -48,7 +55,7 @@ export const TicketCard = ({ order, active = false, onClick }: Props) => {
           </div>
         </div>
         {active && (
-          <Button variant='outlined' onClick={() => handle({ orderId: order._id })}>
+          <Button variant='outlined' onClick={() => putCancelOrderQuery.refetch({ orderId: order._id })}>
             Вернуть билет
           </Button>
         )}

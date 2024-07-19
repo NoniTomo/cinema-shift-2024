@@ -71,6 +71,7 @@ interface CinemaOrdersResponse extends Response {
 }
 
 interface CinemaOrder {
+  _id: string;
   filmName: string;
   orderNumber: number;
   tickets: Ticket[];
@@ -90,6 +91,7 @@ interface CreateCinemaPaymentDto {
 interface CreatePaymentTicketsDto {
   row: number;
   column: number;
+  price: number;
 };
 
 interface CreatePaymentPersonDto {
@@ -138,6 +140,7 @@ interface Profile {
   lastname: string;
   email: string;
   city: string;
+  phone: string;
 }
 
 interface UpdateProfileResponse extends Response {

@@ -5,7 +5,6 @@ import { TextField, Button } from '@components/elements';
 import { filterInputOnlyNumbers } from '@/utils/helpers/validate';
 
 import styles from './index.module.scss';
-import { PaymentCard } from '@/utils/types/dto';
 
 export type PaymentCardFormType = {
   onSubmit: (data: PaymentCard) => void;

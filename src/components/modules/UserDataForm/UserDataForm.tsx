@@ -9,7 +9,6 @@ import {
   validateAlphabetAndSpecialSymbols,
   validateEmail
 } from '@/utils/helpers/validate';
-import { Profile } from '@/utils/types/dto';
 
 import styles from './index.module.scss';
 import { useUser } from '@/utils/context/User';

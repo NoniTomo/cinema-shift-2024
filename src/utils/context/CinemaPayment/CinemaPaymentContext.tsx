@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import { Profile, CreateCinemaPaymentDto, PaymentCard, Seance, Ticket } from '../../types/dto';
 
 export const defaultValue: CreateCinemaPaymentDto = {
   filmName: '',
@@ -8,8 +7,6 @@ export const defaultValue: CreateCinemaPaymentDto = {
     firstname: '',
     middlename: '',
     lastname: '',
-    email: '',
-    city: '',
     phone: ''
   },
   debitCard: {
@@ -27,32 +24,27 @@ export const defaultValue: CreateCinemaPaymentDto = {
 
 export type CinemaPaymentContextType = {
   cinemaPayment: CreateCinemaPaymentDto;
-  loading: boolean;
-  error: boolean;
+
   paymentIsReady: boolean;
-  setTickets: (tickets: Ticket[] | []) => void;
-  setAddTicket: (ticket: Ticket) => void;
-  setDropTicket: (ticket: Ticket) => void;
+  setTickets: (tickets: CreatePaymentTicketsDto[] | []) => void;
+  setAddTicket: (ticket: CreatePaymentTicketsDto) => void;
+  setDropTicket: (ticket: CreatePaymentTicketsDto) => void;
   setFilmName: (filmName: string) => void;
   setFilmId: (filmId: string) => void;
-  setPerson: (person: Profile) => void;
+  setPerson: (person: CreatePaymentPersonDto) => void;
   setDebitCard: (paymentCard: PaymentCard) => void;
   setSeance: (seance: Seance) => void;
-  handleCinemaPayment: (toForward: () => void) => void;
 };
 
 export const CinemaPaymentContext = createContext<CinemaPaymentContextType>({
   cinemaPayment: defaultValue,
-  loading: false,
-  error: false,
   paymentIsReady: false,
-  setTickets: (tickets: Ticket[] | []) => {},
-  setAddTicket: (ticket: Ticket) => {},
-  setDropTicket: (ticket: Ticket) => {},
-  setFilmName: (filmName: string) => {},
-  setFilmId: (filmId: string) => {},
-  setPerson: (person: Profile) => {},
-  setDebitCard: (paymentCard: PaymentCard) => {},
-  setSeance: (seance: Seance) => {},
-  handleCinemaPayment: async () => {}
+  setTickets: (tickets: CreatePaymentTicketsDto[] | []) => { },
+  setAddTicket: (ticket: CreatePaymentTicketsDto) => { },
+  setDropTicket: (ticket: CreatePaymentTicketsDto) => { },
+  setFilmName: (filmName: string) => { },
+  setFilmId: (filmId: string) => { },
+  setPerson: (person: CreatePaymentPersonDto) => { },
+  setDebitCard: (paymentCard: PaymentCard) => { },
+  setSeance: (seance: Seance) => { },
 });

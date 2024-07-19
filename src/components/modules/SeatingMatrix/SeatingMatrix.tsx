@@ -22,8 +22,7 @@ export const SeatingMatrix = ({
   onClick,
   textButton = 'Продолжить'
 }: SeatingMatrixProps) => {
-  const params = useParams();
-  const { schedules, loading, handleGetSchedule } = useSeance();
+  const { schedules } = useSeance();
   const { setAddTicket, setDropTicket, setTickets, cinemaPayment } = useCinemaPayment();
 
   const getHall = (hall: string) => {
@@ -40,14 +39,8 @@ export const SeatingMatrix = ({
   };
 
   useEffect(() => {
-    if (!schedules || (schedules && schedules.length === 0)) handleGetSchedule(+params.filmId!);
-  }, [schedules]);
-
-  useEffect(() => {
     setTickets([]);
   }, []);
-
-  if (loading) return <Loading />;
 
   const schedulesLocal =
     schedules && schedules.length > 0
@@ -56,11 +49,11 @@ export const SeatingMatrix = ({
 
   const seanceLocal = schedulesLocal
     ? schedulesLocal?.seances.find((item) => {
-        return (
-          item.time === cinemaPayment.seance.time &&
-          getHall(cinemaPayment.seance.hall) === item.hall.name
-        );
-      })
+      return (
+        item.time === cinemaPayment.seance.time &&
+        getHall(cinemaPayment.seance.hall) === item.hall.name
+      );
+    })
     : undefined;
 
   return (
@@ -95,34 +88,34 @@ export const SeatingMatrix = ({
                                 key={columnIndex}
                                 className={`${styles['seat']} 
                                   ${styles[type]}
-                                  ${cinemaPayment.tickets.find((item) => item.row === `${rowIndex}` && item.column === `${columnIndex}`) && styles[`${type + '_active'}`]}
+                                  ${cinemaPayment.tickets.find((item) => item.row === rowIndex && item.column === columnIndex) && styles[`${type + '_active'}`]}
                                 `}
                                 onClick={() => {
                                   console.log(column.type);
                                   if (column.type !== 'BLOCKED')
                                     cinemaPayment.tickets.find(
                                       (item) =>
-                                        item.row === `${rowIndex}` &&
-                                        item.column === `${columnIndex}`
+                                        item.row === rowIndex &&
+                                        item.column === columnIndex
                                     )
                                       ? setDropTicket({
-                                          row: `${rowIndex}`,
-                                          column: `${columnIndex}`,
-                                          price: column.price
-                                        })
+                                        row: rowIndex,
+                                        column: columnIndex,
+                                        price: column.price
+                                      })
                                       : setAddTicket({
-                                          row: `${rowIndex}`,
-                                          column: `${columnIndex}`,
-                                          price: column.price
-                                        });
+                                        row: rowIndex,
+                                        column: columnIndex,
+                                        price: column.price
+                                      });
                                 }}
                               >
                                 {cinemaPayment.tickets.find(
                                   (item) =>
-                                    item.row === `${rowIndex}` && item.column === `${columnIndex}`
+                                    item.row === rowIndex && item.column === columnIndex
                                 ) && (
-                                  <p className={styles['seat__seat-index']}>{columnIndex + 1}</p>
-                                )}
+                                    <p className={styles['seat__seat-index']}>{columnIndex + 1}</p>
+                                  )}
                               </div>
                             );
                           })}

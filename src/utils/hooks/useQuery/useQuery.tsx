@@ -38,13 +38,13 @@ export interface UseQueryReturn<Data> {
 
   error?: Error;
 
-  refetch: () => void;
+  refetch: (params?: any) => void;
 
   isRefetching: boolean;
 }
 
 export const useQuery = <QueryData, Data = QueryData>(
-  callback: () => Promise<QueryData>,
+  callback: (params?: any) => Promise<QueryData>,
   options?: UseQueryOptions<QueryData, Data>
 ): UseQueryReturn<Data> => {
   const enabled = options?.enabled ?? true;
@@ -60,10 +60,11 @@ export const useQuery = <QueryData, Data = QueryData>(
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
 
-  const request = (action: 'init' | 'refetch') => {
+  const request = (action: 'init' | 'refetch', params?: any) => {
     setIsLoading(true);
     if (action === 'refetch') setIsRefetching(true);
-    callback()
+    console.log('action: ', action, '; params: ', params)
+    callback(params)
       .then((response) => {
         const data = options?.select ? options?.select(response) : response;
         options?.onSuccess?.(data as Data);
@@ -78,7 +79,7 @@ export const useQuery = <QueryData, Data = QueryData>(
       .catch((error: Error) => {
         if (retryCountRef.current > 0) {
           retryCountRef.current -= 1;
-          return request(action);
+          return request(action, params);
         }
         options?.onError?.(error);
         setData(undefined);
@@ -93,7 +94,7 @@ export const useQuery = <QueryData, Data = QueryData>(
         if (options?.refetchInterval) {
           const interval = setInterval(() => {
             clearInterval(interval);
-            request('refetch');
+            request('refetch', params);
           }, options?.refetchInterval);
           intervalIdRef.current = interval;
         }
@@ -116,7 +117,7 @@ export const useQuery = <QueryData, Data = QueryData>(
     };
   }, [enabled, options?.refetchInterval, options?.retry, ...(options?.keys ?? [])]);
 
-  const refetch = () => request('refetch');
+  const refetch = (params?: any) => request('refetch', params);
 
   const placeholderData =
     options?.placeholderData instanceof Function

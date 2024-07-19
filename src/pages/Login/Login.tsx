@@ -5,21 +5,23 @@ import { useForm, UseFormRegisterReturn } from 'react-hook-form';
 import { ReactComponent as CrossIcon } from '@/assets/svg/Cross.svg';
 import { TextField, Button } from '@components/elements';
 import useTimer from '@/utils/hooks/useTimer/useTimer';
-import { filterInputOnlyNumbers } from '@/utils/helpers';
-import type { CreateOtpDto } from '@/utils/types/dto';
+import { filterInputOnlyNumbers, showError } from '@/utils/helpers';
 import { Loading, Header } from '@/components/modules';
 
 import styles from './index.module.scss';
 import { useUser } from '@/utils/context/User';
+import { useQuery } from '@/utils/hooks/useQuery/useQuery';
+import { postOtp, postSignIn } from '@/utils/api/requests';
+import { toast } from 'react-toastify';
 
 export const Login = () => {
   const { countdown, start, isEnding } = useTimer();
-  const { handleGetOtpsCode, handleSignIn, loading, isUserLogged } = useUser();
+  const { isUserLogged, handleLogIn } = useUser();
   const navigate = useNavigate();
   const [phone, setPhone] = useState('');
 
   useEffect(() => {
-    isUserLogged && navigate(-2);
+    isUserLogged && navigate(-1);
   }, [isUserLogged, navigate]);
 
   const formPhone = useForm({
@@ -35,6 +37,34 @@ export const Login = () => {
   const refPhone = useRef<HTMLFormElement>(null);
   const refCode = useRef<HTMLFormElement>(null);
 
+  const postSignInQuery = useQuery((params) => postSignIn({ params, config: {} }), {
+    select: (response) => {
+      return response.data;
+    },
+    onSuccess: (data) => {
+      localStorage.setItem('token', data.token);
+      handleLogIn();
+    },
+    onError: (data) => {
+      showError(data.message);
+    },
+    enabled: false,
+  });
+
+  const postOtpQuery = useQuery((params) => postOtp(params), {
+    select: (response) => {
+      return response.data.retryDelay;
+    },
+    onSuccess: (data) => {
+      start(data / 1000);
+    },
+    onError: (data) => {
+      console.log(data);
+      showError(data.message);
+    },
+    enabled: false,
+  });
+
   const handleFormSubmit = () => {
     if (displayCodeField) {
       refCode.current?.requestSubmit();
@@ -46,8 +76,7 @@ export const Login = () => {
   const onSubmitPhone = async (data: CreateOtpDto) => {
     setPhone(data.phone);
     setDisplayCodeField(true);
-    const delay = await handleGetOtpsCode(data);
-    delay && start(delay / 1000);
+    postOtpQuery.refetch({ params: data, config: {} });
   };
 
   const signIn = async (data: { code: string }) => {
@@ -55,7 +84,8 @@ export const Login = () => {
       code: data.code,
       phone: phone
     };
-    await handleSignIn(signInData);
+    console.log(signInData);
+    postSignInQuery.refetch(signInData);
   };
 
   const inputPhone = formPhone.register('phone', {
@@ -76,6 +106,7 @@ export const Login = () => {
     maxLength: 6,
     pattern: /^[0-9]+$/i
   });
+
   const customRegisterCode: UseFormRegisterReturn = {
     name: 'code',
     onBlur: (event) => inputCode.onBlur(event),
@@ -90,7 +121,7 @@ export const Login = () => {
       <Header to='/cinema/today' Icon={CrossIcon} />
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          {loading ? (
+          {postSignInQuery.isLoading || postSignInQuery.isLoading ? (
             <Loading />
           ) : (
             <>

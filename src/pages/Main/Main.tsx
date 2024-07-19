@@ -4,8 +4,6 @@ import { toast } from 'react-toastify';
 
 import { MovieSchedule, YourData, ChoiceOfSeats, MovieInfo } from '@components/templates';
 import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
-import { Profile } from '@/utils/types';
-import { RequestClient } from '@/utils/axiosAPI';
 import {
   Modal,
   FilmCard,
@@ -15,14 +13,15 @@ import {
   UserDataForm
 } from '@/components/modules';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
-import {} from '@/utils/types/dto';
 
 import styles from './index.module.scss';
 import { useUser } from '@/utils/context/User';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 import { useQuery } from '@/utils/hooks/useQuery/useQuery';
+import { getFilm } from '@/utils/api/requests';
+import { showError } from '@/utils/helpers';
 
-const getFilmInfo = (filmId: number) => RequestClient.get(`/cinema/film/${filmId}`);
+const getFilmInfo = (filmId: string) => getFilm({ params: { filmId }, config: {} });
 
 export const Main = () => {
   const params = useParams();
@@ -34,7 +33,7 @@ export const Main = () => {
   const { isMobile } = useMobileDetect();
   const { setFilmId, setFilmName, cinemaPayment, setPerson } = useCinemaPayment();
 
-  const getFilmInfoQuery = useQuery(() => getFilmInfo(+params.filmId!), {
+  const getFilmInfoQuery = useQuery(() => getFilmInfo(params.filmId!), {
     keys: [params.filmId],
     select: (data) => {
       return data.data.film;
@@ -44,9 +43,7 @@ export const Main = () => {
       setFilmName(data.name as string);
     },
     onError: (data) => {
-      toast.error(data.message, {
-        position: 'top-left'
-      });
+      showError(data.message);
     }
   });
 
@@ -54,7 +51,7 @@ export const Main = () => {
     if (!isUserLogged) navigate('../cinema/users/signin');
   }, [isUserLogged, navigate]);
 
-  const submitPerson = (data: Profile) => {
+  const submitPerson = (data: CreatePaymentPersonDto) => {
     setPerson(data);
     navigate('../cinema/payment');
   };
@@ -115,8 +112,8 @@ export const Main = () => {
               </div>
             </div>
             {cinemaPayment.seance.date !== '' &&
-            cinemaPayment.seance.time !== '' &&
-            cinemaPayment.seance.hall !== '' ? (
+              cinemaPayment.seance.time !== '' &&
+              cinemaPayment.seance.hall !== '' ? (
               <div>
                 <p className={styles.title}>Выбор места</p>
                 <SeatingMatrix direction='row' onClick={onPayment} textButton='Купить' />
@@ -128,7 +125,7 @@ export const Main = () => {
         </div>
         <Modal open={open} onClose={() => setOpen(false)}>
           <header className={styles['modal-header']}>Введите ваши данные</header>
-          <UserDataForm buttonText='Продолжить' onSubmit={(data: Profile) => submitPerson(data)} />
+          <UserDataForm buttonText='Продолжить' onSubmit={(data: CreatePaymentPersonDto) => submitPerson(data)} />
         </Modal>
       </>
     );

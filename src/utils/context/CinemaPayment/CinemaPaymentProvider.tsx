@@ -1,7 +1,4 @@
 import { ReactNode, useReducer, useState } from 'react';
-import { Profile, CreateCinemaPaymentDto, PaymentCard, Seance, Ticket } from '../../types/dto';
-import { RequestClient } from '@/utils/axiosAPI';
-import { toast } from 'react-toastify';
 import { CinemaPaymentContext, defaultValue } from './CinemaPaymentContext';
 
 export type CinemaPaymentProviderType = {
@@ -22,7 +19,7 @@ type SetFilm = {
 };
 type SetPerson = {
   type: 'set-person';
-  data: Profile;
+  data: CreatePaymentPersonDto;
 };
 type SetCard = {
   type: 'set-debit-card';
@@ -34,11 +31,11 @@ type SetSeance = {
 };
 type setTickets = {
   type: 'set-tickets';
-  data: Ticket[] | [];
+  data: CreatePaymentTicketsDto[] | [];
 };
 type setTicket = {
   type: 'add-one-tickets' | 'remove-one-tickets';
-  data: Ticket;
+  data: CreatePaymentTicketsDto;
 };
 type ActionSeance =
   | SetFilm
@@ -73,8 +70,6 @@ function cinemaPaymentReducer(
           firstname: action.data.firstname,
           middlename: action.data.middlename,
           lastname: action.data.lastname,
-          email: action.data.email,
-          city: action.data.city,
           phone: action.data.phone
         }
       };
@@ -160,7 +155,7 @@ export const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) =
       data: { filmId }
     });
   };
-  const setPerson = (person: Profile) => {
+  const setPerson = (person: CreatePaymentPersonDto) => {
     dispatchCinemaPayment({
       type: 'set-person',
       data: person
@@ -179,60 +174,30 @@ export const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) =
       data: seance
     });
   };
-  const setAddTicket = (ticket: Ticket) => {
+  const setAddTicket = (ticket: CreatePaymentTicketsDto) => {
     dispatchCinemaPayment({
       type: 'add-one-tickets',
       data: ticket
     });
   };
-  const setTickets = (tickets: Ticket[] | []) => {
+  const setTickets = (tickets: CreatePaymentTicketsDto[] | []) => {
     dispatchCinemaPayment({
       type: 'set-tickets',
       data: tickets
     });
   };
-  const setDropTicket = (ticket: Ticket) => {
+  const setDropTicket = (ticket: CreatePaymentTicketsDto) => {
     dispatchCinemaPayment({
       type: 'remove-one-tickets',
       data: ticket
     });
   };
-  const handleCinemaPayment = (toForward: () => void) => {
-    setIsLoading(true);
-    setIsError(false);
-    setPaymentIsReady(false);
-    RequestClient.post('/cinema/payment', cinemaPayment, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-      .then((res) => {
-        if (res.data.success) {
-          setIsError(false);
-          toForward();
-        } else {
-          throw new Error(res.data.reason);
-        }
-      })
-      .catch((err) => {
-        toast.error(err, {
-          position: 'top-left'
-        });
-        setIsError(true);
-        throw new Error();
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+
   return (
     <CinemaPaymentContext.Provider
       value={{
         cinemaPayment,
-        loading,
-        error,
         paymentIsReady,
-        handleCinemaPayment,
 
         setTickets,
         setAddTicket,

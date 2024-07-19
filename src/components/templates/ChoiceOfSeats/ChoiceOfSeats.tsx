@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify';
-
 import { Button } from '@components/elements/Button/Button';
 import { Header, SeatingMatrix } from '@components/modules';
 
@@ -8,6 +6,7 @@ import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 import styles from './index.module.scss';
 import { useSeance } from '@/utils/context/Seance';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
+import { showError } from '@/utils/helpers';
 
 export type ChoiceOfSeatsProps = {
   toBack: () => void;
@@ -15,22 +14,20 @@ export type ChoiceOfSeatsProps = {
 };
 
 export const ChoiceOfSeats = ({ toBack, toForward }: ChoiceOfSeatsProps) => {
-  const { schedules, error } = useSeance();
+  const { schedules } = useSeance();
   const { cinemaPayment } = useCinemaPayment();
 
   const handleOnClick = () => {
     if (cinemaPayment.tickets.length > 0) {
       toForward();
     } else {
-      toast.error('Выберите места', {
-        position: 'top-left'
-      });
+      showError('Выберите места');
     }
   };
 
   return (
     <>
-      {!error && schedules ? (
+      {schedules ? (
         <>
           <Header onClick={toBack} Icon={ArrowLeftIcon} text='Выбор места' />
           <div className={`${styles.wrapper}`}>

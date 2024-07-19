@@ -1,17 +1,14 @@
-import { ReactNode, useReducer, useState } from 'react';
-import config from '@/config';
-import { RequestClient } from '@/utils/axiosAPI';
+import { ReactNode, useReducer } from 'react';
 import { SeanceContext } from './SeanceContext';
-import IDaySchedule from '@/utils/types/IDaySchedule';
 
 type ActionSchedule = {
-  type: 'get-schedules';
-  data: IDaySchedule[];
+  type: 'set-schedules';
+  data: Schedule[];
 };
 
-function scheduleReducer(state: IDaySchedule[], action: ActionSchedule) {
+function scheduleReducer(state: Schedule[], action: ActionSchedule) {
   switch (action.type) {
-    case 'get-schedules': {
+    case 'set-schedules': {
       return [...action.data];
     }
     default: {
@@ -26,42 +23,18 @@ type Props = {
 
 export const SeanceProvider = ({ children }: Props) => {
   const [schedules, dispatchSchedule] = useReducer(scheduleReducer, []);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const handleGetSchedule = async (filmId: number) => {
-    setError(false);
-    setLoading(true);
-    await RequestClient.get(`${config.PUBLIC_SERVER_URL}/cinema/film/${filmId}/schedule`)
-      .then((res) => {
-        if (res.data?.success) {
-          setError(false);
-          dispatchSchedule({
-            type: 'get-schedules',
-            data: res.data.schedules
-          });
-        } else throw new Error('Ошибка при выполнении запроса');
-      })
-      .catch(() => {
-        setError(true);
-      })
-      .finally(() => setLoading(false));
+  const setSchedule = (schedules: Schedule[]) => {
+    dispatchSchedule({
+      type: 'set-schedules',
+      data: schedules
+    });
+  }
 
-    return;
-  };
-
-  const contextValue = schedules
-    ? {
-        handleGetSchedule,
-        schedules,
-        error,
-        loading
-      }
-    : {
-        handleGetSchedule,
-        error,
-        loading
-      };
+  const contextValue = {
+    schedules,
+    setSchedule,
+  }
 
   return <SeanceContext.Provider value={contextValue}>{children}</SeanceContext.Provider>;
 };

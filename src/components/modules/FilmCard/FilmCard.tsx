@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import config from '@/config';
-import { IFilm } from '@/utils/types/IFilm';
 import getAgeRating from '@/utils/helpers/getAgeRating';
 import { Rating } from '@components/elements';
 
 import styles from './index.module.scss';
 
 export type FilmCardType = {
-  film: IFilm;
+  film: Film;
   direction?: 'column' | 'row';
   description?: boolean;
 };
@@ -54,7 +53,7 @@ export const FilmCard = ({ film, direction = 'column', description = false }: Fi
           <div className={`${styles.poster__info}`}>
             <p className={`${styles.poster__text_bold}`}>{film.genres[0]}</p>
             <p className={`${styles.poster__text}`}>
-              {film.country.name}, {film.releaseDate}
+              {film.country && film.country.name}, {film.releaseDate}
             </p>
           </div>
           <img className={`${styles.poster__img}`} src={`${config.PUBLIC_SERVER_URL}${film.img}`} />
