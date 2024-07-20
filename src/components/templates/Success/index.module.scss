@@ -1,7 +1,6 @@
 @import '@/styles/variables.scss';
 
 .wrapper {
-  height: 100vh;
   display: flex;
   justify-content: center;
   height: min-content;
@@ -10,12 +9,11 @@
 .content {
   margin: auto;
   margin-top: 60px;
-  padding-bottom: 60px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: calc($gap * 2);
   max-width: $image-size;
-  padding: 10px;
   text-align: left;
   font-family: $font-family;
 
@@ -25,6 +23,8 @@
 
   &__text {
     font-size: $font-size-small;
+    color: $color-text-light;
+    font-weight: 300;
   }
 
   &__success {

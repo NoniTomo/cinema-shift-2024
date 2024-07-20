@@ -4,9 +4,10 @@ import { getSeats } from '@/utils/helpers/getSeats';
 
 import styles from './index.module.scss';
 import { useQuery } from '@/utils/hooks/useQuery/useQuery';
-import { putCancelOrder } from '@/utils/api/requests';
+import { getOrders, putCancelOrder } from '@/utils/api/requests';
 import { showError } from '@/utils/helpers';
 import { showSuccess } from '@/utils/helpers/showSuccess';
+import { useUser } from '@/utils/context/User';
 
 type Props = {
   order: CinemaOrder;
@@ -15,15 +16,32 @@ type Props = {
 };
 
 export const TicketCard = ({ order, active = false, onClick }: Props) => {
+  const { setOrders } = useUser();
+
+  const getOrdersQuery = useQuery(() => getOrders({}), {
+    select: (response) => {
+      return response.data.orders;
+    },
+    onSuccess: (orders) => {
+      setOrders(orders);
+    },
+    onError: (data) => {
+      showError(data.message)
+    },
+    enabled: false
+  })
+
   const putCancelOrderQuery = useQuery((params: { orderId: string }) => putCancelOrder({ params }), {
     onSuccess: () => {
-      showSuccess('Заказ отменен')
+      showSuccess('Заказ отменен');
+      getOrdersQuery.refetch({});
     },
     onError: (data) => {
       showError(data.message)
     },
     enabled: false,
   })
+
 
   if (order.status === 'PAYED')
     return (

@@ -24,6 +24,9 @@ export const YourCard = ({ toBack, toForward, type = 'mobile' }: YourCardProps) 
   const { setDebitCard, cinemaPayment } = useCinemaPayment();
 
   const postPaymentQuery = useQuery((params) => postPayment(params), {
+    select: (response) => {
+      return response.data.order;
+    },
     onSuccess: () => {
       showSuccess('Ваш заказ оплачен');
       toForward();
