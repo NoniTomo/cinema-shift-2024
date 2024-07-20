@@ -7,12 +7,11 @@ import { TextField, Button } from '@components/elements';
 import useTimer from '@/utils/hooks/useTimer/useTimer';
 import { filterInputOnlyNumbers, showError } from '@/utils/helpers';
 import { Loading, Header } from '@/components/modules';
-
-import styles from './index.module.scss';
 import { useUser } from '@/utils/context/User';
 import { useQuery } from '@/utils/hooks/useQuery/useQuery';
 import { postOtp, postSignIn } from '@/utils/api/requests';
-import { toast } from 'react-toastify';
+
+import styles from './index.module.scss';
 
 export const Login = () => {
   const { countdown, start, isEnding } = useTimer();
@@ -44,6 +43,7 @@ export const Login = () => {
     onSuccess: (data) => {
       localStorage.setItem('token', data.token);
       handleLogIn();
+      navigate(-1);
     },
     onError: (data) => {
       showError(data.message);
@@ -56,10 +56,9 @@ export const Login = () => {
       return response.data.retryDelay;
     },
     onSuccess: (data) => {
-      start(data / 1000);
+      start(Math.floor(data / 1000));
     },
     onError: (data) => {
-      console.log(data);
       showError(data.message);
     },
     enabled: false,
@@ -121,7 +120,7 @@ export const Login = () => {
       <Header to='/cinema/today' Icon={CrossIcon} />
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          {postSignInQuery.isLoading || postSignInQuery.isLoading ? (
+          {postSignInQuery.isLoading || postOtpQuery.isLoading ? (
             <Loading />
           ) : (
             <>

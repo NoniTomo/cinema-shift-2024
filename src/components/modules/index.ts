@@ -9,3 +9,4 @@ export * from './Schedule/Schedule';
 export * from './SeatingMatrix/SeatingMatrix';
 export * from './TicketCard/TicketCard';
 export * from './UserDataForm/UserDataForm';
+export * from './BottomSheet/BottomSheet';

@@ -66,24 +66,32 @@
     font-weight: 300;
 
     &__timer {
+      font-family: $font-family;
+      font-weight: 300;
       margin: 2px 0;
       font-size: $font-size-small;
       color: $color-text-light;
     }
+  }
+}
 
-    .button {
-      width: 100%;
+.button {
+  width: 100%;
 
-      &__description {
-        margin: auto;
-        background-color: transparent;
-        border: none;
-        color: $purple;
-        text-decoration: underline;
-        width: 100%;
-        font-family: $font-family;
-        font-weight: 300;
-      }
+  &__description {
+    margin: auto;
+    background-color: transparent;
+    border: none;
+    color: $purple;
+    text-decoration: underline;
+    width: 100%;
+    font-size: $font-size-small;
+    font-family: $font-family;
+    font-weight: 300;
+    cursor: pointer;
+
+    &:hover {
+      color: $footer-purple;
     }
   }
 }

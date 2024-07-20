@@ -92,3 +92,11 @@
     color: #97A1AF
   }
 }
+
+.modal {
+  margin: $padding;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: $gap;
+}

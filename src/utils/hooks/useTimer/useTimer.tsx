@@ -6,7 +6,7 @@ export default function useTimer() {
   const [isEnding, setIsEnding] = useState<boolean>(false);
 
   useEffect(() => {
-    if (countdown === 0) stop();
+    if (countdown <= 0) stop();
   }, [countdown]);
 
   const start = (time: number) => {
