@@ -1,7 +1,5 @@
-import { Ticket, TicketOrder } from './../types/dto';
-
-export const getSeats = (tickets: Ticket[] | TicketOrder[]) => {
-  const ticketsRows: (Ticket | TicketOrder)[] = [];
+export const getSeats = (tickets: Ticket[] | CreatePaymentTicketsDto[]) => {
+  const ticketsRows: (Ticket | CreatePaymentTicketsDto)[] = [];
   for (const ticket of tickets) {
     if (!ticketsRows.find((_ticket) => +_ticket.row === +ticket.row)) ticketsRows.push(ticket);
   }

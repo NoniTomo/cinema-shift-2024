@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
-import { useParams } from 'react-router-dom';
 
 import { Controls } from '@components/modules/Controls/Controls';
-import { Loading } from '@components/modules/Loading/Loading';
 import { getSeats } from '@/utils/helpers/getSeats';
-
-import styles from './index.module.scss';
 import { Button } from '@/components/elements/Button/Button';
 import { useSeance } from '@/utils/context/Seance';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
+
+import styles from './index.module.scss';
 
 export type SeatingMatrixProps = {
   direction?: 'row' | 'column';

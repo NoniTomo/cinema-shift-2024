@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
 import { ReactComponent as CrossIcon } from '@assets/svg/Cross.svg';
+import { motion } from 'framer-motion';
 
 import styles from './index.module.scss';
 
@@ -27,14 +28,26 @@ export const Modal = ({ children, onClose, open }: ModalProps) => {
 
   if (open) {
     return createPortal(
-      <div className={styles.modal__background} onClick={onClose}>
-        <div onClick={(event) => event.stopPropagation()} className={styles.modal__card}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.1 }}
+        className={styles.modal__background} onClick={onClose}
+      >
+        <motion.div
+          initial={{ height: 0 }}
+          animate={{ height: 'auto' }}
+          transition={{ duration: 0.1 }}
+          exit={{ height: 0 }}
+          onClick={(event) => event.stopPropagation()} className={styles.modal__card}
+        >
           <span className={styles.modal__header}>
             <CrossIcon onClick={onClose} className={styles.modal__icon} />
           </span>
           {children}
-        </div>
-      </div>,
+        </motion.div>
+      </motion.div>,
       element
     );
   }

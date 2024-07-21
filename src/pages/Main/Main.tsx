@@ -1,6 +1,5 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 
 import { MovieSchedule, YourData, ChoiceOfSeats, MovieInfo, LayoutMediaQuery } from '@components/templates';
 import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
@@ -63,13 +62,9 @@ export const Main = () => {
         setStage(4);
         setOpen(true);
       } else if (cinemaPayment.seance.date === '') {
-        toast.error('Укажите дату киносеанса', {
-          position: 'top-left'
-        });
+        showError('Укажите дату киносеанса');
       } else if (cinemaPayment.seance.time === '') {
-        toast.error('Укажите время киносеанса', {
-          position: 'top-left'
-        });
+        showError('Укажите время киносеанса');
       }
     }
   };
@@ -108,7 +103,7 @@ export const Main = () => {
           {cinemaPayment.seance.date !== '' &&
             cinemaPayment.seance.time !== '' &&
             cinemaPayment.seance.hall !== '' ? (
-            <div>
+            <div className={styles['seating-matrix']}>
               <p className={styles.title}>Выбор места</p>
               <SeatingMatrix direction='row' onClick={onPayment} textButton='Купить' />
             </div>

@@ -1,4 +1,4 @@
-import { AgeRating } from '../types/AgeRating';
+import { AgeRating } from '../types/AgeRating.ts';
 
 export default function getAgeRating(ageRating: string): string {
   switch (ageRating) {
