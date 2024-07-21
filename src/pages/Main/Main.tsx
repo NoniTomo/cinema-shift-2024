@@ -1,5 +1,5 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { MovieSchedule, YourData, ChoiceOfSeats, MovieInfo } from '@components/templates';
@@ -14,12 +14,12 @@ import {
 } from '@/components/modules';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 
-import styles from './index.module.scss';
-import { useUser } from '@/utils/context/User';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 import { useQuery } from '@/utils/hooks/useQuery/useQuery';
 import { getFilm } from '@/utils/api/requests';
 import { showError } from '@/utils/helpers';
+
+import styles from './index.module.scss';
 
 const getFilmInfo = (filmId: string) => getFilm({ params: { filmId }, config: {} });
 
@@ -28,7 +28,6 @@ export const Main = () => {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
-  const { isUserLogged } = useUser();
   const [stage, setStage] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
   const { isMobile } = useMobileDetect();
   const { setFilmId, setFilmName, cinemaPayment, setPerson } = useCinemaPayment();
@@ -46,10 +45,6 @@ export const Main = () => {
       showError(data.message);
     }
   });
-
-  useEffect(() => {
-    if (!isUserLogged) navigate('../cinema/users/signin');
-  }, [isUserLogged, navigate]);
 
   const submitPerson = (data: CreatePaymentPersonDto) => {
     setPerson(data);

@@ -1,25 +1,19 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Success, YourCard } from '@components/templates';
 import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
 import { Modal, Header } from '@/components/modules';
-import { useUser } from '@/utils/context/User';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 
 import styles from './index.module.scss';
 
 export const Payment = () => {
   const [open, setOpen] = useState(false);
-  const { isUserLogged } = useUser();
   const [stage, setStage] = useState<1 | 2>(1);
   const { isMobile } = useMobileDetect();
   const { cinemaPayment } = useCinemaPayment();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isUserLogged) navigate('../cinema/users/signin');
-  }, [isUserLogged, navigate]);
 
   const onPayment = () => {
     setStage(2);

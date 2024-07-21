@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import { TicketCard, Header, Loading, Footer } from '@components/modules';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
@@ -11,8 +10,7 @@ import { getOrders } from '@/utils/api/requests';
 import { showError } from '@/utils/helpers';
 
 export const Tickets = () => {
-  const navigate = useNavigate();
-  const { isUserLogged, orders, setOrders } = useUser();
+  const { orders, setOrders } = useUser();
   const [activeTicket, setActiveTicket] = useState(0);
 
   const getOrdersQuery = useQuery(() => getOrders({}), {
@@ -26,11 +24,6 @@ export const Tickets = () => {
       showError(data.message)
     }
   })
-
-  useEffect(() => {
-    if (!isUserLogged) navigate('../cinema/users/signin');
-  }, [isUserLogged, navigate]);
-
   return (
     <>
       <Header to={`/cinema/today`} Icon={ArrowLeftIcon} text='Билеты' />

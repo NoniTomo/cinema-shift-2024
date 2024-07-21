@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 
-import App from './App.tsx';
+import { App } from './App.tsx';
 import { SeanceProvider } from './utils/context/Seance';
 import { CinemaPaymentProvider } from './utils/context/CinemaPayment';
 import { UserProvider } from './utils/context/User';

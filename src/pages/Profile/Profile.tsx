@@ -1,6 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-
 import { ReactComponent as ArrowLeftIcon } from '@/assets/svg/Arrow_Left.svg';
 import { Loading, UserDataForm, Footer, Header } from '@/components/modules';
 import { Button } from '@/components/elements/Button/Button';
@@ -13,8 +10,7 @@ import { patchProfile } from '@/utils/api/requests';
 import { showError } from '@/utils/helpers';
 
 export const Profile = () => {
-  const navigate = useNavigate();
-  const { isUserLogged, handleLogOut, setUserData } = useUser();
+  const { handleLogOut, setUserData } = useUser();
   const { isMobile } = useMobileDetect();
 
   const patchProfileQuery = useQuery((params) => patchProfile({ params, config: {} }), {
@@ -29,10 +25,6 @@ export const Profile = () => {
     },
     enabled: false,
   });
-
-  useEffect(() => {
-    if (!isUserLogged) navigate('../cinema/users/signin');
-  }, [isUserLogged]);
 
   const onSubmit = async (data: Profile) => {
     patchProfileQuery.refetch({ profile: data });
