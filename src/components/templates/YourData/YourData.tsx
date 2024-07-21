@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { Header, UserDataForm } from '@components/modules';
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
-
-import styles from './index.module.scss';
 import { useUser } from '@/utils/context/User';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
+import { LayoutMobile } from '../LayoutMobile/LayoutMobile';
+
+import style from './index.module.scss';
 
 export type YourDataProps = {
   toBack: () => void;
@@ -27,14 +28,15 @@ export const YourData = ({ toBack, toForward }: YourDataProps) => {
     setPerson(data);
     toForward();
   };
+
   return (
     <>
       <Header onClick={toBack} Icon={ArrowLeftIcon} text='Ваши данные' />
-      <div className={styles.wrapper}>
-        <div className={styles.content}>
+      <LayoutMobile>
+        <div className={style.content}>
           <UserDataForm buttonText='Продолжить' onSubmit={(data: CreatePaymentPersonDto) => submitPerson(data)} />
         </div>
-      </div>
+      </LayoutMobile>
     </>
   );
 };

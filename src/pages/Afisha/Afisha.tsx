@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@components/elements';
 import { getToday } from '@/utils/api/requests';
 import { Loading, FilmCard, Header, Footer } from '@/components/modules';
+import { useQuery } from '@/utils/hooks/useQuery/useQuery';
+import { showError } from '@/utils/helpers';
 
 import styles from './index.module.scss';
-import { useQuery } from '@/utils/hooks/useQuery/useQuery';
-import { toast } from 'react-toastify';
-import { showError } from '@/utils/helpers';
 
 export const Afisha = () => {
   const [films, setFilms] = useState<Film[]>();

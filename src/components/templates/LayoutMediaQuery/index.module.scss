@@ -5,8 +5,8 @@
   justify-content: center;
 }
 
-.content {
-  height: 100%;
+.inner-wrapper {
+  margin-top: 60px;
   padding: $padding;
   display: flex;
   flex-direction: column;
@@ -18,6 +18,8 @@
 
   @media (max-width: 760px) {
     margin: auto;
+    margin-top: 60px;
+
     justify-content: space-between;
     padding-bottom: 90px;
     max-width: calc(#{$image-size} + #{$padding * 2});

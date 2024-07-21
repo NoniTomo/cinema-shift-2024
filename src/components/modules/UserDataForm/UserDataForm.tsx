@@ -9,9 +9,9 @@ import {
   validateAlphabetAndSpecialSymbols,
   validateEmail
 } from '@/utils/helpers/validate';
+import { useUser } from '@/utils/context/User';
 
 import styles from './index.module.scss';
-import { useUser } from '@/utils/context/User';
 
 export type UserDataFormType = {
   buttonText: string;

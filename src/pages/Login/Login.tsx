@@ -10,6 +10,7 @@ import { Loading, Header } from '@/components/modules';
 import { useUser } from '@/utils/context/User';
 import { useQuery } from '@/utils/hooks/useQuery/useQuery';
 import { postOtp, postSignIn } from '@/utils/api/requests';
+import { LayoutMediaQuery } from '@/components/templates';
 
 import styles from './index.module.scss';
 
@@ -118,67 +119,65 @@ export const Login = () => {
   return (
     <>
       <Header to='/cinema/today' Icon={CrossIcon} />
-      <div className={styles.wrapper}>
-        <div className={styles.content}>
-          {postSignInQuery.isLoading || postOtpQuery.isLoading ? (
-            <Loading />
-          ) : (
-            <>
-              <p>Введите номер телефона для входа в личный кабинет</p>
-              <form
-                className={styles.form}
-                ref={refPhone}
-                onSubmit={formPhone.handleSubmit(onSubmitPhone)}
-              >
+      <LayoutMediaQuery>
+        {postSignInQuery.isLoading || postOtpQuery.isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <p>Введите номер телефона для входа в личный кабинет</p>
+            <form
+              className={styles.form}
+              ref={refPhone}
+              onSubmit={formPhone.handleSubmit(onSubmitPhone)}
+            >
+              <TextField
+                id='phone'
+                register={customRegisterPhone}
+                placeholder='89999999999'
+                error={formPhone.formState.errors.phone?.message}
+                label='Номер телефона'
+                isDisabled={false}
+                isRequired={true}
+                onKeyDown={filterInputOnlyNumbers}
+                onPaste={filterInputOnlyNumbers}
+              />
+            </form>
+            <form className={styles.form} ref={refCode} onSubmit={formCode.handleSubmit(signIn)}>
+              {displayCodeField && (
                 <TextField
-                  id='phone'
-                  register={customRegisterPhone}
-                  placeholder='89999999999'
-                  error={formPhone.formState.errors.phone?.message}
-                  label='Номер телефона'
+                  id='code'
+                  register={customRegisterCode}
+                  placeholder='123456'
+                  error={formCode.formState.errors.code?.message}
+                  label='Код подтверждения'
                   isDisabled={false}
                   isRequired={true}
                   onKeyDown={filterInputOnlyNumbers}
                   onPaste={filterInputOnlyNumbers}
                 />
-              </form>
-              <form className={styles.form} ref={refCode} onSubmit={formCode.handleSubmit(signIn)}>
-                {displayCodeField && (
-                  <TextField
-                    id='code'
-                    register={customRegisterCode}
-                    placeholder='123456'
-                    error={formCode.formState.errors.code?.message}
-                    label='Код подтверждения'
-                    isDisabled={false}
-                    isRequired={true}
-                    onKeyDown={filterInputOnlyNumbers}
-                    onPaste={filterInputOnlyNumbers}
-                  />
-                )}
-              </form>
-              <Button onClick={handleFormSubmit} type='submit'>
-                Продолжить
-              </Button>
-              {displayCodeField && !isEnding && (
-                <p className={`${styles.content__timer}`}>
-                  Отправить код повторно через {countdown} сек
+              )}
+            </form>
+            <Button onClick={handleFormSubmit} type='submit'>
+              Продолжить
+            </Button>
+            {displayCodeField && !isEnding && (
+              <p className={`${styles.content__timer}`}>
+                Отправить код повторно через {countdown} сек
+              </p>
+            )}
+            {displayCodeField && isEnding && (
+              <div className={styles.button}>
+                <p
+                  className={`${styles.button__description}`}
+                  onClick={() => onSubmitPhone({ phone })}
+                >
+                  Отправить ещё раз
                 </p>
-              )}
-              {displayCodeField && isEnding && (
-                <div className={styles.button}>
-                  <p
-                    className={`${styles.button__description}`}
-                    onClick={() => onSubmitPhone({ phone })}
-                  >
-                    Отправить ещё раз
-                  </p>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </div>
+              </div>
+            )}
+          </>
+        )}
+      </LayoutMediaQuery>
     </>
   );
 };

@@ -1,19 +1,12 @@
 @import '@/styles/variables.scss';
 
-.wrapper {
-  display: flex;
-  justify-content: center;
-  height: min-content;
-}
-
 .content {
-  margin: auto;
-  margin-top: 60px;
-  padding: 10px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: calc($gap * 2);
   max-width: $image-size;
+
   text-align: left;
   font-family: $font-family;
 

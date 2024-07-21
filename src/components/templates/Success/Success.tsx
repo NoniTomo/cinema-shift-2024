@@ -8,6 +8,7 @@ import { getDateToString } from '@/utils/helpers/getDate';
 import { getSeats } from '@/utils/helpers/getSeats';
 import { ReactComponent as AcceptIcon } from '@assets/svg/Accept.svg';
 import { ReactComponent as CrossIcon } from '@assets/svg/Cross.svg';
+import { LayoutMobile } from '../LayoutMobile/LayoutMobile';
 
 import styles from './index.module.scss';
 
@@ -21,7 +22,7 @@ export const Success = ({ type = 'mobile' }: PropsSuccess) => {
   return (
     <>
       {type === 'mobile' && <Header Icon={CrossIcon} text='Выбор места' to={'/cinema/today'} />}
-      <div className={styles.wrapper}>
+      <LayoutMobile>
         <div className={styles.content}>
           <div className={styles.content__success}>
             <AcceptIcon />
@@ -36,7 +37,7 @@ export const Success = ({ type = 'mobile' }: PropsSuccess) => {
             <Button variant='outlined'>Перейти в личный кабинет</Button>
           </NavLink>
         </div>
-      </div>
+      </LayoutMobile>
     </>
   );
 };

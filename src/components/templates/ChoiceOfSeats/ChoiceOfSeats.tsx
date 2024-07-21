@@ -3,10 +3,10 @@ import { Header, SeatingMatrix } from '@components/modules';
 
 import { ReactComponent as ArrowLeftIcon } from '@assets/svg/Arrow_Left.svg';
 
-import styles from './index.module.scss';
 import { useSeance } from '@/utils/context/Seance';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
 import { showError } from '@/utils/helpers';
+import { LayoutMobile } from '@components/templates';
 
 export type ChoiceOfSeatsProps = {
   toBack: () => void;
@@ -30,18 +30,17 @@ export const ChoiceOfSeats = ({ toBack, toForward }: ChoiceOfSeatsProps) => {
       {schedules ? (
         <>
           <Header onClick={toBack} Icon={ArrowLeftIcon} text='Выбор места' />
-          <div className={`${styles.wrapper}`}>
-            <div className={`${styles.schema}`}>
-              <SeatingMatrix />
-              <Button variant='contained' onClick={handleOnClick}>
-                Продолжить
-              </Button>
-            </div>
-          </div>
+          <LayoutMobile>
+            <SeatingMatrix />
+            <Button variant='contained' onClick={handleOnClick}>
+              Продолжить
+            </Button>
+          </LayoutMobile>
         </>
       ) : (
         <p>Возникла ошибка. Необходимо перезагрузить страницу</p>
-      )}
+      )
+      }
     </>
   );
 };

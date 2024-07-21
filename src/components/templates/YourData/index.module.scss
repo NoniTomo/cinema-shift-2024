@@ -1,35 +1,13 @@
 @import '../../../styles/variables.scss';
 
-.wrapper {
-  display: flex;
-  justify-content: center;
-}
-
 .content {
-  height: 100%;
-  padding: 10px 0;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
+  flex-direction: column;
   width: 100%;
   box-sizing: border-box;
   overflow: scroll;
   gap: $gap;
-
-  @media (max-width: 760px) {
-    margin: auto;
-    max-width: calc(#{$image-size} + #{$padding * 2});
-  }
-
-  @media (min-width: 760px) and (max-width: 1200px) {
-    max-width: calc(#{$image-size * 2} + #{$gap} + #{$padding * 2});
-  }
-
-  @media (min-width: 1200px) and (max-width: 1920px) {
-    max-width: calc(#{$image-size * 3} + #{$gap * 2} + #{$padding * 2});
-  }
-
-  @media (min-width: 1920px) {
-    max-width: calc(#{$image-size * 4} + #{$gap * 3} + #{$padding * 2});
-  }
+  max-width: $image-size;
 }

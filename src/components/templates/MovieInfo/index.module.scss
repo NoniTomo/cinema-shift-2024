@@ -1,19 +1,5 @@
 @import '../../../styles/variables.scss';
 
-.wrapper {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-}
-
-.afisha {
-  padding: 10px;
-  padding-top: 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;
-  text-align: left;
-  height: 100%;
-  box-sizing: border-box;
+.movie {
+  margin: 0 auto;
 }

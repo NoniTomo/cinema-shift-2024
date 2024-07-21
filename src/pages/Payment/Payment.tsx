@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-import { Success, YourCard } from '@components/templates';
+import { LayoutMediaQuery, Success, YourCard } from '@components/templates';
 import useMobileDetect from '@/utils/hooks/useMobileDetect/useMobileDetect';
 import { Modal, Header } from '@/components/modules';
 import { useCinemaPayment } from '@/utils/context/CinemaPayment';
@@ -36,12 +36,10 @@ export const Payment = () => {
     return (
       <>
         <Header />
-        <div className={styles.wrapper}>
-          <div className={styles.container}>
-            <header className={styles.header}>Введите данные карты для оплаты</header>
-            <YourCard type='desktop' toForward={onPayment} />
-          </div>
-        </div>
+        <LayoutMediaQuery>
+          <header className={styles.header}>Введите данные карты для оплаты</header>
+          <YourCard type='desktop' toForward={onPayment} />
+        </LayoutMediaQuery>
         <Modal open={open} onClose={() => setOpen(false)}>
           <Success type='desktop' />
         </Modal>
