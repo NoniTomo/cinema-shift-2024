@@ -16,7 +16,7 @@ export type PropsSuccess = {
 };
 
 export const Success = ({ type = 'mobile' }: PropsSuccess) => {
-  const { cinemaPayment } = useContext(CinemaPaymentContext);
+  const { cinemaPayment, orderCode } = useContext(CinemaPaymentContext);
 
   return (
     <>
@@ -27,7 +27,7 @@ export const Success = ({ type = 'mobile' }: PropsSuccess) => {
             <AcceptIcon />
             <p className={styles.content__title}>Оплата прошла успешно!</p>
           </div>
-          <InfoCard title='Код заказа' subtitle={cinemaPayment.filmName} />
+          <InfoCard title='Код заказа' subtitle={`${orderCode}`} />
           <InfoCard title='Фильм' subtitle={cinemaPayment.filmName} />
           <InfoCard title='Дата и время' subtitle={getDateToString(cinemaPayment?.seance.date)} />
           <InfoCard title='Места' subtitle={getSeats(cinemaPayment.tickets)} />

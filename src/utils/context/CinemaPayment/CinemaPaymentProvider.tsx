@@ -139,9 +139,8 @@ function cinemaPaymentReducer(
 
 export const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) => {
   const [cinemaPayment, dispatchCinemaPayment] = useReducer(cinemaPaymentReducer, defaultValue);
-  const [loading, setIsLoading] = useState(false);
-  const [error, setIsError] = useState(false);
   const [paymentIsReady, setPaymentIsReady] = useState(false);
+  const [orderCode, setOrderCode] = useState<null | number>(null);
 
   const setFilmName = (filmName: string) => {
     dispatchCinemaPayment({
@@ -198,7 +197,9 @@ export const CinemaPaymentProvider = ({ children }: CinemaPaymentProviderType) =
       value={{
         cinemaPayment,
         paymentIsReady,
+        orderCode,
 
+        setOrderCode,
         setTickets,
         setAddTicket,
         setDropTicket,

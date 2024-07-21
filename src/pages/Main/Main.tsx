@@ -78,7 +78,7 @@ export const Main = () => {
       }
     }
   };
-
+  console.log('stage = ', stage)
   if (isMobile) {
     return (
       <>

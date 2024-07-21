@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { Button } from '@/components/elements';
 import { BottomSheet, Modal } from '@/components/modules';
@@ -79,28 +81,44 @@ export const TicketCard = ({ order, active = false, onClick }: Props) => {
             <p className={styles['ticket__order-code']}>код билета {order.orderNumber}</p>
           </div>
         </div>
-        {active && (
-          <Button variant='outlined' onClick={() => setModalIsOpen(true)}>
-            Вернуть билет
-          </Button>
-        )}
-        {modalIsOpen && isMobile &&
-          <BottomSheet onClose={() => setModalIsOpen(false)} open={modalIsOpen}>
-            <div className={styles.modal}>
-              <p>Вернуть билет?</p>
-              <Button variant='outlined' onClick={() => {
-                setModalIsOpen(false)
-              }}>
-                Отмена
-              </Button>
-              <Button variant='contained' onClick={() => {
-                putCancelOrderQuery.refetch({ orderId: order._id })
-              }}>
-                Вернуть билет
-              </Button>
-            </div>
-          </BottomSheet>}
-        {modalIsOpen && !isMobile &&
+        <AnimatePresence>
+          {(active || modalIsOpen) && (
+            <motion.div
+              initial={{ height: 0 }}
+              animate={{ height: 'auto' }}
+              transition={{ duration: 0.15 }}
+              exit={{ height: 0 }}
+              style={{ overflow: 'hidden' }}
+            >
+              <div style={{ paddingTop: '16px' }}>
+                <Button variant='outlined' onClick={() => setModalIsOpen(true)}>
+                  Вернуть билет
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {modalIsOpen && isMobile &&
+            <BottomSheet onClose={() => setModalIsOpen(false)} open={modalIsOpen}>
+              <div className={styles.modal}>
+                <p>Вернуть билет?</p>
+                <Button variant='outlined' onClick={() => {
+                  setModalIsOpen(false)
+                }}>
+                  Отмена
+                </Button>
+                <Button variant='contained' onClick={() => {
+                  putCancelOrderQuery.refetch({ orderId: order._id })
+                }}>
+                  Вернуть билет
+                </Button>
+              </div>
+            </BottomSheet>
+          }
+        </AnimatePresence>
+        {
+          modalIsOpen && !isMobile &&
           <Modal onClose={() => setModalIsOpen(false)} open={modalIsOpen}>
             <div className={styles.modal}>
               <p>Вернуть билет?</p>
@@ -115,8 +133,9 @@ export const TicketCard = ({ order, active = false, onClick }: Props) => {
                 Вернуть билет
               </Button>
             </div>
-          </Modal>}
-      </div>
+          </Modal>
+        }
+      </div >
     );
 
   return (

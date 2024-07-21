@@ -21,14 +21,15 @@ export type YourCardProps = {
 export const YourCard = ({ toBack, toForward, type = 'mobile' }: YourCardProps) => {
   const navigate = useNavigate();
   const { isUserLogged } = useUser();
-  const { setDebitCard, cinemaPayment } = useCinemaPayment();
+  const { setDebitCard, cinemaPayment, setOrderCode } = useCinemaPayment();
 
   const postPaymentQuery = useQuery((params) => postPayment(params), {
     select: (response) => {
-      return response.data.order;
+      return response.data.order.orderNumber;
     },
-    onSuccess: () => {
+    onSuccess: (orderNumber) => {
       showSuccess('Ваш заказ оплачен');
+      setOrderCode(orderNumber);
       toForward();
     },
     onError: (data) => {

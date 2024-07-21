@@ -16,16 +16,14 @@ export const MovieSchedule = ({ toBack, toForward }: MovieScheduleProps) => {
 
   return (
     <>
-      {schedules && schedules.length && (
-        <>
-          <Header onClick={toBack} Icon={ArrowLeftIcon} text='Расписание' />
-          <div className={`${styles.wrapper}`}>
-            <div className={`${styles.schedules}`}>
-              <Schedule toForward={toForward} />
-            </div>
-          </div>
-        </>
-      )}
+
+      <Header onClick={toBack} Icon={ArrowLeftIcon} text='Расписание' />
+      <div className={`${styles.wrapper}`}>
+        <div className={`${styles.schedules}`}>
+          <Schedule toForward={toForward} />
+        </div>
+      </div>
+
     </>
   );
 };

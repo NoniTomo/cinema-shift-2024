@@ -26,6 +26,9 @@ export type CinemaPaymentContextType = {
   cinemaPayment: CreateCinemaPaymentDto;
 
   paymentIsReady: boolean;
+  orderCode: number | null;
+
+  setOrderCode: (code: number) => void;
   setTickets: (tickets: CreatePaymentTicketsDto[] | []) => void;
   setAddTicket: (ticket: CreatePaymentTicketsDto) => void;
   setDropTicket: (ticket: CreatePaymentTicketsDto) => void;
@@ -39,6 +42,9 @@ export type CinemaPaymentContextType = {
 export const CinemaPaymentContext = createContext<CinemaPaymentContextType>({
   cinemaPayment: defaultValue,
   paymentIsReady: false,
+  orderCode: null,
+
+  setOrderCode: (code: number) => { },
   setTickets: (tickets: CreatePaymentTicketsDto[] | []) => { },
   setAddTicket: (ticket: CreatePaymentTicketsDto) => { },
   setDropTicket: (ticket: CreatePaymentTicketsDto) => { },
