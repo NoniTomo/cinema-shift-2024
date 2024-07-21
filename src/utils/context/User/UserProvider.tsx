@@ -38,7 +38,7 @@ export const UserProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    (isUserLogged) && getSessionQuery.refetch();
+    (!isUserLogged) && getSessionQuery.refetch();
   }, [isUserLogged])
 
   return (
